@@ -1,46 +1,61 @@
-package net.javaguides.springboot.model;
+package net.javaguides.springboot.entity;
 
-import java.util.Collection;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 
 @Entity
 @javax.persistence.Table(name="button")
 public class Button {
+
 	@Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="id_button")
-	private int id_button;
+	@Column(name="id")
+	private int id;
+
 	@Column(name="name_button")
 	private String name_button;
+
 	@Column(name="color_text")
 	private String color_text;
+
 	@Column(name="color_background")
 	private String color_background;
+
 	@Column(name="color_icon")
 	private String color_icon;
+
 	@Column(name="link")
 	private String link;
+
 	@Column(name="icon")
 	private String icon;
-	@ManyToOne
+
+	@JsonBackReference
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="id_menu")
 	private Menu menu;
 
-	public int getId_button() {
-		return id_button;
+	public Button() {
 	}
 
-	public void setId_button(int id_button) {
-		this.id_button = id_button;
+	public Button(int id, String name_button, String color_text, String color_background, String color_icon, String link, String icon, Menu menu) {
+		this.id = id;
+		this.name_button = name_button;
+		this.color_text = color_text;
+		this.color_background = color_background;
+		this.color_icon = color_icon;
+		this.link = link;
+		this.icon = icon;
+		this.menu = menu;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getName_button() {

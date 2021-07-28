@@ -16,8 +16,8 @@ public class DataOfCustomer {
     @Column(name = "phone")
     private String phone;
 
-    @Column(name = "email")
-    private String email ;
+    @Column(name = "email_customer")
+    private String emailCustomer ;
 
     @Column(name = "_address")
     private String address ;
@@ -30,14 +30,14 @@ public class DataOfCustomer {
 
     @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="id_users ")
+    @JoinColumn(name="email ")
     private User users;
 
-    public DataOfCustomer(int id, String fullName, String phone, String email, String address, String conTent, String notes, User users) {
+    public DataOfCustomer(int id, String fullName, String phone, String emailCustomer, String address, String conTent, String notes, User users) {
         this.id = id;
         this.fullName = fullName;
         this.phone = phone;
-        this.email = email;
+        this.emailCustomer = emailCustomer;
         this.address = address;
         this.conTent = conTent;
         this.notes = notes;
@@ -71,12 +71,12 @@ public class DataOfCustomer {
         this.phone = phone;
     }
 
-    public String getEmail() {
-        return email;
+    public String getEmailCustomer() {
+        return emailCustomer;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setEmailCustomer(String emailCustomer) {
+        this.emailCustomer = emailCustomer;
     }
 
     public String getAddress() {

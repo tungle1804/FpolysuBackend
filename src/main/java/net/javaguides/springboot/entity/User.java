@@ -10,10 +10,6 @@ import javax.persistence.*;
 @javax.persistence.Table(name="users")
 public class User {
 	@Id
-	@Column(name = "id")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
-
 	@Column(name="email")
 	private String email;
 
@@ -43,8 +39,7 @@ public class User {
 	public User() {
 	}
 
-	public User(int id, String email, String password, String name_user, String business, String phone, String role, Collection<Menu> menu, Collection<PaymentHistory> paymentHistories) {
-		this.id = id;
+	public User( String email, String password, String name_user, String business, String phone, String role, Collection<Menu> menu, Collection<PaymentHistory> paymentHistories) {
 		this.email = email;
 		this.password = password;
 		this.name_user = name_user;
@@ -93,14 +88,6 @@ public class User {
 
 	public void setPassword(String password) {
 		this.password = password;
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
 	}
 
 	public String getRole() {

@@ -21,7 +21,7 @@ public class PaymentHistory {
 
     @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="id_users")
+    @JoinColumn(name="email")
     private User users;
 
     @JsonBackReference

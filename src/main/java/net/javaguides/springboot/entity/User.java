@@ -28,13 +28,17 @@ public class User {
 	@Column(name="_role")
 	private String role;
 
-	@JsonManagedReference
+
 	@OneToMany(mappedBy ="users",fetch = FetchType.LAZY)
 	private Collection<Menu> menu;
 
-	@JsonManagedReference
+
 	@OneToMany(mappedBy ="users",fetch = FetchType.LAZY)
 	private Collection<PaymentHistory> paymentHistories;
+
+
+	@OneToMany(mappedBy ="users",fetch = FetchType.LAZY)
+	private Collection<DataOfCustomer> dataOfCustomers;
 
 	public User() {
 	}
@@ -98,12 +102,6 @@ public class User {
 		this.role = role;
 	}
 
-	public Collection<Menu> getMenu() {
-		return menu;
-	}
 
-	public void setMenu(Collection<Menu> menu) {
-		this.menu = menu;
-	}
 }
 

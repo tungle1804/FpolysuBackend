@@ -19,7 +19,7 @@ public interface MenuRepository extends JpaRepository<Menu,Integer>{
 	@Query(" from Menu m  where m.users.email like CONCAT('%',:email,'%')")
 	List<Menu> getMenuByEmail(@Param("email") String email);
 
-	@Query(value = " from Menu where status=true and email like CONCAT('%',:email,'%') ",nativeQuery = true)
+	@Query(" from Menu where status=true and email like CONCAT('%',:email,'%') ")
 	List<Menu> getMenuByStatus(@Param("email") String email);
 	
 }

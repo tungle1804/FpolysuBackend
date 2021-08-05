@@ -82,6 +82,7 @@ insert into users(email,_password,name,business_name,phone,_role) values('duongt
 insert into users(email,_password,name,business_name,phone,_role) values('nguyenbavinh@gmail.com','duy123','Duy','CD FPT','0972222111','admin')
 insert into users(email,_password,name,business_name,phone,_role) values('vuthanhnam@gmail.com','duy123','Duy','CD FPT','0972222111','customer')
 insert into users(email,_password,name,business_name,phone,_role) values('abc@gmail.com','duy123','Duy','CD FPT','0972222111','employee')
+insert into users(email,_password,name,business_name,phone,_role) values('binh@gmail.com','12345678', N'Lê Đức Bình','CD FPT','0376655733','customer')
 
 select * from menu
 -- insert menu

@@ -86,21 +86,21 @@ insert into users(email,_password,name,business_name,phone,_role) values('test@g
 
 select * from menu
 -- insert menu
-insert into menu (email,name_menu,color_menu,_status) values('abc@gmail.com','alo','red',1)
+insert into menu (email,name_menu,color_menu,_status) values('tung@gmail.com','alo','red',1)
 insert into menu (email,name_menu,color_menu,_status) values('duongtunglam@gmail.com','call','red',0)
 insert into menu (email,name_menu,color_menu,_status) values('leanhtung@gmail.com','email','red',1)
-insert into menu (email,name_menu,color_menu,_status) values('leducbinh@gmail.com','call','blue',0)
+insert into menu (email,name_menu,color_menu,_status) values('test1@gmail.com','call','blue',0)
 insert into menu (email,name_menu,color_menu,_status) values('lekhuongduy1998@gmail.com','email','black',1)
 insert into menu (email,name_menu,color_menu,_status) values('vuthanhnam@gmail.com','email','black',1)
 insert into menu (email,name_menu,color_menu,_status) values('vuthanhnam@gmail.com','zalo','black',0)
 insert into menu (email,name_menu,color_menu,_status) values('test@gmail.com','zalo','black',0)
 UPDATE dbo.menu SET email='vuthanhnam@gmail.com' WHERE id='11'
 
-SELECT * FROM dbo.menu WHERE email ='test@gmail.com'
+SELECT * FROM dbo.menu WHERE email ='test1@gmail.com'
 -- insert button
-select * from button
-insert into button(id_menu,name_button,color_text,link,icon,color_background,color_icon) values(1,'call','red','24h.com.vn',':))','red','blue')
-insert into button(id_menu,name_button,color_text,link,icon,color_background,color_icon) values(2,'call','black','https://www.24h.com.vn/',':))','red','blue')
+select * from button WHERE id_menu='16'
+insert into button(id_menu,name_button,color_text,link,icon,color_background,color_icon) values(16,'call','red','24h.com.vn',':))','red','blue')
+insert into button(id_menu,name_button,color_text,link,icon,color_background,color_icon) values(16,'call','black','https://www.24h.com.vn/',':))','red','blue')
 insert into button(id_menu,name_button,color_text,link,icon,color_background,color_icon) values(1,'call','blue','https://www.google.com/',':))','black','blue')
 insert into button(id_menu,name_button,color_text,link,icon,color_background,color_icon) values(2,'facebook','yellow','https://www.24h.com.vn/',':))','yellow','blue')
 insert into button(id_menu,name_button,color_text,link,icon,color_background,color_icon) values(3,'massage','red','https://www.24h.com.vn/',':))','black','blue')

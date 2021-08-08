@@ -17,7 +17,7 @@ public class User {
 	private String password;
 
 	@Column(name="name")
-	private String name_user;
+	private String fullName;
 
 	@Column(name="business_name")
 	private String business;
@@ -28,14 +28,10 @@ public class User {
 	@Column(name="_role")
 	private String role;
 
-
 	@OneToMany(mappedBy ="users",fetch = FetchType.LAZY)
 	private Collection<Menu> menu;
-
-
 	@OneToMany(mappedBy ="users",fetch = FetchType.LAZY)
 	private Collection<PaymentHistory> paymentHistories;
-
 
 	@OneToMany(mappedBy ="users",fetch = FetchType.LAZY)
 	private Collection<DataOfCustomer> dataOfCustomers;
@@ -43,10 +39,10 @@ public class User {
 	public User() {
 	}
 
-	public User( String email, String password, String name_user, String business, String phone, String role, Collection<Menu> menu, Collection<PaymentHistory> paymentHistories) {
+	public User( String email, String password, String fullName, String business, String phone, String role, Collection<Menu> menu, Collection<PaymentHistory> paymentHistories) {
 		this.email = email;
 		this.password = password;
-		this.name_user = name_user;
+		this.fullName = fullName;
 		this.business = business;
 		this.phone = phone;
 		this.role = role;
@@ -62,12 +58,12 @@ public class User {
 		this.email = email;
 	}
 
-	public String getName_user() {
-		return name_user;
+	public String getFullName() {
+		return fullName;
 	}
 
-	public void setName_user(String name_user) {
-		this.name_user = name_user;
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
 	}
 
 	public String getBusiness() {

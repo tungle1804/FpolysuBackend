@@ -82,25 +82,31 @@ insert into users(email,_password,name,business_name,phone,_role) values('duongt
 insert into users(email,_password,name,business_name,phone,_role) values('nguyenbavinh@gmail.com','duy123','Duy','CD FPT','0972222111','admin')
 insert into users(email,_password,name,business_name,phone,_role) values('vuthanhnam@gmail.com','duy123','Duy','CD FPT','0972222111','customer')
 insert into users(email,_password,name,business_name,phone,_role) values('abc@gmail.com','duy123','Duy','CD FPT','0972222111','employee')
-insert into users(email,_password,name,business_name,phone,_role) values('binh@gmail.com','12345678', N'Lê Đức Bình','CD FPT','0376655733','customer')
+insert into users(email,_password,name,business_name,phone,_role) values('test@gmail.com','duy123','Duy','CD FPT','0972222111','customer')
 
 select * from menu
 -- insert menu
-insert into menu (email,name_menu,color_menu,_status) values('abc@gmail.com','alo','red',1)
+insert into menu (email,name_menu,color_menu,_status) values('tung@gmail.com','alo','red',1)
 insert into menu (email,name_menu,color_menu,_status) values('duongtunglam@gmail.com','call','red',0)
 insert into menu (email,name_menu,color_menu,_status) values('leanhtung@gmail.com','email','red',1)
-insert into menu (email,name_menu,color_menu,_status) values('leducbinh@gmail.com','call','blue',0)
+insert into menu (email,name_menu,color_menu,_status) values('test1@gmail.com','call','blue',0)
 insert into menu (email,name_menu,color_menu,_status) values('lekhuongduy1998@gmail.com','email','black',1)
+insert into menu (email,name_menu,color_menu,_status) values('vuthanhnam@gmail.com','email','black',1)
+insert into menu (email,name_menu,color_menu,_status) values('vuthanhnam@gmail.com','zalo','black',0)
+insert into menu (email,name_menu,color_menu,_status) values('test@gmail.com','zalo','black',0)
+UPDATE dbo.menu SET email='vuthanhnam@gmail.com' WHERE id='11'
 
-
+SELECT * FROM dbo.menu WHERE email ='test1@gmail.com'
 -- insert button
-select * from button
-insert into button(id_menu,name_button,color_text,link,icon,color_background,color_icon) values(1,'call','red','24h.com.vn',':))','red','blue')
-insert into button(id_menu,name_button,color_text,link,icon,color_background,color_icon) values(2,'call','black','https://www.24h.com.vn/',':))','red','blue')
+select * from button WHERE id_menu='16'
+insert into button(id_menu,name_button,color_text,link,icon,color_background,color_icon) values(16,'call','red','24h.com.vn',':))','red','blue')
+insert into button(id_menu,name_button,color_text,link,icon,color_background,color_icon) values(16,'call','black','https://www.24h.com.vn/',':))','red','blue')
 insert into button(id_menu,name_button,color_text,link,icon,color_background,color_icon) values(1,'call','blue','https://www.google.com/',':))','black','blue')
 insert into button(id_menu,name_button,color_text,link,icon,color_background,color_icon) values(2,'facebook','yellow','https://www.24h.com.vn/',':))','yellow','blue')
 insert into button(id_menu,name_button,color_text,link,icon,color_background,color_icon) values(3,'massage','red','https://www.24h.com.vn/',':))','black','blue')
-
+insert into button(id_menu,name_button,color_text,link,icon,color_background,color_icon) values(12,'massage','red','https://www.24h.com.vn/',':))','black','blue')
+insert into button(id_menu,name_button,color_text,link,icon,color_background,color_icon) values(11,'facebook','red','https://www.24h.com.vn/',':))','black','blue')
+insert into button(id_menu,name_button,color_text,link,icon,color_background,color_icon) values(13,'facebook','red','https://www.24h.com.vn/',':))','black','blue')
 -- insert dataofcustomer
 select * from dataofcustomer
 select * from users
@@ -109,7 +115,9 @@ insert into dataofcustomer(email,fullname,phone,email_customer,_address,content,
 insert into dataofcustomer(email,fullname,phone,email_customer,_address,content,notes) values('leanhtung@gmail.com',N'Vũ thành Nan','033445566','thanhnam93@gmail.com',N'Nam định',N'tôi mới có người yêu',N'thuu')
 insert into dataofcustomer(email,fullname,phone,email_customer,_address,content,notes) values('leducbinh@gmail.com',N'Lê khương duy','044445566','lekhuongduy@gmail.com',N'ha noi',N'THPT lý tử tấn',N'cyz')
 insert into dataofcustomer(email,fullname,phone,email_customer,_address,content,notes) values('lekhuongduy1998@gmail.com',N'duong tung lam','0343445566','tunglam@gmail.com',N'Hà Nội',N'thu nhập 10000$',N'chưa có người yêu')
-
+insert into dataofcustomer(email,fullname,phone,email_customer,_address,content,notes) values('vuthanhnam@gmail.com',N'vu thanh nam','0343445566','thanhnam93@gmail.com',N'Hà Nội',N'thu nhập 10000$',N'chưa có người yêu')
+insert into dataofcustomer(email,fullname,phone,email_customer,_address,content,notes) values('vuthanhnam@gmail.com',N'vu thanh nam','123456789','thanhnam93@gmail.com',N'Hà Nội',N'thu nhập cao',N'chưa có người yêu')
+insert into dataofcustomer(email,fullname,phone,email_customer,_address,content,notes) values('test@gmail.com',N'test','123456789','test1@gmail.com',N'Hà Nội',N'thu nhập cao',N'chưa có người yêu')
 -- insert servicefee
 select * from servicefee
 

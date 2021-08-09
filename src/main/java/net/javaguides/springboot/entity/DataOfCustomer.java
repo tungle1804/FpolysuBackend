@@ -31,24 +31,24 @@ public class DataOfCustomer  {
     @Column(name = "notes ")
     private String notes;
 
-    //@JsonBackReference
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="email ")
+
+    @ManyToOne
+    @JoinColumn(name="email")
     private User users;
 
-    public DataOfCustomer(int id, String fullName, String phone, String emailCustomer, String address, String conTent, String notes, User users) {
-        this.id = id;
-        this.fullName = fullName;
-        this.phone = phone;
-        this.emailCustomer = emailCustomer;
-        this.address = address;
-        this.conTent = conTent;
-        this.notes = notes;
-        this.users = users;
-    }
-
-    public DataOfCustomer() {
-    }
+//    public DataOfCustomer(int id, String fullName, String phone, String emailCustomer, String address, String conTent, String notes, User users) {
+//        this.id = id;
+//        this.fullName = fullName;
+//        this.phone = phone;
+//        this.emailCustomer = emailCustomer;
+//        this.address = address;
+//        this.conTent = conTent;
+//        this.notes = notes;
+//        this.users = users;
+//    }
+//
+//    public DataOfCustomer() {
+//    }
 
     public int getId() {
         return id;

@@ -32,12 +32,11 @@ public class Menu {
 	@Column(name="_status")
 	private boolean status;
 
-	@JsonBackReference
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name="email")
 	private User users;
 
-	@JsonManagedReference
+
 	@OneToMany(mappedBy = "menu",fetch = FetchType.LAZY)
 	private Collection<Button> button;
 
@@ -61,13 +60,13 @@ public class Menu {
 		this.id = id;
 	}
 
-	public Collection<Button> getButton() {
-		return button;
-	}
+//	public Collection<Button> getButton() {
+//		return button;
+//	}
 
-	public void setButton(Collection<Button> button) {
-		this.button = button;
-	}
+//	public void setButton(Collection<Button> button) {
+//		this.button = button;
+//	}
 
 	public String getName_menu() {
 		return name_menu;

@@ -1,6 +1,8 @@
 package net.javaguides.springboot.controller;
 
+import net.javaguides.springboot.entity.Button;
 import net.javaguides.springboot.entity.DataOfCustomer;
+import net.javaguides.springboot.entity.User;
 import net.javaguides.springboot.repository.DataOfCustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -10,30 +12,33 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/v1/dataofcustomer")
-
+@RequestMapping("/api/v1")
 public class DataOfCustomerController {
 
     @Autowired
     private DataOfCustomerRepository dataOfCustomerRepository;
 
-    @GetMapping("")
+    @GetMapping("/dataofcustomer")
     public List<DataOfCustomer> getAllDataOfCustomer(){
         return dataOfCustomerRepository.findAll();
     }
+    @PostMapping("/dataofcustomer")
+    public DataOfCustomer createDataOfCustomer(@RequestBody DataOfCustomer dataOfCustomer) {
+        return dataOfCustomerRepository.save(dataOfCustomer);
+    }
 
-    @GetMapping("/{id}")
+    @GetMapping("/dataofcustomerbyid/{id}")
     public Optional<DataOfCustomer> getDataOfCustomersById(@PathVariable int id){
         return dataOfCustomerRepository.findById(id);
     }
 
+    @GetMapping("/dataofcustomerbyuser/{email}")
+    public List<DataOfCustomer> getDataOfCustomersByUsers(@PathVariable String email){
+        return dataOfCustomerRepository.getDataOfCustomersByUsers(email);
+    }
     @GetMapping("/search")
     public List<DataOfCustomer> getDataOfCustomersByFullName(@RequestParam(name = "keyword",required = false, defaultValue = "")String fullname){
         return dataOfCustomerRepository.getDataOfCustomerByFullName(fullname);
-    }
-    @PostMapping("add")
-    public void save(@RequestBody DataOfCustomer data){
-        dataOfCustomerRepository.save(data);
     }
 
 }

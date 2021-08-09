@@ -63,7 +63,7 @@ public class MenuController {
         Menu menu1 = menuRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Categories not exist with id :" + id));
         menu1.setStatus(menu.isStatus());
-        Menu updateMenu = menuRepository.save(menu);
+        Menu updateMenu = menuRepository.save(menu1);
         return ResponseEntity.ok(updateMenu);
     }
 

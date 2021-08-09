@@ -50,6 +50,15 @@ public class User {
 		this.paymentHistories = paymentHistories;
 	}
 
+	public User(String email, String password, String name_user, String business, String phone, String role) {
+		this.email = email;
+		this.password = password;
+		this.name_user = name_user;
+		this.business = business;
+		this.phone = phone;
+		this.role = role;
+	}
+
 	public String getEmail() {
 		return email;
 	}
@@ -98,9 +107,9 @@ public class User {
 		this.role = role;
 	}
 
-	public Collection<Menu> getMenu() {
-		return menu;
-	}
+//	public Collection<Menu> getMenu() {
+//		return menu;
+//	}
 
 	public void setMenu(Collection<Menu> menu) {
 		this.menu = menu;

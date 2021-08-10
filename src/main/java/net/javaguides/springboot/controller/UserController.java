@@ -15,7 +15,7 @@ import net.javaguides.springboot.repository.UserRepository;
 
 import javax.validation.Valid;
 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/v1/")
 public class UserController {

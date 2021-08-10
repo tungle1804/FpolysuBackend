@@ -14,6 +14,8 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
  * config spring security
@@ -29,6 +31,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         this.customUserDetailService = customUserDetailService;
         this.jwtAuthEntryPoint = jwtAuthEntryPoint;
     }
+    @Bean
+    public WebMvcConfigurer corsConfigurer() {
+        return new WebMvcConfigurer() {
+            @Override
+            public void addCorsMappings(CorsRegistry registry) {
+                registry.addMapping("/**").allowedOrigins("*").allowedMethods("*");
+            }
+        };
+    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -38,6 +49,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(customUserDetailService)
+
                 .passwordEncoder(passwordEncoder());
 
     }
@@ -46,8 +58,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/login").permitAll()
+                .antMatchers("/login","/integrated/**").permitAll()
                 .antMatchers("/api/v1/user").permitAll()
+                .antMatchers("/api/v1/getMenuByStatus/**").permitAll()
+                .antMatchers("/api/v1/getButtonByIDMenu/**").permitAll()
+                .antMatchers("/api/v1/button/**").permitAll()
+                .antMatchers("/api/v1/menu/**").permitAll()
 //                .antMatchers("/bill/**","/bill-details/**",
 //                        "/order/**","/orders/**","/order-details/**")
 //                .hasAnyAuthority("ADMIN","STAFF_SALE")

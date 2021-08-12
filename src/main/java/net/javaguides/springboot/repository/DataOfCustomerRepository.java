@@ -8,14 +8,16 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface DataOfCustomerRepository  extends JpaRepository<DataOfCustomer,Integer> {
-    @Query(" from DataOfCustomer")
-    List<DataOfCustomer> listDataOfCustomer();
+//    @Query("from DataOfCustomer")
+//    List<DataOfCustomer> listDataOfCustomer();
 
     @Query(value = "from DataOfCustomer where fullName like concat('%',:fullname,'%') ")
     List<DataOfCustomer> getDataOfCustomerByFullName(@Param("fullname") String fullname);
 
-
+    @Query(value="from DataOfCustomer where email like concat('%',:email,'%')")
+    List<DataOfCustomer> getDataOfCustomersByUsers(String email);
 }

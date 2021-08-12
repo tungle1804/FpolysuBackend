@@ -31,8 +31,8 @@ public class Button {
 	@Column(name="icon")
 	private String icon;
 
-	@JsonBackReference
-	@ManyToOne(fetch = FetchType.LAZY)
+
+	@ManyToOne
 	@JoinColumn(name="id_menu")
 	private Menu menu;
 

@@ -23,6 +23,7 @@ public class DataOfCustomerController {
     }
     @PostMapping("/dataofcustomer")
     public DataOfCustomer createDataOfCustomer(@RequestBody DataOfCustomer dataOfCustomer) {
+
         return dataOfCustomerRepository.save(dataOfCustomer);
     }
 

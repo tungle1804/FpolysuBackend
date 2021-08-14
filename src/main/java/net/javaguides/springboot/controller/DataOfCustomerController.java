@@ -40,4 +40,5 @@ public class DataOfCustomerController {
         return dataOfCustomerRepository.getDataOfCustomerByFullName(fullname);
     }
 
+
 }

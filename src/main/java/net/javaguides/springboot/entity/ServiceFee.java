@@ -16,7 +16,7 @@ public class ServiceFee {
     private String nameService;
 
     @Column(name = "price")
-    private int price;
+    private double price;
 
     @OneToMany(mappedBy ="serviceFee",fetch = FetchType.LAZY)
     private Collection<PaymentHistory> paymentHistories;
@@ -28,7 +28,7 @@ public class ServiceFee {
     public ServiceFee() {
     }
 
-    public ServiceFee(int id, String nameService, int price, Collection<PaymentHistory> paymentHistories) {
+    public ServiceFee(int id, String nameService, double price, Collection<PaymentHistory> paymentHistories) {
         this.id = id;
         this.nameService = nameService;
         this.price = price;
@@ -47,11 +47,11 @@ public class ServiceFee {
         this.nameService = nameService;
     }
 
-    public int getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 }

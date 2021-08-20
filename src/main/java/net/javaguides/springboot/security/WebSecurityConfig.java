@@ -59,22 +59,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.cors().and().csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/login").permitAll()
-<<<<<<< HEAD
                 .antMatchers("/api/v1/**").permitAll()
 //                .antMatchers("/api/v1/getMenuByStatus/**").permitAll()
 //                .antMatchers("/api/v1/getButtonByIDMenu/**").permitAll()
 //                .antMatchers("/api/v1/button/**").permitAll()
 //                .antMatchers("/api/v1/menu/**").permitAll()
-=======
-                .antMatchers("/api/v1/user").permitAll()
-                .antMatchers("/api/v1/getMenuByStatus/**").permitAll()
-                .antMatchers("/api/v1/getButtonByIDMenu/**").permitAll()
-                .antMatchers("/api/v1/button/**").permitAll()
-                .antMatchers("/api/v1/menu/**").permitAll()
-                .antMatchers("/api/v1/dataofcustomer/**").permitAll()
-                .antMatchers("/api/v1/dataofcustomer").permitAll()
-                .antMatchers("/api/v1/**").permitAll()
->>>>>>> 7ef1f7ecc7cdcc20e9b8d4b4ce73c2365e381a2a
 //                .antMatchers("/bill/**","/bill-details/**",
 //                        "/order/**","/orders/**","/order-details/**")
 //                .hasAnyAuthority("ADMIN","STAFF_SALE")

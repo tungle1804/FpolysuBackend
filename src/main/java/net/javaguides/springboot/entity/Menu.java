@@ -1,6 +1,7 @@
 package net.javaguides.springboot.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import java.util.Collection;
@@ -31,7 +32,7 @@ public class Menu {
 
 	@Column(name="_status")
 	private boolean status;
-
+@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="email")
 	private User users;

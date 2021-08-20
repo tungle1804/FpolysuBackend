@@ -1,12 +1,18 @@
 package net.javaguides.springboot.entity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+<<<<<<< HEAD
+import java.io.Serializable;
+=======
 import java.util.Date;
+>>>>>>> 7ef1f7ecc7cdcc20e9b8d4b4ce73c2365e381a2a
 
 @Entity
 @javax.persistence.Table(name="dataofcustomer")
-public class DataOfCustomer {
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+public class DataOfCustomer  {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;

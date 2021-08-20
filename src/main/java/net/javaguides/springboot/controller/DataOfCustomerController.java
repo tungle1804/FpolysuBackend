@@ -5,6 +5,7 @@ import net.javaguides.springboot.entity.DataOfCustomer;
 import net.javaguides.springboot.entity.User;
 import net.javaguides.springboot.repository.DataOfCustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -40,5 +41,25 @@ public class DataOfCustomerController {
     public List<DataOfCustomer> getDataOfCustomersByFullName(@RequestParam(name = "keyword",required = false, defaultValue = "")String fullname){
         return dataOfCustomerRepository.getDataOfCustomerByFullName(fullname);
     }
+
+    @PostMapping("/create")
+    public DataOfCustomer createDataOfCustom(@RequestBody DataOfCustomer data){
+        return dataOfCustomerRepository.save(data);
+    }
+
+    @PutMapping("/update")
+    public DataOfCustomer updateDataOfCustomer(@RequestBody DataOfCustomer dataOfCustomer){
+        DataOfCustomer existingData = dataOfCustomerRepository.findById(dataOfCustomer.getId()).orElse(null);
+        existingData.setFullName(dataOfCustomer.getFullName());
+        existingData.setPhone(dataOfCustomer.getPhone());
+        existingData.setEmailCustomer(dataOfCustomer.getEmailCustomer());
+        existingData.setAddress(dataOfCustomer.getAddress());
+        existingData.setConTent(dataOfCustomer.getConTent());
+        existingData.setNotes(dataOfCustomer.getNotes());
+//        existingData.setUsers(dataOfCustomer.getUsers());
+        return dataOfCustomerRepository.save(existingData);
+    }
+
+
 
 }

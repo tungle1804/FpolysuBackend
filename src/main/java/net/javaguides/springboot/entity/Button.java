@@ -1,11 +1,16 @@
 package net.javaguides.springboot.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Collection;
 
-@Entity
+@Entity@Getter@Setter@AllArgsConstructor@NoArgsConstructor
 @javax.persistence.Table(name="button")
 public class Button {
 
@@ -13,6 +18,9 @@ public class Button {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="id")
 	private int id;
+
+	@Column(name="type_button")
+	private String TypeButton;
 
 	@Column(name="name_button")
 	private String name_button;
@@ -32,11 +40,13 @@ public class Button {
 	@Column(name="icon")
 	private String icon;
 
-
+//@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="id_menu")
 	private Menu menu;
 
+<<<<<<< HEAD
+=======
 	@OneToMany(mappedBy ="buttons",fetch = FetchType.LAZY)
 	private Collection<Modal> modal;
 
@@ -115,11 +125,8 @@ public class Button {
 	public String getColor_icon() {
 		return color_icon;
 	}
+>>>>>>> 7ef1f7ecc7cdcc20e9b8d4b4ce73c2365e381a2a
 
-	public void setColor_icon(String color_icon) {
-		this.color_icon = color_icon;
-	}
-		
 	
 	
 

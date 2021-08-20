@@ -96,7 +96,8 @@ public class PaypalController {
 
     @PostMapping("/pay")
     public String pay(HttpServletRequest request, @RequestBody double price) {
-        String cancelUrl = Utils.getBaseURL(request) + "/" + URL_PAYPAL_CANCEL;
+//        String cancelUrl = Utils.getBaseURL(request) + "/" + URL_PAYPAL_CANCEL;
+        String cancelUrl= "http://localhost:3000/admin/failed";
         String successUrl = "http://localhost:3000/admin/success";
         try {
             Payment payment = paypalService.createPayment(

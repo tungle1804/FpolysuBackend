@@ -1,11 +1,18 @@
 package net.javaguides.springboot.entity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+<<<<<<< HEAD
+import java.io.Serializable;
+=======
+import java.util.Date;
+>>>>>>> 7ef1f7ecc7cdcc20e9b8d4b4ce73c2365e381a2a
 
 @Entity
 @javax.persistence.Table(name="dataofcustomer")
-public class DataOfCustomer {
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+public class DataOfCustomer  {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -27,25 +34,34 @@ public class DataOfCustomer {
 
     @Column(name = "notes ")
     private String notes;
+    @Column(name="create_date")
+    private String createDate;
 
-    @JsonBackReference
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="email ")
+    public String getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(String createDate) {
+        this.createDate = createDate;
+    }
+
+    @ManyToOne
+    @JoinColumn(name="email")
     private User users;
 
-    public DataOfCustomer(int id, String fullName, String phone, String emailCustomer, String address, String conTent, String notes, User users) {
-        this.id = id;
-        this.fullName = fullName;
-        this.phone = phone;
-        this.emailCustomer = emailCustomer;
-        this.address = address;
-        this.conTent = conTent;
-        this.notes = notes;
-        this.users = users;
-    }
-
-    public DataOfCustomer() {
-    }
+//    public DataOfCustomer(int id, String fullName, String phone, String emailCustomer, String address, String conTent, String notes, User users) {
+//        this.id = id;
+//        this.fullName = fullName;
+//        this.phone = phone;
+//        this.emailCustomer = emailCustomer;
+//        this.address = address;
+//        this.conTent = conTent;
+//        this.notes = notes;
+//        this.users = users;
+//    }
+//
+//    public DataOfCustomer() {
+//    }
 
     public int getId() {
         return id;

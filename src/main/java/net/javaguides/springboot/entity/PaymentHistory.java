@@ -19,13 +19,13 @@ public class PaymentHistory {
     @Column(name = "_status")
     private String status;
 
-    @JsonBackReference
-    @ManyToOne(fetch = FetchType.LAZY)
+
+    @ManyToOne
     @JoinColumn(name="email")
     private User users;
 
-    @JsonBackReference
-    @ManyToOne(fetch = FetchType.LAZY)
+
+    @ManyToOne
     @JoinColumn(name="id_service" )
     private ServiceFee serviceFee;
 

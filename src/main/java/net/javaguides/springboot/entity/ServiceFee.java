@@ -18,7 +18,6 @@ public class ServiceFee {
     @Column(name = "price")
     private int price;
 
-    @JsonManagedReference
     @OneToMany(mappedBy ="serviceFee",fetch = FetchType.LAZY)
     private Collection<PaymentHistory> paymentHistories;
 

@@ -14,6 +14,8 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
  * config spring security
@@ -29,6 +31,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         this.customUserDetailService = customUserDetailService;
         this.jwtAuthEntryPoint = jwtAuthEntryPoint;
     }
+    @Bean
+    public WebMvcConfigurer corsConfigurer() {
+        return new WebMvcConfigurer() {
+            @Override
+            public void addCorsMappings(CorsRegistry registry) {
+                registry.addMapping("/**").allowedOrigins("*").allowedMethods("*");
+            }
+        };
+    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -38,6 +49,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(customUserDetailService)
+
                 .passwordEncoder(passwordEncoder());
 
     }
@@ -47,7 +59,22 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.cors().and().csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/login").permitAll()
+<<<<<<< HEAD
+                .antMatchers("/api/v1/**").permitAll()
+//                .antMatchers("/api/v1/getMenuByStatus/**").permitAll()
+//                .antMatchers("/api/v1/getButtonByIDMenu/**").permitAll()
+//                .antMatchers("/api/v1/button/**").permitAll()
+//                .antMatchers("/api/v1/menu/**").permitAll()
+=======
                 .antMatchers("/api/v1/user").permitAll()
+                .antMatchers("/api/v1/getMenuByStatus/**").permitAll()
+                .antMatchers("/api/v1/getButtonByIDMenu/**").permitAll()
+                .antMatchers("/api/v1/button/**").permitAll()
+                .antMatchers("/api/v1/menu/**").permitAll()
+                .antMatchers("/api/v1/dataofcustomer/**").permitAll()
+                .antMatchers("/api/v1/dataofcustomer").permitAll()
+                .antMatchers("/api/v1/**").permitAll()
+>>>>>>> 7ef1f7ecc7cdcc20e9b8d4b4ce73c2365e381a2a
 //                .antMatchers("/bill/**","/bill-details/**",
 //                        "/order/**","/orders/**","/order-details/**")
 //                .hasAnyAuthority("ADMIN","STAFF_SALE")

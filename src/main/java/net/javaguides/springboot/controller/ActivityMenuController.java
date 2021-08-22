@@ -14,6 +14,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,12 +23,15 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/v1/")
 public class ActivityMenuController {
-    @Autowired
-    private ActivityMenuRepository activityMenuRepository;
-    private ActivityButtonRepository activityButtonRepository;
 
-    @Autowired
-    private ButtonRepository buttonRepository;
+
+    private  final ActivityMenuRepository activityMenuRepository;
+
+    public ActivityMenuController(ActivityMenuRepository activityMenuRepository) {
+        this.activityMenuRepository = activityMenuRepository;
+    }
+
+
     @GetMapping("/activityMenu")
     public List<ActivityMenu> getAllUser(){
         return activityMenuRepository.findAll();
@@ -65,6 +70,7 @@ public class ActivityMenuController {
         }
 
     }
+
     @GetMapping("/statisticAllActionOnThisMenuEnable")
     ResponseEntity<?> statisticAllActionOnThisMenuEnable(
             @RequestParam(name = "email",required = true)String email,
@@ -74,7 +80,7 @@ public class ActivityMenuController {
             @RequestParam(name = "year", required = true) String year
     ) {
         try {
-            List<Integer> list=null;
+            List<Integer> list=new ArrayList<>();
             for (int i = 0; i <24 ; i++) {
             Integer dtoPage = activityMenuRepository.statisticAllActionOnThisMenuEnable(email,Integer.parseInt(String.valueOf(i)),
                     Integer.parseInt(day),Integer.parseInt(month),Integer.parseInt(year));
@@ -95,12 +101,21 @@ public class ActivityMenuController {
     @GetMapping("/getTotalNumberClickOnMenu")
     ResponseEntity<?> getTotalNumberClickOnMenu(
            @RequestParam(name = "email") String email,
+           @RequestParam(name="start",required = false) String start,
+           @RequestParam(name="end",required = false)String end,
+           @RequestParam(name="menuId",required = false)String menuId,
             @RequestParam(name = "pageNo", defaultValue = "0", required = false) String pageNo,
             @RequestParam(name = "limit", defaultValue = "5", required = false) String limit
     ) {
         try {
             PageRequest pageRequest = PageRequest.of(Integer.parseInt(pageNo), Integer.parseInt(limit));
-            Page<Object[]> dtoPage = activityMenuRepository.getTotalNumberClickOnMenu(email,pageRequest);
+            Page<Object[]> dtoPage=null;
+            if(start.length()>0&&end.length()>0){
+dtoPage=activityMenuRepository.getTotalNumberClickOnMenuByTime(email,start,end,Integer.parseInt(menuId),pageRequest);
+            }else {
+                dtoPage = activityMenuRepository.getTotalNumberClickOnMenu(email,pageRequest);
+            }
+
             if (dtoPage != null) {
                 return new ResponseEntity<>(dtoPage, new HttpHeaders(), HttpStatus.OK);
             } else {
@@ -116,12 +131,20 @@ public class ActivityMenuController {
     @GetMapping("/getTotalNumberActionDisplayOnMenu")
     ResponseEntity<?> getTotalNumberActionDisplayOnMenu(
             @RequestParam(name = "email") String email,
+            @RequestParam(name="start",required = false) String start,
+            @RequestParam(name="end",required = false)String end,
             @RequestParam(name = "pageNo", defaultValue = "0", required = false) String pageNo,
             @RequestParam(name = "limit", defaultValue = "5", required = false) String limit
     ) {
         try {
             PageRequest pageRequest = PageRequest.of(Integer.parseInt(pageNo), Integer.parseInt(limit));
-            Page<Object[]> dtoPage = activityMenuRepository.getTotalNumberActionDisplayOnMenu(email,pageRequest);
+            Page<Object[]> dtoPage=null;
+            if(start.length()>0&&end.length()>0){
+
+            }else {
+                dtoPage = activityMenuRepository.getTotalNumberActionDisplayOnMenu(email,pageRequest);
+            }
+
             if (dtoPage != null) {
                 return new ResponseEntity<>(dtoPage, new HttpHeaders(), HttpStatus.OK);
             } else {
@@ -134,6 +157,8 @@ public class ActivityMenuController {
         }
 
     }
+
+
     @GetMapping("/getTotalNumberActionDisplayOnButtonByType")
     ResponseEntity<?> getTotalNumberActionDisplayOnButtonByType(
             @RequestParam(name = "email") String email,
@@ -190,6 +215,38 @@ public class ActivityMenuController {
             } else {
                 return new ResponseEntity<>("Data need search not exist", new HttpHeaders(), HttpStatus.NOT_FOUND);
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+
+            return ResponseEntity.badRequest().body("Page Empty");
+        }
+
+    }
+
+    @GetMapping("/get")
+    ResponseEntity<?> getStatisticInformationOfActions(
+          //  @RequestParam(name = "email") String email,
+            @RequestParam(name = "pageNo", defaultValue = "0", required = false) String pageNo,
+            @RequestParam(name = "limit", defaultValue = "5", required = false) String limit
+    ) {
+        try {
+//            PageRequest pageRequest = PageRequest.of(Integer.parseInt(pageNo), Integer.parseInt(limit), Sort.by("id").descending());
+//            Page<Object[]> dtoPage = activityMenuRepository.getStatisticInformationOfAction(email,pageRequest);
+//            if (dtoPage != null) {
+//                return new ResponseEntity<>(dtoPage, new HttpHeaders(), HttpStatus.OK);
+//            } else {
+//                return new ResponseEntity<>("Data need search not exist", new HttpHeaders(), HttpStatus.NOT_FOUND);
+//            }
+            String s = "2014-05-01";
+            String e = "2014-09-10";
+            LocalDate start = LocalDate.parse(s);
+            LocalDate end = LocalDate.parse(e);
+            List<LocalDate> totalDates = new ArrayList<>();
+            while (!start.isAfter(end)) {
+                totalDates.add(start);
+                start = start.plusDays(1);
+            }
+            return new ResponseEntity<>(totalDates, new HttpHeaders(), HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
 

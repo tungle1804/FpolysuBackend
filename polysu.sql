@@ -183,11 +183,11 @@ insert into payment_history(email,id_service,date_end,_status) values('leanhtung
 insert into payment_history(email,id_service,date_end,_status) values('leducbinh@gmail.com',4,GETDATE(),'đã thanh toán')
 
 select * from users
-select * from menu
+select * from menu where email='vuthanhnam@gmail.com'
 select * from button where button.id_menu=6
 
 select * from activity_menu 
-select * from activity_button join button on button.id = activity_button.id_button join menu on
+select menu.id,activity_button.created_at from activity_button join button on button.id = activity_button.id_button join menu on
 menu.id = button.id_menu join users on users.email = menu.email and users.email = 'vuthanhnam@gmail.com'
 --Note: Button had Click----------> Menu had Action but Menu had Action ----------not sure Button had Click
 -------------------------------------------------------------------------Char 1--------------------------------------------------------
@@ -196,12 +196,19 @@ join menu on menu.id = button.id_menu join  users on users.email = menu.email
 where users.email = 'vuthanhnam@gmail.com' and menu._status = 1 
 and DATEPART(HOUR,activity_button.created_at) = 17
 and DAY(activity_button.created_at) =19 
-and MONTH(activity_button.created_at) =8
+    and MONTH(activity_button.created_at) =8
 and YEAR(activity_button.created_at) = 2021
 -------------------------------------------------------------------------Table 1--------------------------------------------------------
 -- get Total number Click on one Menu group by MenuID of username: countNumberClickMenu = Total Click all Button of this
 select distinct menu.name_menu, count(*) as countNumberClickMenu from activity_button join button on button.id = activity_button.id_button 
 join menu on menu.id = button.id_menu join  users on users.email = menu.email and users.email = 'vuthanhnam@gmail.com'  group by menu.name_menu
+
+-- get Total number Click on one Menu group by MenuID of username: countNumberClickMenu = Total Click all Button of this by Time range selectn use DatetimePicker
+select count(*) as countNumberClickMenu from activity_button join button on button.id = activity_button.id_button 
+join menu on menu.id = button.id_menu join  users on users.email = menu.email and users.email = 'vuthanhnam@gmail.com' and activity_button.created_at
+between  '2021-08-17' AND '2021-08-22' and menu.id=6 
+
+
 --get Total number Action on one Menu group by MenuId of username 
 select distinct menu.name_menu, count(*) as countNumberActionMenu from activity_menu join menu on menu.id = activity_menu.id_menu join users
 on users.email = menu.email where users.email = 'vuthanhnam@gmail.com' group by menu.name_menu

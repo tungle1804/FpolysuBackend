@@ -3,6 +3,7 @@ package net.javaguides.springboot.repository;
 import net.javaguides.springboot.entity.ActivityButton;
 import net.javaguides.springboot.entity.ActivityMenu;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -29,9 +30,25 @@ public interface ActivityMenuRepository extends JpaRepository<ActivityMenu,Integ
             " users.email =:email  group by menu.name_menu",nativeQuery = true)
     Page<Object[]> getTotalNumberClickOnMenu(@Param("email")String email,Pageable pageable);
 
+    @Query(value = "select count(*) as countNumberClickMenu from activity_button join button on button.id = activity_button.id_button \n" +
+            "join menu on menu.id = button.id_menu join  users on users.email = menu.email and users.email =:email and activity_button.created_at\n" +
+            "between :start AND :end and menu.id =:menuId",nativeQuery = true)
+    Page<Object[]> getTotalNumberClickOnMenuByTime(@Param("email")String email,@Param("start")String start,
+                                                   @Param("end")String end,@Param("menuId")Integer menuId,Pageable pageable);
+
+//    @Query(value = "select distinct menu.name_menu, count(*) as countNumberClickMenu from activity_button join button on button.id = activity_button.id_button \n" +
+//            "join menu on menu.id = button.id_menu join  users on users.email = menu.email and" +
+//            " users.email =:email and activity_button.created_at between ?1start and end group by menu.name_menu",nativeQuery = true)
+//    Page<Object[]> getTotalNumberClickOnMenuByTimeSelect(@Param("email")String email,Pageable pageable);
+
     @Query(value = "select distinct menu.name_menu, count(*) as countNumberActionMenu from activity_menu join menu on menu.id = activity_menu.id_menu join users\n" +
             "on users.email = menu.email where users.email =:email group by menu.name_menu",nativeQuery = true)
     Page<Object[]> getTotalNumberActionDisplayOnMenu(@Param("email")String email,Pageable pageable);
+
+//    @Query(value = "select distinct menu.name_menu, count(*) as countNumberActionMenu from activity_menu join menu on menu.id = activity_menu.id_menu join users\n" +
+//            "on users.email = menu.email where users.email =:email and  group by menu.name_menu",nativeQuery = true)
+//    Page<Object[]> getTotalNumberActionDisplayOnMenuByTime(@Param("email")String email,Pageable pageable);
+
 ///////////////////////////////////////////////////////////
     @Query(value = "select button.type_button, count(*) as countNumberActionButtonByType from button join menu on menu.id = button.id_menu join activity_menu\n" +
             "on menu.id = activity_menu.id_menu join users on users.email = menu.email where users.email =:email group by button.type_button",nativeQuery = true)
@@ -62,4 +79,6 @@ public interface ActivityMenuRepository extends JpaRepository<ActivityMenu,Integ
             "join User u on u.email = m.users.email\n"
     )
     Page<Object[]> getStatisticInformationOfAction(@Param("email")String email,Pageable pageable);
+
+
 }

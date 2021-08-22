@@ -70,6 +70,8 @@ name_service NVARCHAR(200),
 price INT,
 )
 
+alter table servicefee alter column price float
+
 -- payment_history
 create table payment_history(
 id INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
@@ -78,6 +80,12 @@ id_service INT FOREIGN KEY REFERENCES servicefee(id),
 date_end datetime,
 _status nvarchar(100),
 )
+
+select * from payment_history
+alter table payment_history alter column date_end date
+alter table payment_history alter column _status bit
+alter table payment_history add date_start date
+
 -- button fake
 
 CREATE TABLE button_fake (
@@ -156,6 +164,7 @@ insert into button(id_menu,name_button,color_text,link,icon,color_background,col
 insert into button(id_menu,name_button,color_text,link,icon,color_background,color_icon) values(12,'massage','red','https://www.24h.com.vn/',':))','black','blue')
 insert into button(id_menu,name_button,color_text,link,icon,color_background,color_icon) values(11,'facebook','red','https://www.24h.com.vn/',':))','black','blue')
 insert into button(id_menu,name_button,color_text,link,icon,color_background,color_icon) values(13,'facebook','red','https://www.24h.com.vn/',':))','black','blue')
+
 -- insert dataofcustomer
 
 insert into dataofcustomer(email,fullname,phone,email_customer,_address,content,notes) values('abc@gmail.com',N'Lê Đức bình','044445566','ducbinh@gmail.com',N'Nghệ An',N'tôi được nhận vào công ty savis',N'abc')
@@ -166,6 +175,7 @@ insert into dataofcustomer(email,fullname,phone,email_customer,_address,content,
 insert into dataofcustomer(email,fullname,phone,email_customer,_address,content,notes) values('vuthanhnam@gmail.com',N'vu thanh nam','0343445566','thanhnam93@gmail.com',N'Hà Nội',N'thu nhập 10000$',N'chưa có người yêu')
 insert into dataofcustomer(email,fullname,phone,email_customer,_address,content,notes) values('vuthanhnam@gmail.com',N'vu thanh nam','123456789','thanhnam93@gmail.com',N'Hà Nội',N'thu nhập cao',N'chưa có người yêu')
 insert into dataofcustomer(email,fullname,phone,email_customer,_address,content,notes) values('tung@gmail.com',N'test','123456789','test1@gmail.com',N'Hà Nội',N'thu nhập cao',N'chưa có người yêu')
+
 -- insert servicefee
 
 

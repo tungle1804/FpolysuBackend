@@ -1,4 +1,5 @@
-﻿create database polysu
+﻿drop database polysu
+create database polysu
 go
 use polysu
 go
@@ -14,6 +15,7 @@ _role VARCHAR(15),
 )
 
 -- menu
+
 CREATE TABLE menu(
 id INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
 email NVARCHAR(50) FOREIGN KEY REFERENCES dbo.users(email),
@@ -26,6 +28,7 @@ _status BIT
 CREATE TABLE button (
 id INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
 id_menu INT FOREIGN KEY REFERENCES menu(id),
+type_button nvarchar(100),
 name_button NVARCHAR(100),
 color_text NVARCHAR(300),
 link NVARCHAR(300),
@@ -33,7 +36,17 @@ icon NVARCHAR(300),
 color_background NVARCHAR(300),
 color_icon NVARCHAR(300)  
 )
-
+create table activityButton(
+id int identity not null primary key,
+id_button int foreign key references dbo.button(id) not null,
+created_at datetime default getdate() null,
+from_url nvarchar(300) null
+)
+create table activityMenu(
+id int identity not null primary key,
+id_menu int foreign key references dbo.menu(id) not null,
+created_at datetime default getdate() null
+)
 -- dataofcustom
 create table dataofcustomer(
 id INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
@@ -57,6 +70,8 @@ name_service NVARCHAR(200),
 price INT,
 )
 
+alter table servicefee alter column price float
+
 -- payment_history
 create table payment_history(
 id INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
@@ -65,6 +80,12 @@ id_service INT FOREIGN KEY REFERENCES servicefee(id),
 date_end datetime,
 _status nvarchar(100),
 )
+
+select * from payment_history
+alter table payment_history alter column date_end date
+alter table payment_history alter column _status bit
+alter table payment_history add date_start date
+
 -- button fake
 
 CREATE TABLE button_fake (
@@ -78,9 +99,6 @@ color_icon NVARCHAR(300) NOT NULL
 ) 
 
 
-----1 button -> 1 modal
-----1 modal  -> nhieu truong
----- 1 truong -> 1 value
 
 CREATE TABLE modal (
 id INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
@@ -95,7 +113,6 @@ INSERT INTO dbo.modal( id_button,input_name,input_value)VALUES  (14,N'GioiTinh',
 INSERT INTO dbo.modal( id_button,input_name,input_value)VALUES  (14,N'DoTuoi','TrungBinh')
 INSERT INTO dbo.modal( id_button,input_name,input_value)VALUES  (14,N'CMTND','1232454356')
 
-select * from users
 -- insert user
 insert into users(email,_password,name,business_name,phone,_role) values('lekhuongduy1998@gmail.com','duy123','Duy','CD FPT','0972222111','admin')
 insert into users(email,_password,name,business_name,phone,_role) values('leanhtung@gmail.com','duy123','Duy','CD FPT','0972222111','admin')
@@ -106,19 +123,37 @@ insert into users(email,_password,name,business_name,phone,_role) values('vuthan
 insert into users(email,_password,name,business_name,phone,_role) values('abc@gmail.com','duy123','Duy','CD FPT','0972222111','employee')
 insert into users(email,_password,name,business_name,phone,_role) values('tung@gmail.com','duy123','Duy','CD FPT','0972222111','customer')
 
-select * from menu
+
 -- insert menu
-insert into menu (email,name_menu,color_menu,_status) values('tung@gmail.com','alo','red',1)
+insert into menu (email,name_menu,color_menu,_status) values('lekhuongduy1998@gmail.com','alo','red',1)
 insert into menu (email,name_menu,color_menu,_status) values('duongtunglam@gmail.com','call','red',0)
-insert into menu (email,name_menu,color_menu,_status) values('leanhtung@gmail.com','email','red',1)
-insert into menu (email,name_menu,color_menu,_status) values('test1@gmail.com','call','blue',0)
+insert into menu (email,name_menu,color_menu,_status) values('leducbinh@gmail.com','email','red',1)
+insert into menu (email,name_menu,color_menu,_status) values('test@gmail.com','call','blue',0)
 insert into menu (email,name_menu,color_menu,_status) values('lekhuongduy1998@gmail.com','email','black',1)
 insert into menu (email,name_menu,color_menu,_status) values('vuthanhnam@gmail.com','email','black',1)
 insert into menu (email,name_menu,color_menu,_status) values('vuthanhnam@gmail.com','zalo','black',0)
-insert into menu (email,name_menu,color_menu,_status) values('test@gmail.com','zalo','black',0)
-UPDATE dbo.menu SET email='vuthanhnam@gmail.com' WHERE id='11'
+insert into menu (email,name_menu,color_menu,_status) values('vuthanhnam@gmail.com','email','black',0)
 
-SELECT * FROM dbo.menu WHERE email ='tung@gmail.com'
+
+-- insert button
+
+insert into button(id_menu,type_button,name_button,color_text,link,icon,color_background,color_icon) values(6,'call','call','red','24h.com.vn',':))','red','blue')
+insert into button(id_menu,type_button,name_button,color_text,link,icon,color_background,color_icon) values(1,'call','call','black','https://www.24h.com.vn/',':))','red','blue')
+insert into button(id_menu,type_button,name_button,color_text,link,icon,color_background,color_icon) values(1,'call','call','blue','https://www.google.com/',':))','black','blue')
+insert into button(id_menu,type_button,name_button,color_text,link,icon,color_background,color_icon) values(2,'facebook','facebook','yellow','https://www.24h.com.vn/',':))','yellow','blue')
+insert into button(id_menu,type_button,name_button,color_text,link,icon,color_background,color_icon) values(6,'massage','massage','red','https://www.24h.com.vn/',':))','black','blue')
+insert into button(id_menu,type_button,name_button,color_text,link,icon,color_background,color_icon) values(2,'massage','massage','red','https://www.24h.com.vn/',':))','black','blue')
+insert into button(id_menu,type_button,name_button,color_text,link,icon,color_background,color_icon) values(1,'facebook','facebook','red','https://www.24h.com.vn/',':))','black','blue')
+insert into button(id_menu,type_button,name_button,color_text,link,icon,color_background,color_icon) values(3,'facebook','facebook','red','https://www.24h.com.vn/',':))','black','blue')
+
+--insert activity
+
+insert into activityButton(id_button) values(3)
+insert into activityMenu(id_menu) values(3)
+
+-- insert dataofcustomer
+
+
 -- insert button
 select * from button WHERE id_menu='16'
 insert into button(id_menu,name_button,color_text,link,icon,color_background,color_icon) values(17,'call','red','24h.com.vn','zalo.png','red','blue')
@@ -129,10 +164,9 @@ insert into button(id_menu,name_button,color_text,link,icon,color_background,col
 insert into button(id_menu,name_button,color_text,link,icon,color_background,color_icon) values(12,'massage','red','https://www.24h.com.vn/',':))','black','blue')
 insert into button(id_menu,name_button,color_text,link,icon,color_background,color_icon) values(11,'facebook','red','https://www.24h.com.vn/',':))','black','blue')
 insert into button(id_menu,name_button,color_text,link,icon,color_background,color_icon) values(13,'facebook','red','https://www.24h.com.vn/',':))','black','blue')
+
 -- insert dataofcustomer
-select * from dataofcustomer
-select * from dbo.users
-DELETE dbo.dataofcustomer WHERE id='23'
+
 insert into dataofcustomer(email,fullname,phone,email_customer,_address,content,notes) values('abc@gmail.com',N'Lê Đức bình','044445566','ducbinh@gmail.com',N'Nghệ An',N'tôi được nhận vào công ty savis',N'abc')
 insert into dataofcustomer(email,fullname,phone,email_customer,_address,content,notes) values('duongtunglam@gmail.com',N'lê anh tùng','0343445566','leanhtung@gmail.com',N'phú thọ',N'thu nhập 1000$',N'chị 97')
 insert into dataofcustomer(email,fullname,phone,email_customer,_address,content,notes) values('leanhtung@gmail.com',N'Vũ thành Nan','033445566','thanhnam93@gmail.com',N'Nam định',N'tôi mới có người yêu',N'thuu')
@@ -141,8 +175,9 @@ insert into dataofcustomer(email,fullname,phone,email_customer,_address,content,
 insert into dataofcustomer(email,fullname,phone,email_customer,_address,content,notes) values('vuthanhnam@gmail.com',N'vu thanh nam','0343445566','thanhnam93@gmail.com',N'Hà Nội',N'thu nhập 10000$',N'chưa có người yêu')
 insert into dataofcustomer(email,fullname,phone,email_customer,_address,content,notes) values('vuthanhnam@gmail.com',N'vu thanh nam','123456789','thanhnam93@gmail.com',N'Hà Nội',N'thu nhập cao',N'chưa có người yêu')
 insert into dataofcustomer(email,fullname,phone,email_customer,_address,content,notes) values('tung@gmail.com',N'test','123456789','test1@gmail.com',N'Hà Nội',N'thu nhập cao',N'chưa có người yêu')
+
 -- insert servicefee
-select * from servicefee
+
 
 insert into servicefee(name_service,price) values('1 tháng',59000)
 insert into servicefee(name_service,price) values('3 tháng',130000)
@@ -150,10 +185,62 @@ insert into servicefee(name_service,price) values('6 tháng',200000)
 insert into servicefee(name_service,price) values('12 tháng',350000)
 
 -- insert payment_history
-select * from payment_history
-select * from users
+
 insert into payment_history(email,id_service,date_end,_status) values('abc@gmail.com',1,GETDATE(),'đã thanh toán')
 insert into payment_history(email,id_service,date_end,_status) values('abc@gmail.com',2,GETDATE(),'đã thanh toán')
 insert into payment_history(email,id_service,date_end,_status) values('duongtunglam@gmail.com',2,GETDATE(),'đã thanh toán')
 insert into payment_history(email,id_service,date_end,_status) values('leanhtung@gmail.com',1,GETDATE(),'đã thanh toán')
 insert into payment_history(email,id_service,date_end,_status) values('leducbinh@gmail.com',4,GETDATE(),'đã thanh toán')
+
+select * from users
+select * from menu where email='vuthanhnam@gmail.com'
+select * from button where button.id_menu=6
+
+select * from activity_menu 
+select menu.id,activity_button.created_at from activity_button join button on button.id = activity_button.id_button join menu on
+menu.id = button.id_menu join users on users.email = menu.email and users.email = 'vuthanhnam@gmail.com'
+--Note: Button had Click----------> Menu had Action but Menu had Action ----------not sure Button had Click
+-------------------------------------------------------------------------Char 1--------------------------------------------------------
+select count(*) as TotalClickOnMenuEnable from activity_button join  button on button.id = activity_button.id_button 
+join menu on menu.id = button.id_menu join  users on users.email = menu.email 
+where users.email = 'vuthanhnam@gmail.com' and menu._status = 1 
+and DATEPART(HOUR,activity_button.created_at) = 17
+and DAY(activity_button.created_at) =19 
+    and MONTH(activity_button.created_at) =8
+and YEAR(activity_button.created_at) = 2021
+-------------------------------------------------------------------------Table 1--------------------------------------------------------
+-- get Total number Click on one Menu group by MenuID of username: countNumberClickMenu = Total Click all Button of this
+select distinct menu.name_menu, count(*) as countNumberClickMenu from activity_button join button on button.id = activity_button.id_button 
+join menu on menu.id = button.id_menu join  users on users.email = menu.email and users.email = 'vuthanhnam@gmail.com'  group by menu.name_menu
+
+-- get Total number Click on one Menu group by MenuID of username: countNumberClickMenu = Total Click all Button of this by Time range selectn use DatetimePicker
+select count(*) as countNumberClickMenu from activity_button join button on button.id = activity_button.id_button 
+join menu on menu.id = button.id_menu join  users on users.email = menu.email and users.email = 'vuthanhnam@gmail.com' and activity_button.created_at
+between  '2021-08-17' AND '2021-08-22' and menu.id=6 
+
+
+--get Total number Action on one Menu group by MenuId of username 
+select distinct menu.name_menu, count(*) as countNumberActionMenu from activity_menu join menu on menu.id = activity_menu.id_menu join users
+on users.email = menu.email where users.email = 'vuthanhnam@gmail.com' group by menu.name_menu
+
+--two query on up certain have problem because action of menu
+--independence with action of button (have action menu but can't action button  but have action button must action of menu  --FUCK--)
+-------------------------------------------------------------------------Table 2--------------------------------------------------------
+-- get Total number display of button by TypeButton
+select button.type_button, count(*) as countNumberActionButtonByType from button join menu on menu.id = button.id_menu join activity_menu
+on menu.id = activity_menu.id_menu join users on users.email = menu.email where users.email = 'vuthanhnam@gmail.com' group by button.type_button
+
+-- get Total number Click of button by TypeButton
+select  button.type_button, count(*) as countNumberActionButtonByType 
+from activity_button join button on button.id = activity_button.id_button
+join menu on menu.id = button.id_menu 
+join users on users.email = menu.email 
+where users.email = 'vuthanhnam@gmail.com' and button.id_menu in (select distinct activity_menu.id_menu from activity_menu)
+group by button.type_button
+-------------------------------------------------------------------------Table 3--------------------------------------------------------
+select activity_button.created_at as ClickTime,menu.name_menu, button.name_button, button.link,activity_button.from_url from 
+activity_button join button on button.id = activity_button.id_button
+join menu on menu.id = button.id_menu
+join users on users.email = menu.email
+where users.email = 'vuthanhnam@gmail.com' 
+SET LANGUAGE us_english;  

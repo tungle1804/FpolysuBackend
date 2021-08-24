@@ -1,41 +1,28 @@
 package net.javaguides.springboot.controller;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.google.gson.Gson;
-
-import net.javaguides.springboot.exception.ResourceNotFoundException;
 import net.javaguides.springboot.entity.Book;
 import net.javaguides.springboot.entity.Button;
 import net.javaguides.springboot.entity.Menu;
+import net.javaguides.springboot.exception.ResourceNotFoundException;
 import net.javaguides.springboot.repository.ButtonRepository;
 import net.javaguides.springboot.repository.MenuRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 //@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/api/v1/")
 public class ButtonController {
 
+    Gson gson = new Gson();
     @Autowired
     private ButtonRepository buttonRespository;
-
     @Autowired
     private MenuRepository menuRespository;
-
-    @GetMapping("/button")
-    public List<Button> getAllButton() {
-        return buttonRespository.findAll();
-    }
 //	@GetMapping("/user")
 //	public List<User>getAllUser(){
 //		return userRespository.findAll();
@@ -47,7 +34,10 @@ public class ButtonController {
 //		return buttonRespository.save(button);
 //	}
 
-    Gson gson = new Gson();
+    @GetMapping("/button")
+    public List<Button> getAllButton() {
+        return buttonRespository.findAll();
+    }
 
     @PostMapping("/button")
     public void createButton(@RequestBody Object object) {

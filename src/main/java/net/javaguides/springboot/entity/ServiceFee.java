@@ -1,12 +1,10 @@
 package net.javaguides.springboot.entity;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 import javax.persistence.*;
 import java.util.Collection;
 
 @Entity
-@javax.persistence.Table(name="servicefee")
+@javax.persistence.Table(name = "servicefee")
 public class ServiceFee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,23 +14,23 @@ public class ServiceFee {
     private String nameService;
 
     @Column(name = "price")
-    private int price;
+    private double price;
 
-    @OneToMany(mappedBy ="serviceFee",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "serviceFee", fetch = FetchType.LAZY)
     private Collection<PaymentHistory> paymentHistories;
-
-    public int getId() {
-        return id;
-    }
 
     public ServiceFee() {
     }
 
-    public ServiceFee(int id, String nameService, int price, Collection<PaymentHistory> paymentHistories) {
+    public ServiceFee(int id, String nameService, double price, Collection<PaymentHistory> paymentHistories) {
         this.id = id;
         this.nameService = nameService;
         this.price = price;
         this.paymentHistories = paymentHistories;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public void setId(int id) {
@@ -47,11 +45,11 @@ public class ServiceFee {
         this.nameService = nameService;
     }
 
-    public int getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 }

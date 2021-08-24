@@ -9,6 +9,9 @@ public class Book {
 
     private List<Button> button = new ArrayList<>();
 
+    public Book() {
+    }
+
     public List<Menu> getMenu() {
         return menu;
     }
@@ -23,8 +26,5 @@ public class Book {
 
     public void setButton(List<Button> button) {
         this.button = button;
-    }
-
-    public Book() {
     }
 }

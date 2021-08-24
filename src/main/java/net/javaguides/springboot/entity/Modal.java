@@ -3,21 +3,21 @@ package net.javaguides.springboot.entity;
 import javax.persistence.*;
 
 @Entity
-@javax.persistence.Table(name="modal")
+@javax.persistence.Table(name = "modal")
 public class Modal {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id")
+    @Column(name = "id")
     private int id;
 
-    @Column(name="input_name")
+    @Column(name = "input_name")
     private String inputName;
 
-    @Column(name="input_value")
+    @Column(name = "input_value")
     private String inputValue;
 
     @ManyToOne
-    @JoinColumn(name="id_button")
+    @JoinColumn(name = "id_button")
     private Button buttons;
 
     public int getId() {

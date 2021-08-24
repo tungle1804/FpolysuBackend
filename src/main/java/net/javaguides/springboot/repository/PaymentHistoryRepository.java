@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface PaymentHistoryRepository extends JpaRepository<PaymentHistory,Integer> {
+public interface PaymentHistoryRepository extends JpaRepository<PaymentHistory, Integer> {
     List<PaymentHistory> findAllByUsers(User user);
 }

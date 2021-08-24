@@ -1,14 +1,11 @@
 package net.javaguides.springboot.entity;
 
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
 import javax.persistence.*;
-import java.sql.Timestamp;
 import java.util.Date;
 
 @Entity
-@javax.persistence.Table(name="payment_history")
+@javax.persistence.Table(name = "payment_history")
 public class PaymentHistory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

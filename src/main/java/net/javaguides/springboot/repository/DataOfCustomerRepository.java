@@ -18,6 +18,6 @@ public interface DataOfCustomerRepository  extends JpaRepository<DataOfCustomer,
     @Query(value = "from DataOfCustomer where fullName like concat('%',:fullname,'%') ")
     List<DataOfCustomer> getDataOfCustomerByFullName(@Param("fullname") String fullname);
 
-    @Query(value="from DataOfCustomer where email like concat('%',:email,'%')")
+    @Query(value="from DataOfCustomer where email=:email")
     List<DataOfCustomer> getDataOfCustomersByUsers(String email);
 }

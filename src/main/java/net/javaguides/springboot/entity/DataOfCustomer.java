@@ -2,6 +2,7 @@ package net.javaguides.springboot.entity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @javax.persistence.Table(name="dataofcustomer")
@@ -27,7 +28,16 @@ public class DataOfCustomer {
 
     @Column(name = "notes ")
     private String notes;
+    @Column(name="create_date")
+    private String createDate;
 
+    public String getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(String createDate) {
+        this.createDate = createDate;
+    }
 
     @ManyToOne
     @JoinColumn(name="email")

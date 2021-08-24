@@ -3,6 +3,7 @@ package net.javaguides.springboot.entity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
+import java.util.Collection;
 
 @Entity
 @javax.persistence.Table(name="button")
@@ -35,6 +36,9 @@ public class Button {
 	@ManyToOne
 	@JoinColumn(name="id_menu")
 	private Menu menu;
+
+	@OneToMany(mappedBy ="buttons",fetch = FetchType.LAZY)
+	private Collection<Modal> modal;
 
 	public Button() {
 	}

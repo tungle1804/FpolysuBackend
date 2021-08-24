@@ -13,8 +13,10 @@ public class ModalController {
     @Autowired
     private ModalRepository modalRepository;
 
-    @PostMapping("/getModalByButton/{id}")
-    public List<Modal> getModalByButton(@PathVariable int id) {
+
+    @GetMapping("/getModalByButton/{id}")
+    public List<Modal> getModalByButton(@PathVariable int id){
+
         return modalRepository.getModalByIdButton(id);
     }
 

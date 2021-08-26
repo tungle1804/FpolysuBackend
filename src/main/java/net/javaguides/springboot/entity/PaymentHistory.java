@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Date;
 
 @Entity
 @javax.persistence.Table(name="payment_history")
@@ -13,29 +14,34 @@ public class PaymentHistory {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @Temporal(TemporalType.DATE)
     @Column(name = "date_end")
-    private Timestamp dateEnd;
+    private Date dateEnd;
 
     @Column(name = "_status")
-    private String status;
+    private boolean status;
 
+    @Temporal(TemporalType.DATE)
+    @Column(name = "date_start")
+    private Date dateStart;
 
     @ManyToOne
-    @JoinColumn(name="email")
+    @JoinColumn(name = "email")
     private User users;
 
 
     @ManyToOne
-    @JoinColumn(name="id_service" )
+    @JoinColumn(name = "id_service")
     private ServiceFee serviceFee;
 
     public PaymentHistory() {
     }
 
-    public PaymentHistory(int id, Timestamp dateEnd, String status, User users, ServiceFee serviceFee) {
+    public PaymentHistory(int id, Date dateEnd, boolean status, Date dateStart, User users, ServiceFee serviceFee) {
         this.id = id;
         this.dateEnd = dateEnd;
         this.status = status;
+        this.dateStart = dateStart;
         this.users = users;
         this.serviceFee = serviceFee;
     }
@@ -48,20 +54,28 @@ public class PaymentHistory {
         this.id = id;
     }
 
-    public Timestamp getDateEnd() {
+    public Date getDateEnd() {
         return dateEnd;
     }
 
-    public void setDateEnd(Timestamp dateEnd) {
+    public void setDateEnd(Date dateEnd) {
         this.dateEnd = dateEnd;
     }
 
-    public String getStatus() {
+    public boolean getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(boolean status) {
         this.status = status;
+    }
+
+    public Date getDateStart() {
+        return dateStart;
+    }
+
+    public void setDateStart(Date dateStart) {
+        this.dateStart = dateStart;
     }
 
     public User getUsers() {

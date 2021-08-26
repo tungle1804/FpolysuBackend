@@ -5,6 +5,7 @@ import net.javaguides.springboot.entity.DataOfCustomer;
 import net.javaguides.springboot.entity.User;
 import net.javaguides.springboot.repository.DataOfCustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -59,4 +60,9 @@ public class DataOfCustomerController {
         return dataOfCustomerRepository.save(existingData);
     }
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 36ef5c9d14449dbf46b9e59111b3bb94c0f9d30f
 }

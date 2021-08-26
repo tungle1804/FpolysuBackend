@@ -64,6 +64,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/v1/getButtonByIDMenu/**").permitAll()
                 .antMatchers("/api/v1/button/**").permitAll()
                 .antMatchers("/api/v1/menu/**").permitAll()
+                .antMatchers("/api/v1/**").permitAll()
 //                .antMatchers("/bill/**","/bill-details/**",
 //                        "/order/**","/orders/**","/order-details/**")
 //                .hasAnyAuthority("ADMIN","STAFF_SALE")

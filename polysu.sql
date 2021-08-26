@@ -12,6 +12,12 @@ business_name NVARCHAR(200),
 phone NVARCHAR(15),
 _role VARCHAR(15),
 )
+alter table users
+add date_of_birth date,
+	gender nvarchar(10),
+	_address nvarchar(100),
+	created_date date,
+	created_by nvarchar(50)
 
 -- menu
 CREATE TABLE menu(
@@ -77,7 +83,7 @@ select * from users
 -- insert user
 insert into users(email,_password,name,business_name,phone,_role) values('lekhuongduy1998@gmail.com','duy123','Duy','CD FPT','0972222111','admin')
 insert into users(email,_password,name,business_name,phone,_role) values('leanhtung@gmail.com','duy123','Duy','CD FPT','0972222111','admin')
-insert into users(email,_password,name,business_name,phone,_role) values('leducbinh@gmail.com','duy123','Duy','CD FPT','0972222111','admin')
+insert into users(email,_password,name,business_name,phone,_role) values('leducbinh@gmail.com','duy123','Duy','CD FPT','0972222111','customer')
 insert into users(email,_password,name,business_name,phone,_role) values('duongtunglam@gmail.com','duy123','Duy','CD FPT','0972222111','admin')
 insert into users(email,_password,name,business_name,phone,_role) values('nguyenbavinh@gmail.com','duy123','Duy','CD FPT','0972222111','admin')
 insert into users(email,_password,name,business_name,phone,_role) values('vuthanhnam@gmail.com','duy123','Duy','CD FPT','0972222111','customer')
@@ -89,24 +95,24 @@ select * from menu
 insert into menu (email,name_menu,color_menu,_status) values('tung@gmail.com','alo','red',1)
 insert into menu (email,name_menu,color_menu,_status) values('duongtunglam@gmail.com','call','red',0)
 insert into menu (email,name_menu,color_menu,_status) values('leanhtung@gmail.com','email','red',1)
-insert into menu (email,name_menu,color_menu,_status) values('test1@gmail.com','call','blue',0)
+insert into menu (email,name_menu,color_menu,_status) values('test@gmail.com','call','blue',0)
 insert into menu (email,name_menu,color_menu,_status) values('lekhuongduy1998@gmail.com','email','black',1)
 insert into menu (email,name_menu,color_menu,_status) values('vuthanhnam@gmail.com','email','black',1)
 insert into menu (email,name_menu,color_menu,_status) values('vuthanhnam@gmail.com','zalo','black',0)
 insert into menu (email,name_menu,color_menu,_status) values('test@gmail.com','zalo','black',0)
-UPDATE dbo.menu SET email='vuthanhnam@gmail.com' WHERE id='11'
+
 
 SELECT * FROM dbo.menu WHERE email ='test1@gmail.com'
 -- insert button
-select * from button WHERE id_menu='16'
-insert into button(id_menu,name_button,color_text,link,icon,color_background,color_icon) values(16,'call','red','24h.com.vn',':))','red','blue')
-insert into button(id_menu,name_button,color_text,link,icon,color_background,color_icon) values(16,'call','black','https://www.24h.com.vn/',':))','red','blue')
+insert into button(id_menu,name_button,color_text,link,icon,color_background,color_icon) values(2,'call','red','https://www.24h.com.vn/',':))','red','blue')
+insert into button(id_menu,name_button,color_text,link,icon,color_background,color_icon) values(3,'call','black','https://www.24h.com.vn/',':))','red','blue')
 insert into button(id_menu,name_button,color_text,link,icon,color_background,color_icon) values(1,'call','blue','https://www.google.com/',':))','black','blue')
 insert into button(id_menu,name_button,color_text,link,icon,color_background,color_icon) values(2,'facebook','yellow','https://www.24h.com.vn/',':))','yellow','blue')
-insert into button(id_menu,name_button,color_text,link,icon,color_background,color_icon) values(3,'massage','red','https://www.24h.com.vn/',':))','black','blue')
-insert into button(id_menu,name_button,color_text,link,icon,color_background,color_icon) values(12,'massage','red','https://www.24h.com.vn/',':))','black','blue')
-insert into button(id_menu,name_button,color_text,link,icon,color_background,color_icon) values(11,'facebook','red','https://www.24h.com.vn/',':))','black','blue')
-insert into button(id_menu,name_button,color_text,link,icon,color_background,color_icon) values(13,'facebook','red','https://www.24h.com.vn/',':))','black','blue')
+insert into button(id_menu,name_button,color_text,link,icon,color_background,color_icon) values(9,'massage','red','https://www.24h.com.vn/',':))','black','blue')
+insert into button(id_menu,name_button,color_text,link,icon,color_background,color_icon) values(8,'massage','red','https://www.24h.com.vn/',':))','black','blue')
+insert into button(id_menu,name_button,color_text,link,icon,color_background,color_icon) values(8,'facebook','red','https://www.24h.com.vn/',':))','black','blue')
+insert into button(id_menu,name_button,color_text,link,icon,color_background,color_icon) values(9,'facebook','red','https://www.24h.com.vn/',':))','black','blue')
+
 -- insert dataofcustomer
 select * from dataofcustomer
 select * from users
@@ -134,3 +140,16 @@ insert into payment_history(email,id_service,date_end,_status) values('abc@gmail
 insert into payment_history(email,id_service,date_end,_status) values('duongtunglam@gmail.com',2,GETDATE(),'đã thanh toán')
 insert into payment_history(email,id_service,date_end,_status) values('leanhtung@gmail.com',1,GETDATE(),'đã thanh toán')
 insert into payment_history(email,id_service,date_end,_status) values('leducbinh@gmail.com',4,GETDATE(),'đã thanh toán')
+
+--SQL injection
+--Câu chạy đúng
+select * from users where email = 'admin@gmail.com' and _password = '1234509' or 1=1 
+
+--Câu chạy khi injection
+select * from users where email = 'admin@gmail.com' and _password = '1234509'or 1=1 --' 
+--- có nghĩa là thêm vào      'or 1=1 --
+
+select distinct _role from users where _role not in ('customer')
+select * from users  where _role = 'admin' or _role = 'employee'
+
+delete from users where email = 'anhtung@gmail.com'

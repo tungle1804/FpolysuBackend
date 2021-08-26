@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.header.Header;
 import org.springframework.web.bind.annotation.*;
 
 import net.javaguides.springboot.entity.User;
@@ -17,8 +18,9 @@ import javax.validation.Valid;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/api/v1/")
+@RequestMapping("/api/v1")
 public class UserController {
+	private final String Binhle = "CHÀO CÁC BẠN NHÉ";
 
 	private final UserService userService;
 
@@ -55,4 +57,31 @@ public class UserController {
 	public Optional<User> getUserById(@PathVariable String id) {
 		return userRepository.findById(id);
 	}
+
+	@GetMapping("/admin/users")
+	public ResponseEntity getUserByRole(){
+		List<User> listUsers = userService.getUserByRole();
+		ResponseEntity response = new ResponseEntity(listUsers, HttpStatus.OK);
+		return response;
+	}
+
+	@GetMapping("/admin/users/role")
+	public ResponseEntity getRoleOfUsers(){
+		List<String> listRole = userRepository.getRole();
+		return new ResponseEntity(listRole, HttpStatus.OK);
+	}
+
+	@PutMapping("/users/{id}")
+	public ResponseEntity updateUser(@RequestBody User user) {
+		User dto = userRepository.save(user);
+		return new ResponseEntity(dto, HttpStatus.OK);
+	}
+
+	@DeleteMapping("/users/{email}")
+	public ResponseEntity deleteUser(@PathVariable("email") String email) {
+		 userRepository.deleteUser(email);
+		return  new ResponseEntity(HttpStatus.OK);
+	}
+
+
 }

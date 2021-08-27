@@ -12,15 +12,18 @@ public class Menu {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
-
     @Column(name = "name_menu")
     private String name_menu;
-
     @Column(name = "color_menu")
     private String color_menu;
-
     @Column(name = "_status")
     private boolean status;
+    @Column(name = "menu_type")
+    private String menuType;
+    @Column(name = "menu_location")
+    private String menuLocation;
+
+
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "email")
@@ -33,14 +36,6 @@ public class Menu {
     public Menu() {
     }
 
-    public Menu(int id, String name_menu, String color_menu, boolean status, User users, Collection<Button> button) {
-        this.id = id;
-        this.name_menu = name_menu;
-        this.color_menu = color_menu;
-        this.status = status;
-        this.users = users;
-        this.button = button;
-    }
 
     public int getId() {
         return id;
@@ -49,14 +44,6 @@ public class Menu {
     public void setId(int id) {
         this.id = id;
     }
-
-//	public Collection<Button> getButton() {
-//		return button;
-//	}
-
-//	public void setButton(Collection<Button> button) {
-//		this.button = button;
-//	}
 
     public String getName_menu() {
         return name_menu;
@@ -90,5 +77,20 @@ public class Menu {
         this.color_menu = color_menu;
     }
 
+    public String getMenuType() {
+        return menuType;
+    }
+
+    public void setMenuType(String menuType) {
+        this.menuType = menuType;
+    }
+
+    public String getMenuLocation() {
+        return menuLocation;
+    }
+
+    public void setMenuLocation(String menuLocation) {
+        this.menuLocation = menuLocation;
+    }
 
 }

@@ -1,7 +1,18 @@
 package net.javaguides.springboot.controller;
 
+
+import com.google.gson.Gson;
+import lombok.extern.log4j.Log4j2;
+import net.javaguides.springboot.dao.PaymentDao;
+import net.javaguides.springboot.entity.*;
+import net.javaguides.springboot.exception.ResourceNotFoundException;
+
 import net.javaguides.springboot.entity.DataOfCustomer;
+
 import net.javaguides.springboot.repository.DataOfCustomerRepository;
+import net.javaguides.springboot.repository.ModalRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,19 +22,37 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/v1")
 public class DataOfCustomerController {
-
+    Logger logger = LoggerFactory.getLogger(PaypalController.class);
     @Autowired
     private DataOfCustomerRepository dataOfCustomerRepository;
-
+    @Autowired
+    private ModalRepository modalRepository;
+    @Autowired
+    PaymentDao paymentDao;
     @GetMapping("/dataofcustomer")
     public List<DataOfCustomer> getAllDataOfCustomer() {
         return dataOfCustomerRepository.findAll();
     }
 
     @PostMapping("/dataofcustomer")
-    public DataOfCustomer createDataOfCustomer(@RequestBody DataOfCustomer dataOfCustomer) {
+    public void createDataOfCustomer(@RequestBody Object object) {
+        Gson gson = new Gson();
+        String json = gson.toJson(object);
+        Book book = gson.fromJson(json, Book.class);
+        DataOfCustomer dataOfCustomer = book.getDataOfCustomers().get(0);
+        dataOfCustomerRepository.save(dataOfCustomer);
+        List<Modal> modal = book.getModal();
 
-        return dataOfCustomerRepository.save(dataOfCustomer);
+        for (Modal modals : modal){
+            int updateValueInput=0;
+            updateValueInput= paymentDao.updateValueInput(modals);
+            if(updateValueInput==0){
+                logger.info("Update khong thanh thong");
+            }else{
+                logger.info("Update thanh thong");
+            }
+        }
+//        return dataOfCustomerRepository.save(dataOfCustomer);
     }
 
     @GetMapping("/dataofcustomerbyid/{id}")

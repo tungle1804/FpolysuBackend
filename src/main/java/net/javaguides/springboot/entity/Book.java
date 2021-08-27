@@ -7,7 +7,19 @@ public class Book {
 
     private List<Menu> menu = new ArrayList<>();
 
-    private List<Button> button = new ArrayList<>();
+    private List<Button> buttons = new ArrayList<>();
+
+    private List<Modal> modal = new ArrayList<>();
+
+    private List<DataOfCustomer> dataOfCustomers = new ArrayList<>();
+
+    public List<Modal> getModal() {
+        return modal;
+    }
+
+    public void setModal(List<Modal> modal) {
+        this.modal = modal;
+    }
 
     public List<Menu> getMenu() {
         return menu;
@@ -18,11 +30,19 @@ public class Book {
     }
 
     public List<Button> getButton() {
-        return button;
+        return buttons;
+    }
+
+    public List<DataOfCustomer> getDataOfCustomers() {
+        return dataOfCustomers;
+    }
+
+    public void setDataOfCustomers(List<DataOfCustomer> dataOfCustomers) {
+        this.dataOfCustomers = dataOfCustomers;
     }
 
     public void setButton(List<Button> button) {
-        this.button = button;
+        this.buttons = button;
     }
 
     public Book() {

@@ -2,6 +2,8 @@ package net.javaguides.springboot.controller;
 
 import java.util.List;
 
+import net.javaguides.springboot.entity.Modal;
+import net.javaguides.springboot.repository.ModalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,6 +33,8 @@ public class ButtonController {
 
     @Autowired
     private MenuRepository menuRespository;
+    @Autowired
+    private ModalRepository modalRespository;
 
     @GetMapping("/button")
     public List<Button> getAllButton() {
@@ -51,15 +55,21 @@ public class ButtonController {
 
     @PostMapping("/button")
     public void createButton(@RequestBody Object object) {
-        System.out.print(object);
         String json = gson.toJson(object);
         Book book = gson.fromJson(json, Book.class);
         Menu menu1 = book.getMenu().get(0);
         menuRespository.save(menu1);
         List<Button> button1 = book.getButton();
+        List<Modal> modal = book.getModal();
         for (int i = 0; i < button1.size(); i++) {
             button1.get(i).setMenu(menu1);
             buttonRespository.save(button1.get(i));
+            for (int j = 0; j < modal.size(); j++) {
+                if (button1.get(i).getId() == modal.get(j).getId()) {
+                    modal.get(j).setButtons(button1.get(i));
+                    modalRespository.save(modal.get(j));
+                }
+            }
         }
     }
 

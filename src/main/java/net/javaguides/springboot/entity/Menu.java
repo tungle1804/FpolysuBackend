@@ -17,92 +17,89 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 @Entity
-@javax.persistence.Table(name="menu")
+@javax.persistence.Table(name = "menu")
 public class Menu {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="id")
-	private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private int id;
+    @Column(name = "name_menu")
+    private String name_menu;
+    @Column(name = "color_menu")
+    private String color_menu;
+    @Column(name = "_status")
+    private boolean status;
+    @Column(name = "menu_type")
+    private String menuType;
+    @Column(name = "menu_location")
+    private String menuLocation;
 
-	@Column(name="name_menu")
-	private String name_menu;
-
-	@Column(name="color_menu")
-	private String color_menu;
-
-	@Column(name="_status")
-	private boolean status;
-@JsonIgnore
-	@ManyToOne
-	@JoinColumn(name="email")
-	private User users;
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "email")
+    private User users;
 
 
-	@OneToMany(mappedBy = "menu",fetch = FetchType.LAZY)
-	private Collection<Button> button;
+    @OneToMany(mappedBy = "menu", fetch = FetchType.LAZY)
+    private Collection<Button> button;
 
-	public Menu() {
-	}
+    public Menu() {
+    }
 
-	public Menu(int id, String name_menu, String color_menu, boolean status, User users, Collection<Button> button) {
-		this.id = id;
-		this.name_menu = name_menu;
-		this.color_menu = color_menu;
-		this.status = status;
-		this.users = users;
-		this.button = button;
-	}
+    public int getId() {
+        return id;
+    }
 
-	public int getId() {
-		return id;
-	}
+    public void setId(int id) {
+        this.id = id;
+    }
 
-	public void setId(int id) {
-		this.id = id;
-	}
 
-//	public Collection<Button> getButton() {
-//		return button;
-//	}
+    public String getName_menu() {
+        return name_menu;
+    }
 
-//	public void setButton(Collection<Button> button) {
-//		this.button = button;
-//	}
+    public void setName_menu(String name_menu) {
+        this.name_menu = name_menu;
+    }
 
-	public String getName_menu() {
-		return name_menu;
-	}
+    public boolean isStatus() {
+        return status;
+    }
 
-	public void setName_menu(String name_menu) {
-		this.name_menu = name_menu;
-	}
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
 
-	public boolean isStatus() {
-		return status;
-	}
+    public User getUsers() {
+        return users;
+    }
 
-	public void setStatus(boolean status) {
-		this.status = status;
-	}
+    public void setUsers(User users) {
+        this.users = users;
+    }
 
-	public User getUsers() {
-		return users;
-	}
+    public String getColor_menu() {
+        return color_menu;
+    }
 
-	public void setUsers(User users) {
-		this.users = users;
-	}
+    public void setColor_menu(String color_menu) {
+        this.color_menu = color_menu;
+    }
 
-	public String getColor_menu() {
-		return color_menu;
-	}
+    public String getMenuType() {
+        return menuType;
+    }
 
-	public void setColor_menu(String color_menu) {
-		this.color_menu = color_menu;
-	}
-	
-	
-	
-	
-	
+    public void setMenuType(String menuType) {
+        this.menuType = menuType;
+    }
+
+    public String getMenuLocation() {
+        return menuLocation;
+    }
+
+    public void setMenuLocation(String menuLocation) {
+        this.menuLocation = menuLocation;
+    }
 }

@@ -26,11 +26,13 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private final CustomUserDetailService customUserDetailService;
     private final JwtAuthEntryPoint jwtAuthEntryPoint;
+
     public WebSecurityConfig(CustomUserDetailService customUserDetailService,
                              JwtAuthEntryPoint jwtAuthEntryPoint) {
         this.customUserDetailService = customUserDetailService;
         this.jwtAuthEntryPoint = jwtAuthEntryPoint;
     }
+
     @Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {

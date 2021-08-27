@@ -12,7 +12,7 @@ public class JwtRespone {
     private List<GrantedAuthority> role;
     private String email;
 
-    public JwtRespone(String token, String fullName, List<GrantedAuthority> role, String email){
+    public JwtRespone(String token, String fullName, List<GrantedAuthority> role, String email) {
         this.token = token;
         this.fullName = fullName;
         this.role = role;

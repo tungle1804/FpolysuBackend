@@ -13,18 +13,19 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@javax.persistence.Table(name="activity_button")
+@javax.persistence.Table(name = "activity_button")
 public class ActivityButton {
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name="id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private int id;
     @Column(name = "created_at")
     private Date CreatedAt = new Date();
-@Column(name = "from_url")
-private String fromUrl;
-@Column(name ="id_button")
+    @Column(name = "from_url")
+    private String fromUrl;
+    @Column(name = "id_button")
     private int buttonId;
+
     public ActivityButton(int buttonId) {
         this.buttonId = buttonId;
     }

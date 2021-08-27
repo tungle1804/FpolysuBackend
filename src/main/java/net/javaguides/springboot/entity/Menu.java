@@ -1,20 +1,9 @@
 package net.javaguides.springboot.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
+import javax.persistence.*;
 import java.util.Collection;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
 @Entity
 @javax.persistence.Table(name = "menu")
@@ -34,6 +23,7 @@ public class Menu {
     @Column(name = "menu_location")
     private String menuLocation;
 
+
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "email")
@@ -46,6 +36,7 @@ public class Menu {
     public Menu() {
     }
 
+
     public int getId() {
         return id;
     }
@@ -53,7 +44,6 @@ public class Menu {
     public void setId(int id) {
         this.id = id;
     }
-
 
     public String getName_menu() {
         return name_menu;
@@ -102,4 +92,5 @@ public class Menu {
     public void setMenuLocation(String menuLocation) {
         this.menuLocation = menuLocation;
     }
+
 }

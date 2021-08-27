@@ -21,6 +21,9 @@ public class Book {
         this.modal = modal;
     }
 
+    public Book() {
+    }
+
     public List<Menu> getMenu() {
         return menu;
     }
@@ -43,8 +46,5 @@ public class Book {
 
     public void setButton(List<Button> button) {
         this.buttons = button;
-    }
-
-    public Book() {
     }
 }

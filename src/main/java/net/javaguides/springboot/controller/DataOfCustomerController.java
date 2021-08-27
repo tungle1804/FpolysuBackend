@@ -1,16 +1,19 @@
 package net.javaguides.springboot.controller;
 
+
 import com.google.gson.Gson;
 import lombok.extern.log4j.Log4j2;
 import net.javaguides.springboot.dao.PaymentDao;
 import net.javaguides.springboot.entity.*;
 import net.javaguides.springboot.exception.ResourceNotFoundException;
+
+import net.javaguides.springboot.entity.DataOfCustomer;
+
 import net.javaguides.springboot.repository.DataOfCustomerRepository;
 import net.javaguides.springboot.repository.ModalRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -53,26 +56,27 @@ public class DataOfCustomerController {
     }
 
     @GetMapping("/dataofcustomerbyid/{id}")
-    public Optional<DataOfCustomer> getDataOfCustomersById(@PathVariable int id){
+    public Optional<DataOfCustomer> getDataOfCustomersById(@PathVariable int id) {
         return dataOfCustomerRepository.findById(id);
     }
 
     @GetMapping("/dataofcustomerbyuser/{email}")
-    public List<DataOfCustomer> getDataOfCustomersByUsers(@PathVariable String email){
+    public List<DataOfCustomer> getDataOfCustomersByUsers(@PathVariable String email) {
         return dataOfCustomerRepository.getDataOfCustomersByUsers(email);
     }
+
     @GetMapping("/search")
-    public List<DataOfCustomer> getDataOfCustomersByFullName(@RequestParam(name = "keyword",required = false, defaultValue = "")String fullname){
+    public List<DataOfCustomer> getDataOfCustomersByFullName(@RequestParam(name = "keyword", required = false, defaultValue = "") String fullname) {
         return dataOfCustomerRepository.getDataOfCustomerByFullName(fullname);
     }
 
     @PostMapping("/create")
-    public DataOfCustomer createDataOfCustom(@RequestBody DataOfCustomer data){
+    public DataOfCustomer createDataOfCustom(@RequestBody DataOfCustomer data) {
         return dataOfCustomerRepository.save(data);
     }
 
     @PutMapping("/update")
-    public DataOfCustomer updateDataOfCustomer(@RequestBody DataOfCustomer dataOfCustomer){
+    public DataOfCustomer updateDataOfCustomer(@RequestBody DataOfCustomer dataOfCustomer) {
         DataOfCustomer existingData = dataOfCustomerRepository.findById(dataOfCustomer.getId()).orElse(null);
         existingData.setFullName(dataOfCustomer.getFullName());
         existingData.setPhone(dataOfCustomer.getPhone());
@@ -83,7 +87,6 @@ public class DataOfCustomerController {
 //        existingData.setUsers(dataOfCustomer.getUsers());
         return dataOfCustomerRepository.save(existingData);
     }
-
 
 
 }

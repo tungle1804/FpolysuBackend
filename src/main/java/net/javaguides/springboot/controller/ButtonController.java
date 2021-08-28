@@ -42,11 +42,6 @@ public class ButtonController {
     @Autowired
     private ModalRepository modalRespository;
 
-    @GetMapping("/button")
-    public List<Button> getAllButton() {
-        return buttonRespository.findAll();
-    }
-
 //	@GetMapping("/user")
 //	public List<User>getAllUser(){
 //		return userRespository.findAll();

@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Collection;
+import java.util.Collections;
 
 @Entity
 @javax.persistence.Table(name="button")
@@ -48,6 +50,8 @@ public class Button {
 
 	public Button() {
 	}
+
+
 	public int getId() {
 		return id;
 	}
@@ -120,6 +124,11 @@ public class Button {
 		this.menu = menu;
 	}
 
+	public Collection<Modal> getModal() {
+		return modal;
+	}
 
-
+	public void setModal(Collection<Modal> modal) {
+		this.modal = modal;
+	}
 }

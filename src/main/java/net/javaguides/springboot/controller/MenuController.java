@@ -3,6 +3,7 @@ package net.javaguides.springboot.controller;
 import net.javaguides.springboot.entity.Menu;
 import net.javaguides.springboot.exception.ResourceNotFoundException;
 import net.javaguides.springboot.repository.MenuRepository;
+import net.javaguides.springboot.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +19,9 @@ import java.util.Optional;
 public class MenuController {
     @Autowired
     private MenuRepository menuRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @GetMapping("/menu")
     public List<Menu> getAllMenu() {
@@ -63,4 +67,14 @@ public class MenuController {
         return menuRepository.getMenuByStatus(email);
     }
 
+    @GetMapping("/getBasicPro/{email}")
+    public String getBasicPro(@PathVariable String email){
+        int countBasic = menuRepository.getBasicPro(userRepository.findOneByEmail(email));
+//        int countHistory = menuRepository.getCountHistory(userRepository.findOneByEmail(email));
+        System.out.println("AAAAAAAA      " + countBasic );
+        if(countBasic > 10){
+            return "Lỗi, tài khoản của bạn chưa nâng cấp";
+        }
+        return "OK";
+    }
 }

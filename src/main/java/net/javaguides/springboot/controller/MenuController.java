@@ -63,4 +63,15 @@ public class MenuController {
         return menuRepository.getMenuByStatus(email);
     }
 
+    @GetMapping("countSumMenuCreated")
+    ResponseEntity<?> countSumMenuCreated(@RequestParam(value = "email",required = true) String email){
+       Integer value = menuRepository.countSumMenuCreated(email);
+       return (value!=null)?ResponseEntity.ok(value) : (ResponseEntity<?>) ResponseEntity.badRequest();
+    }
+
+    @GetMapping("statisticsClickByMenu")
+    ResponseEntity<?> statisticsClickByButton(@RequestParam(value = "email",required = true) String email){
+        List<Object> list = menuRepository.statisticsClickByMenu(email);
+        return (list!=null)?ResponseEntity.ok(list) : (ResponseEntity<?>) ResponseEntity.badRequest();
+    }
 }

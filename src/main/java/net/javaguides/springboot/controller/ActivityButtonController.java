@@ -83,18 +83,17 @@ public class ActivityButtonController {
     ) {
         try {
             PageRequest pageRequest = PageRequest.of(Integer.parseInt(pageNo), Integer.parseInt(limit));
-            Page<Object[]> dtoPage = null;
-            if (start.length() > 0 && end.length() > 0) {
+            Page<Object[]> dtoPage;
+            List<Object[]>  list;
+            if (start!=null && end!=null) {
                 dtoPage = activityButtonRepository.countNumberClickButtonByRangeTimeSelect(email, start, end, Integer.parseInt(menuId), pageRequest);
-            } else {
-                dtoPage = activityButtonRepository.getTotalNumberClickOnButton(email, pageRequest);
-            }
-
-            if (dtoPage != null) {
                 return new ResponseEntity<>(dtoPage, new HttpHeaders(), HttpStatus.OK);
             } else {
-                return new ResponseEntity<>("Data need search not exist", new HttpHeaders(), HttpStatus.NOT_FOUND);
+               list = activityButtonRepository.getTotalNumberClickOnButton(email);
+                return new ResponseEntity<>(list, new HttpHeaders(), HttpStatus.OK);
             }
+
+
         } catch (Exception e) {
             e.printStackTrace();
 
@@ -133,4 +132,37 @@ public class ActivityButtonController {
         }
 
     }
+    @GetMapping("statisticActionButtonByRangeTimeSelect")
+    ResponseEntity<?> statisticActionButtonByRangeTimeSelect(
+           @RequestParam(name = "email",required = true) String email,
+            @RequestParam(name = "pageNo", defaultValue = "0", required = false) String pageNo,
+            @RequestParam(name = "limit", defaultValue = "5", required = false) String limit
+    ) {
+        try {
+            PageRequest pageRequest = PageRequest.of(Integer.parseInt(pageNo), Integer.parseInt(limit));
+            List<Object[]> dtoPage = activityButtonRepository.statisticActionButtonByRangeTimeSelect(email);
+            if (dtoPage != null) {
+                return new ResponseEntity<>(dtoPage, new HttpHeaders(), HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>("Khách hàng cần tìm không tồn tại", new HttpHeaders(), HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+
+            return ResponseEntity.badRequest().body("Page Empty");
+        }
+
+    }
+@GetMapping("statisticsActivityByEquipment")
+ResponseEntity<?> statisticsActivityByEquipment(
+        @RequestParam(name="email",required = true) String email
+){
+        List<Object> list = null;
+        list = activityButtonRepository.statisticsActivityByEquipment(email);
+    if (list != null) {
+        return new ResponseEntity<>(list, new HttpHeaders(), HttpStatus.OK);
+    } else {
+        return new ResponseEntity<>("Data not Exist", new HttpHeaders(), HttpStatus.NOT_FOUND);
+    }
+}
 }

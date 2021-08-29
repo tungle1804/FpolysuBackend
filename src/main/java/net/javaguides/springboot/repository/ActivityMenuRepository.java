@@ -97,4 +97,16 @@ public interface ActivityMenuRepository extends JpaRepository<ActivityMenu, Inte
     )
     Page<Object[]> getStatisticInformationOfActionWithSearch(@Param("email") String email,@Param("start") Date start,
                                                    @Param("end") Date end,@Param("search") String search, Pageable pageable);
+
+    @Query(value = "select distinct activity_button.from_url, count(*) as Total from activity_button join button on button.id = activity_button.id_button\n" +
+            "         join menu on menu.id = button.id_menu where menu.email=:email and activity_button.created_at between :start AND :end group by activity_button.from_url",nativeQuery = true)
+    Page<Object[]> countTotalClickBuFromUrl(@Param("email") String email,@Param("start") String start,
+                                            @Param("end") String end, Pageable pageable);
+
+
+ // This is query to Statistics for Page Dashboard
+ @Query(value = "select count(*) as countNumberClickMenu from activity_button join button on button.id = activity_button.id_button \n" +
+         "join menu on menu.id = button.id_menu where menu.email =:email ", nativeQuery = true)
+ Integer getTotalNumberClickByUser(@Param("email") String email);
+
 }

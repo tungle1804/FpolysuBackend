@@ -8,6 +8,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
+
 public interface ActivityButtonRepository extends JpaRepository<ActivityButton, Integer> {
     @Query(value = "select * from activityButton", nativeQuery = true)
     Page<ActivityButton> findAll(Pageable pageable);
@@ -16,7 +18,7 @@ public interface ActivityButtonRepository extends JpaRepository<ActivityButton, 
     @Query(value = "select distinct button.name_button, count(*) as countNumberClickButton from activity_button join button on button.id = activity_button.id_button \n" +
             "join menu on menu.id = button.id_menu join  users on users.email = menu.email and" +
             " users.email =:email  group by button.name_button", nativeQuery = true)
-    Page<Object[]> getTotalNumberClickOnButton(@Param("email") String email, Pageable pageable);
+    List<Object[]> getTotalNumberClickOnButton(@Param("email") String email);
 
 
 
@@ -33,7 +35,12 @@ public interface ActivityButtonRepository extends JpaRepository<ActivityButton, 
     Integer statisticAllActionOnThisButton(@Param("email") String email, @Param("idButton") Integer idButton, @Param("day") String day);
 
 
+    @Query(value = "select distinct button.name_button, count(*) as countNumberActionByButton from button join menu on menu.id=button.id_menu\n" +
+            "    join activity_menu on menu.id=activity_menu.id_menu where menu.email =:email" +
+            "    group by button.name_button", nativeQuery = true)
+    List<Object[]> statisticActionButtonByRangeTimeSelect(@Param("email") String email);
 
-
-
+@Query(value = "select equipment ,count(*) from activity_button join button on button.id = activity_button.id_button " +
+        "join menu on menu.id=button.id_menu where menu.email=:email group by equipment",nativeQuery = true)
+    List<Object> statisticsActivityByEquipment(@Param("email")String email);
 }

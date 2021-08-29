@@ -44,7 +44,8 @@ create table activityButton
     id         int identity                                   not null primary key,
     id_button  int foreign key references dbo.button (id) not null,
     created_at datetime default getdate()                     null,
-    from_url   nvarchar(300)                                  null
+    from_url   nvarchar(300)                                  null,
+	equipment bit null
 )
 create table activityMenu
 (
@@ -166,8 +167,10 @@ values ('vuthanhnam@gmail.com', 'email', 'black', 1)
 insert into menu (email, name_menu, color_menu, _status)
 values ('vuthanhnam@gmail.com', 'zalo', 'black', 0)
 insert into menu (email, name_menu, color_menu, _status)
-values ('vuthanhnam@gmail.com', 'email', 'black', 0)
-
+values ('thanhnam.humg93@gmail.com', 'email', 'black', 1)
+select * from menu where email= 'thanhnam.humg93@gmail.com'
+insert into button(id_menu, type_button, name_button, color_text, link, icon, color_background, color_icon)
+values (10, 'Nam', 'Nam', 'red', '24h.com.vn', ':))', 'red', 'blue')
 
 -- insert button
 
@@ -313,6 +316,7 @@ from activity_button
 where users.email = 'vuthanhnam@gmail.com'
   and menu.id = 6
   and activity_button.created_at like '2021-08-19'
+ 
 
 -------------------------------------------------------------------------Table 1--------------------------------------------------------
 -- get Total number Click on one Menu group by MenuID of username: countNumberClickMenu = Total Click all Button of this
@@ -374,4 +378,27 @@ from activity_button
          join menu on menu.id = button.id_menu
          join users on users.email = menu.email
 where users.email = 'vuthanhnam@gmail.com' and activity_button.created_at between '2021-08-17' and '2021-08-22'
-SET LANGUAGE us_english;  
+
+select distinct button.name_button, count(*) as countNumber
+from activity_button join button on button.id=activity_button.id_button
+join menu on menu.id = button.id_menu
+join activity_menu
+ on menu.id = activity_menu.id_menu
+where menu.email = 'vuthanhnam@gmail.com'
+ group by button.name_button
+
+
+select distinct button.name_button, count(*) as countNumberActionByButton from button join menu on menu.id=button.id_menu
+         join activity_menu on menu.id=activity_menu.id_menu where menu.email = 'vuthanhnam@gmail.com'
+         group by button.name_button
+
+
+		 select distinct button.name_button, count(*) as countNumberClickButton from activity_button join button on button.id = activity_button.id_button
+           join menu on menu.id = button.id_menu join  users on users.email = menu.email and
+           users.email ='vuthanhnam@gmail.com'  group by button.name_button
+
+
+
+		   select * from activity_button
+
+		   update activity_button set equipment=0 where activity_button.id=1

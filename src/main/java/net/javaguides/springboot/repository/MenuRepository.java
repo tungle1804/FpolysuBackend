@@ -1,6 +1,7 @@
 package net.javaguides.springboot.repository;
 
 import net.javaguides.springboot.entity.Menu;
+import net.javaguides.springboot.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -26,6 +27,7 @@ public interface MenuRepository extends JpaRepository<Menu, Integer> {
 //	@Query(value = "select m from Menu m where m.users.email=:email")
 //	Page<Menu> findAllByUser(@Param("email") String email, PageRequest pageRequest);
 
+
     //function to get total menu created by users
     @Query("select count(m) from Menu m where m.users.email=:email")
     Integer countSumMenuCreated(@Param("email")String email);
@@ -37,4 +39,5 @@ public interface MenuRepository extends JpaRepository<Menu, Integer> {
             "group by  menu.name_menu \n" +
             "order by Total desc",nativeQuery = true)
     List<Object> statisticsClickByMenu(@Param("email")String email);
+
 }

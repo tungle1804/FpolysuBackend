@@ -14,7 +14,8 @@ public class ModalController {
     private ModalRepository modalRepository;
 
 
-    @GetMapping("/getModalByButton/{id}")
+    @PostMapping("/getModalByButton/{id}")
+
     public List<Modal> getModalByButton(@PathVariable int id){
 
         return modalRepository.getModalByIdButton(id);

@@ -37,6 +37,7 @@ public class ActivityButtonController {
     @PostMapping("/activityButton")
     public ResponseEntity createActivity(@RequestBody ActivityButton activity) {
         try {
+            System.out.println(activity.toString());
             return new ResponseEntity(activityButtonRepository.save(activity), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity("Error" + e, HttpStatus.BAD_REQUEST);
@@ -165,4 +166,44 @@ ResponseEntity<?> statisticsActivityByEquipment(
         return new ResponseEntity<>("Data not Exist", new HttpHeaders(), HttpStatus.NOT_FOUND);
     }
 }
+    @GetMapping("statisticsActivityBySupplier")
+    ResponseEntity<?> statisticsActivityBySupplier(
+            @RequestParam(name="email",required = true) String email
+    ){
+        List<Object> list = null;
+        list = activityButtonRepository.statisticsActivityBySupplier(email);
+        if (list != null) {
+            return new ResponseEntity<>(list, new HttpHeaders(), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("Data not Exist", new HttpHeaders(), HttpStatus.NOT_FOUND);
+        }
+    }
+    @GetMapping("statisticsActivityByAddress")
+    ResponseEntity<?> statisticsActivityByAddress(
+            @RequestParam(name="email",required = true) String email
+    ){
+        List<Object> list = null;
+        list = activityButtonRepository.statisticsActivityByAddress(email);
+        if (list != null) {
+            return new ResponseEntity<>(list, new HttpHeaders(), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("Data not Exist", new HttpHeaders(), HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("statisticsActivityByIp")
+    ResponseEntity<?> statisticsActivityByIp(
+            @RequestParam(name = "email",required = true) String email,
+            @RequestParam(name = "pageNo", defaultValue = "0", required = false) String pageNo,
+            @RequestParam(name = "limit", defaultValue = "5", required = false) String limit
+    ){
+        PageRequest pageRequest = PageRequest.of(Integer.parseInt(pageNo), Integer.parseInt(limit));
+
+        Page<Object> page = activityButtonRepository.statisticsActivityByIp(email,pageRequest);
+        if (page != null) {
+            return new ResponseEntity<>(page, new HttpHeaders(), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("Data not Exist", new HttpHeaders(), HttpStatus.NOT_FOUND);
+        }
+    }
 }

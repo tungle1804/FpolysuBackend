@@ -43,4 +43,19 @@ public interface ActivityButtonRepository extends JpaRepository<ActivityButton, 
 @Query(value = "select equipment ,count(*) from activity_button join button on button.id = activity_button.id_button " +
         "join menu on menu.id=button.id_menu where menu.email=:email group by equipment",nativeQuery = true)
     List<Object> statisticsActivityByEquipment(@Param("email")String email);
+
+@Query(value = "select activity_button.supplier, count(*) from activity_button join button on button.id = activity_button.id_button\n" +
+        "           join menu on menu.id = button.id_menu join  users on users.email = menu.email and\n" +
+        "           users.email =:email  group by activity_button.supplier",nativeQuery = true)
+    List<Object> statisticsActivityBySupplier(@Param("email")String email);
+
+    @Query(value = "select activity_button.user_address, count(*) from activity_button join button on button.id = activity_button.id_button\n" +
+            "           join menu on menu.id = button.id_menu join  users on users.email = menu.email and\n" +
+            "           users.email =:email  group by activity_button.user_address",nativeQuery = true)
+    List<Object> statisticsActivityByAddress(@Param("email")String email);
+
+    @Query(value = "select activity_button.ip_address, count(*) from activity_button join button on button.id = activity_button.id_button\n" +
+            "           join menu on menu.id = button.id_menu join  users on users.email = menu.email and\n" +
+            "           users.email =:email group by activity_button.ip_address",nativeQuery = true)
+    Page<Object> statisticsActivityByIp(@Param("email")String email,Pageable pageable);
 }

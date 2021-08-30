@@ -3,6 +3,7 @@ package net.javaguides.springboot.controller;
 import net.javaguides.springboot.entity.Menu;
 import net.javaguides.springboot.exception.ResourceNotFoundException;
 import net.javaguides.springboot.repository.MenuRepository;
+import net.javaguides.springboot.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +19,9 @@ import java.util.Optional;
 public class MenuController {
     @Autowired
     private MenuRepository menuRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @GetMapping("/menu")
     public List<Menu> getAllMenu() {
@@ -73,5 +77,6 @@ public class MenuController {
     ResponseEntity<?> statisticsClickByButton(@RequestParam(value = "email",required = true) String email){
         List<Object> list = menuRepository.statisticsClickByMenu(email);
         return (list!=null)?ResponseEntity.ok(list) : (ResponseEntity<?>) ResponseEntity.badRequest();
+
     }
 }

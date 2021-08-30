@@ -14,5 +14,7 @@ public interface UserService {
 
     public boolean createUser(User user);
 
+    public List<User> getUserByRoleCustomer();
+
 
 }

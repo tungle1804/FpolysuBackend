@@ -20,7 +20,6 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("/api/v1")
 public class UserController {
-	private final String Binhle = "CHÀO CÁC BẠN NHÉ";
 
 	private final UserService userService;
 
@@ -77,10 +76,17 @@ public class UserController {
 		return new ResponseEntity(dto, HttpStatus.OK);
 	}
 
-	@DeleteMapping("/users/{email}")
-	public ResponseEntity deleteUser(@PathVariable("email") String email) {
-		 userRepository.deleteUser(email);
-		return  new ResponseEntity(HttpStatus.OK);
+	@GetMapping("/admin/users/role-customer")
+	public ResponseEntity getUserByRoleCustomer(){
+		List<User> listUsers = userService.getUserByRoleCustomer();
+		ResponseEntity response = new ResponseEntity(listUsers, HttpStatus.OK);
+		return response;
+	}
+
+	@GetMapping("/admin/users/status")
+	public ResponseEntity getStatusOfUsers(){
+		List<String> listRole = userRepository.getRole();
+		return new ResponseEntity(listRole, HttpStatus.OK);
 	}
 
 

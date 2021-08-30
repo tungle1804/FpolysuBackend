@@ -22,7 +22,9 @@ public interface UserRepository extends JpaRepository<User,String> {
     @Query(value = "select distinct u.role from User u where u.role not in ('customer')")
     List<String> getRole();
 
-    @Query(value = "delete from User u where u.email = :email")
-    Boolean deleteUser(@Param("email") String email);
-	
+    @Query(value = "from User u where u.role = 'customer'")
+    List<User> getUserByRoleCustomer();
+
+    @Query(value = "select distinct u.status from User u ")
+    List<String> getStatus();
 }

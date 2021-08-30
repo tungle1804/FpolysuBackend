@@ -37,4 +37,10 @@ public class UserServiceImpl implements UserService {
         }
         return result;
     }
+
+    @Override
+    public List<User> getUserByRoleCustomer() {
+        List<User> listUsers = userRepository.getUserByRoleCustomer();
+        return listUsers;
+    }
 }

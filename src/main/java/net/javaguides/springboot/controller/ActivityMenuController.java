@@ -105,7 +105,7 @@ public class ActivityMenuController {
             @RequestParam(name = "email", required = true) String email,
             @RequestParam(name = "start") String s,
             @RequestParam(name = "end") String e,
-            @RequestParam(name = "idMenu", required = true) String idMenu
+            @RequestParam(name = "idMenu", required = false) String idMenu
 
 
     ) {
@@ -119,8 +119,14 @@ public class ActivityMenuController {
                 totalDates.add(start);
                 start = start.plusDays(1);
             }
-            list = totalDates.stream().map(item -> activityMenuRepository.statisticAllActionOnThisMenu
-                    (email, Integer.parseInt(idMenu), item.toString())).collect(Collectors.toList());
+            if(idMenu!=null){
+                list = totalDates.stream().map(item -> activityMenuRepository.statisticAllActionOnThisMenu
+                        (email, Integer.parseInt(idMenu), item.toString())).collect(Collectors.toList());
+            }else {
+                list = totalDates.stream().map(item -> activityMenuRepository.statisticAllActionOnAllMenu
+                        (email, item.toString())).collect(Collectors.toList());
+            }
+
             return new ResponseEntity<>(list, new HttpHeaders(), HttpStatus.OK);
             //       return new ResponseEntity<>(dtoPage, new HttpHeaders(), HttpStatus.OK);
 

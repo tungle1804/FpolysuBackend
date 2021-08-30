@@ -30,6 +30,11 @@ public interface ActivityMenuRepository extends JpaRepository<ActivityMenu, Inte
             "where users.email =:email and menu.id =:idMenu and activity_button.created_at LIKE CONCAT(:day,'%')", nativeQuery = true)
     Integer statisticAllActionOnThisMenu(@Param("email") String email, @Param("idMenu") Integer idMenu, @Param("day") String day);
 
+    @Query(value = "select count(*) as TotalClickOnMenuEnable from activity_button join  button on button.id = activity_button.id_button \n" +
+            "join menu on menu.id = button.id_menu join  users on users.email = menu.email \n" +
+            "where users.email =:email and activity_button.created_at LIKE CONCAT(:day,'%')", nativeQuery = true)
+    Integer statisticAllActionOnAllMenu(@Param("email") String email, @Param("day") String day);
+
     //////////////////////////////////////////////////////
     @Query(value = "select distinct menu.name_menu, count(*) as countNumberClickMenu from activity_button join button on button.id = activity_button.id_button \n" +
             "join menu on menu.id = button.id_menu join  users on users.email = menu.email and" +
@@ -108,5 +113,6 @@ public interface ActivityMenuRepository extends JpaRepository<ActivityMenu, Inte
  @Query(value = "select count(*) as countNumberClickMenu from activity_button join button on button.id = activity_button.id_button \n" +
          "join menu on menu.id = button.id_menu where menu.email =:email ", nativeQuery = true)
  Integer getTotalNumberClickByUser(@Param("email") String email);
+
 
 }

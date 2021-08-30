@@ -39,15 +39,23 @@ CREATE TABLE button
     color_background NVARCHAR(300),
     color_icon       NVARCHAR(300)
 )
-create table activityButton
+create table activity_button
 (
     id         int identity                                   not null primary key,
     id_button  int foreign key references dbo.button (id) not null,
     created_at datetime default getdate()                     null,
     from_url   nvarchar(300)                                  null,
-	equipment bit null
+	equipment bit null,
+	ip_address nvarchar(100) null,
+	user_address nvarchar(100) null,
+	languages nvarchar(50) null,
+	supplier nvarchar(50) null
 )
-create table activityMenu
+select * from activity_button where DATEPART(day,activity_button.created_at)=30
+
+select * from activity_menu
+
+create table activity_menu
 (
     id         int identity                                 not null primary key,
     id_menu    int foreign key references dbo.menu (id) not null,
@@ -398,7 +406,15 @@ select distinct button.name_button, count(*) as countNumberActionByButton from b
            users.email ='vuthanhnam@gmail.com'  group by button.name_button
 
 
+select equipment ,count(*) from activity_button group by equipment
+select distinct button.type_button,count(*) from button 
+join activity_button on button.id = activity_button.id_button 
+join menu on menu.id = button.id_menu where email='vuthanhnam@gmail.com' group by button.type_button
 
-		   select * from activity_button
 
-		   update activity_button set equipment=0 where activity_button.id=1
+select activity_button.from_url,count(*) as Total from activity_button 
+join button on button.id=activity_button.id_button 
+join menu on menu.id = button.id_menu 
+where menu.email='vuthanhnam@gmail.com' 
+group by  activity_button.from_url 
+order by Total desc

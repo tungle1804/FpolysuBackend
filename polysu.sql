@@ -66,6 +66,15 @@ id int identity not null primary key,
 id_menu int foreign key references dbo.menu(id) not null,
 created_at datetime default getdate() null
 )
+
+-- modal
+CREATE TABLE modal
+(
+    id          INT IDENTITY (1,1) NOT NULL PRIMARY KEY,
+    id_button   INT FOREIGN KEY REFERENCES dbo.button (id),
+    input_name  NVARCHAR(50)       NOT NULL,
+    input_value NVARCHAR(50)       NOT NULL
+)
 -- dataofcustom
 create table dataofcustomer(
 id INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
@@ -80,7 +89,6 @@ notes NVARCHAR(MAX),
 create_date Datetime,
 )
 
-
 -----------------------
 -- servicefee
 create table servicefee(
@@ -88,8 +96,6 @@ id INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
 name_service NVARCHAR(200),
 price float,
 )
-
-
 
 -- payment_history
 create table payment_history(
@@ -101,13 +107,6 @@ date_end date,
 _status bit,
 )
 
-CREATE TABLE modal
-(
-    id          INT IDENTITY (1,1) NOT NULL PRIMARY KEY,
-    id_button   INT FOREIGN KEY REFERENCES dbo.button (id),
-    input_name  NVARCHAR(50)       NOT NULL,
-    input_value NVARCHAR(50)       NOT NULL
-)
 
 --insert modal
 SELECT *
@@ -121,15 +120,15 @@ VALUES (14, N'CMTND', '1232454356')
 
 -- insert user
 insert into users(email, _password, name, business_name, phone, _role)
-values ('lekhuongduy1998@gmail.com', 'duy123', 'Duy', 'CD FPT', '0972222111', 'admin')
+values ('admin@gmail.com', '12345678', 'Admin', 'CD FPT', '0972222111', 'admin')
 insert into users(email, _password, name, business_name, phone, _role)
 values ('leanhtung@gmail.com', 'duy123', 'Duy', 'CD FPT', '0972222111', 'admin')
 insert into users(email, _password, name, business_name, phone, _role)
-values ('leducbinh@gmail.com', 'duy123', 'Duy', 'CD FPT', '0972222111', 'admin')
+values ('leducbinh@gmail.com', '12345678', 'Duy', 'CD FPT', '0972222111', 'customer')
 insert into users(email, _password, name, business_name, phone, _role)
-values ('duongtunglam@gmail.com', 'duy123', 'Duy', 'CD FPT', '0972222111', 'admin')
+values ('duongtunglam@gmail.com', 'duy123', 'Duy', 'CD FPT', '0972222111', 'employee')
 insert into users(email, _password, name, business_name, phone, _role)
-values ('nguyenbavinh@gmail.com', 'duy123', 'Duy', 'CD FPT', '0972222111', 'admin')
+values ('nguyenbavinh@gmail.com', 'duy123', 'Duy', 'CD FPT', '0972222111', 'customer')
 insert into users(email, _password, name, business_name, phone, _role)
 values ('vuthanhnam@gmail.com', 'duy123', 'Duy', 'CD FPT', '0972222111', 'customer')
 insert into users(email, _password, name, business_name, phone, _role)
@@ -248,15 +247,15 @@ values ('12 tháng', 350000)
 -- insert payment_history
 
 insert into payment_history(email, id_service, date_end, _status)
-values ('abc@gmail.com', 1, GETDATE(), 'đã thanh toán')
+values ('abc@gmail.com', 1, GETDATE(), 0)
 insert into payment_history(email, id_service, date_end, _status)
-values ('abc@gmail.com', 2, GETDATE(), 'đã thanh toán')
+values ('abc@gmail.com', 2, GETDATE(), 1)
 insert into payment_history(email, id_service, date_end, _status)
-values ('duongtunglam@gmail.com', 2, GETDATE(), 'đã thanh toán')
+values ('duongtunglam@gmail.com', 2, GETDATE(), 1)
 insert into payment_history(email, id_service, date_end, _status)
-values ('leanhtung@gmail.com', 1, GETDATE(), 'đã thanh toán')
+values ('leanhtung@gmail.com', 1, GETDATE(), 0)
 insert into payment_history(email, id_service, date_end, _status)
-values ('leducbinh@gmail.com', 4, GETDATE(), 'đã thanh toán')
+values ('leducbinh@gmail.com', 4, GETDATE(), 1)
 
 select *
 from users

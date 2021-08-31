@@ -79,4 +79,13 @@ public class MenuController {
         return (list!=null)?ResponseEntity.ok(list) : (ResponseEntity<?>) ResponseEntity.badRequest();
 
     }
+    @GetMapping("findAllByStatusTrue")
+    ResponseEntity<?> findAllByStatusTrue(@RequestParam(value = "email",required = true)String email){
+try {
+    List<Menu> list = menuRepository.findAllByStatusTrue(email);
+    return ResponseEntity.ok().body(list);
+}catch (Exception e){
+    return (ResponseEntity<String>) ResponseEntity.badRequest().body("Erorr CMNR!");
+}
+    }
 }

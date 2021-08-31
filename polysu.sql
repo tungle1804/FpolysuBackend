@@ -1,57 +1,44 @@
-drop database polysu
+﻿drop database polysu
 create database polysu
 go
 use polysu
 go
 
 -- users
-
-CREATE TABLE users(
-email NVARCHAR(50) NOT NULL PRIMARY KEY,
-_password VARCHAR(100),
-name NVARCHAR(100),
-business_name NVARCHAR(200),
-phone NVARCHAR(15),
-_role VARCHAR(15),
-gender NVARCHAR(15),
-_address NVARCHAR(100),
-date_of_birth date,
-_status bit,
-created_date date,
-created_by NVARCHAR(50)
-
+CREATE TABLE users
+(
+    email         NVARCHAR(50) NOT NULL PRIMARY KEY,
+    _password     VARCHAR(100),
+    name          NVARCHAR(100),
+    business_name NVARCHAR(200),
+    phone         NVARCHAR(15),
+    _role         VARCHAR(15),
 )
 
 -- menu
 
-
-CREATE TABLE menu(
-id INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
-email NVARCHAR(50) FOREIGN KEY REFERENCES dbo.users(email),
-name_menu NVARCHAR(30),
-color_menu NVARCHAR(50),
-_status BIT,
-menu_type nvarchar(10),
-date_start date,
-display_time int,
-menu_location nvarchar(20)
+CREATE TABLE menu
+(
+    id         INT IDENTITY (1,1) NOT NULL PRIMARY KEY,
+    email      NVARCHAR(50) FOREIGN KEY REFERENCES dbo.users (email),
+    name_menu  NVARCHAR(30),
+    color_menu NVARCHAR(50),
+    _status    BIT
 )
-select * from menu
 
 --button
-
-CREATE TABLE button (
-id INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
-id_menu INT FOREIGN KEY REFERENCES menu(id),
-type_button nvarchar(100),
-name_button NVARCHAR(100),
-color_text NVARCHAR(300),
-link NVARCHAR(300),
-icon NVARCHAR(300),
-color_background NVARCHAR(300),
-color_icon NVARCHAR(300)
+CREATE TABLE button
+(
+    id               INT IDENTITY (1,1) NOT NULL PRIMARY KEY,
+    id_menu          INT FOREIGN KEY REFERENCES menu (id),
+    type_button      nvarchar(100),
+    name_button      NVARCHAR(100),
+    color_text       NVARCHAR(300),
+    link             NVARCHAR(300),
+    icon             NVARCHAR(300),
+    color_background NVARCHAR(300),
+    color_icon       NVARCHAR(300)
 )
-<<<<<<< HEAD
 create table activity_button
 (
     id         int identity                                   not null primary key,
@@ -73,57 +60,67 @@ create table activity_menu
     id         int identity                                 not null primary key,
     id_menu    int foreign key references dbo.menu (id) not null,
     created_at datetime default getdate()                   null
-=======
-
-
-create table activityButton(
-id int identity not null primary key,
-id_button int foreign key references dbo.button(id) not null,
-created_at datetime default getdate() null,
-from_url nvarchar(300),
-Equipment  bit
-)
-
-create table activityMenu(
-id int identity not null primary key,
-id_menu int foreign key references dbo.menu(id) not null,
-created_at datetime default getdate() null
->>>>>>> cb818aaf22c6c4dee055d62d735a2abdddf54d50
 )
 -- dataofcustom
-create table dataofcustomer(
-id INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
-email NVARCHAR(50) FOREIGN KEY REFERENCES dbo.users(email),
-id_modal INT FOREIGN KEY REFERENCES modal(id),
-fullname NVARCHAR(100),
-phone varchar(15),
-email_customer NVARCHAR(100),
-_address NVARCHAR(200),
-content NVARCHAR(MAX),
-notes NVARCHAR(MAX),
-create_date Datetime,
+create table dataofcustomer
+(
+    id             INT IDENTITY (1,1) NOT NULL PRIMARY KEY,
+    email          NVARCHAR(50) FOREIGN KEY REFERENCES dbo.users (email),
+    fullname       NVARCHAR(100),
+    phone          varchar(15),
+    email_customer NVARCHAR(100),
+    _address       NVARCHAR(200),
+    content        NVARCHAR(MAX),
+    notes          NVARCHAR(MAX),
 )
 
-
+---them ngay khoi tao
+ALTER TABLE dbo.dataofcustomer
+    ADD create_date NVARCHAR(20);
 -----------------------
 -- servicefee
-create table servicefee(
-id INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
-name_service NVARCHAR(200),
-price float,
+create table servicefee
+(
+    id           INT IDENTITY (1,1) NOT NULL PRIMARY KEY,
+    name_service NVARCHAR(200),
+    price        INT,
 )
 
-
+alter table servicefee
+    alter column price float
 
 -- payment_history
-create table payment_history(
-id INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
-email NVARCHAR(50) FOREIGN KEY REFERENCES dbo.users(email),
-id_service INT FOREIGN KEY REFERENCES servicefee(id),
-date_start date,
-date_end date,
-_status bit,
+create table payment_history
+(
+    id         INT IDENTITY (1,1) NOT NULL PRIMARY KEY,
+    email      NVARCHAR(50) FOREIGN KEY REFERENCES dbo.users (email),
+    id_service INT FOREIGN KEY REFERENCES servicefee (id),
+    date_end   datetime,
+    _status    nvarchar(100),
 )
+
+select *
+from payment_history
+alter table payment_history
+    alter column date_end date
+alter table payment_history
+    alter column _status bit
+alter table payment_history
+    add date_start date
+
+-- button fake
+
+CREATE TABLE button_fake
+(
+    id_button        INT           NOT NULL PRIMARY KEY,
+    name_button      NVARCHAR(100) NOT NULL,
+    color_text       NVARCHAR(300) NOT NULL,
+    link             NVARCHAR(300) NOT NULL,
+    icon             NVARCHAR(300) NOT NULL,
+    color_background NVARCHAR(300) NOT NULL,
+    color_icon       NVARCHAR(300) NOT NULL
+)
+
 
 CREATE TABLE modal
 (
@@ -421,3 +418,11 @@ join menu on menu.id = button.id_menu
 where menu.email='vuthanhnam@gmail.com' 
 group by  activity_button.from_url 
 order by Total desc
+
+select * from activity_button where DATEPART(day,activity_button.created_at)=31
+
+delete from activity_button where DATEPART(day,activity_button.created_at)= 31
+
+select activity_button.ip_address,user_address, count(*) from activity_button join button on button.id = activity_button.id_button
+           join menu on menu.id = button.id_menu join  users on users.email = menu.email and
+           users.email ='vuthanhnam@gmail.com'  group by activity_button.ip_address,user_address

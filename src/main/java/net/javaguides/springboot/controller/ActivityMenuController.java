@@ -75,7 +75,7 @@ public class ActivityMenuController {
     @GetMapping("/statisticAllActionOnThisMenuEnable")
     ResponseEntity<?> statisticAllActionOnThisMenuEnable(
             @RequestParam(name = "email", required = true) String email,
-            // @RequestParam(name = "hour", required = true) String hour,
+            @RequestParam(name = "idMenu", required = true) String idMenu,
             @RequestParam(name = "day", required = true) String day,
             @RequestParam(name = "month", required = true) String month,
             @RequestParam(name = "year", required = true) String year
@@ -83,7 +83,7 @@ public class ActivityMenuController {
         try {
             List<Integer> list = new ArrayList<>();
             for (int i = 0; i < 24; i++) {
-                Integer dtoPage = activityMenuRepository.statisticAllActionOnThisMenuEnable(email, Integer.parseInt(String.valueOf(i)),
+                Integer dtoPage = activityMenuRepository.statisticAllActionOnThisMenuEnable(email,Integer.parseInt(idMenu), Integer.parseInt(String.valueOf(i)),
                         Integer.parseInt(day), Integer.parseInt(month), Integer.parseInt(year));
                 list.add(dtoPage);
             }
@@ -319,6 +319,7 @@ public class ActivityMenuController {
                 totalDates.add(start);
                 start = start.plusDays(1);
             }
+
             return new ResponseEntity<>(totalDates, new HttpHeaders(), HttpStatus.OK);
         } catch (Exception ex) {
             ex.printStackTrace();

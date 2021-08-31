@@ -16,12 +16,12 @@ public interface ActivityMenuRepository extends JpaRepository<ActivityMenu, Inte
     //////////////////////////////////////////////////////////////////////////
     @Query(value = "select count(*) as TotalClickOnMenuEnable from activity_button join  button on button.id = activity_button.id_button \n" +
             "join menu on menu.id = button.id_menu join  users on users.email = menu.email \n" +
-            "where users.email =:email and menu._status = 1 \n" +
+            "where users.email =:email and menu.id=:idMenu \n" +
             "and DATEPART(HOUR,activity_button.created_at) =:hour\n" +
             "and DAY(activity_button.created_at) =:day\n" +
             "and MONTH(activity_button.created_at) =:month\n" +
             "and YEAR(activity_button.created_at) =:year", nativeQuery = true)
-    Integer statisticAllActionOnThisMenuEnable(@Param("email") String email, @Param("hour") Integer hour, @Param("day") Integer day
+    Integer statisticAllActionOnThisMenuEnable(@Param("email") String email,@Param("idMenu")Integer idMenu, @Param("hour") Integer hour, @Param("day") Integer day
             , @Param("month") Integer month, @Param("year") Integer year);
 
 

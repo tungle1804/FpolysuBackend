@@ -1,6 +1,8 @@
 package net.javaguides.springboot.controller;
 
 import net.javaguides.springboot.entity.User;
+import net.javaguides.springboot.repository.MenuRepository;
+import net.javaguides.springboot.repository.PaymentHistoryRepository;
 import net.javaguides.springboot.repository.UserRepository;
 import net.javaguides.springboot.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,10 @@ public class UserController {
     PasswordEncoder encoder;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private MenuRepository menuRepository;
+    @Autowired
+    private PaymentHistoryRepository paymentHistoryRepository;
 
     public UserController(UserService userService) {
         this.userService = userService;
@@ -51,4 +57,25 @@ public class UserController {
     public Optional<User> getUserById(@PathVariable String id) {
         return userRepository.findById(id);
     }
+
+    @GetMapping("/sum-employee")
+    public Integer sumEmplyee(){
+        return userRepository.countByRole("employee");
+    }
+
+    @GetMapping("/sum-customer")
+    public Integer sumCustomer(){
+        return userRepository.countByRole("customer");
+    }
+
+    @GetMapping("/sum-menu")
+    public Integer sumMenu(){
+        return menuRepository.countAll();
+    }
+
+    @GetMapping("/total-price")
+    public double totalPrice(){
+      return paymentHistoryRepository.getTotalSumPrice();
+    }
+
 }

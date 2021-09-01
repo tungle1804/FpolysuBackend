@@ -19,7 +19,6 @@ date_of_birth date,
 _status bit,
 created_date date,
 created_by NVARCHAR(50)
-
 )
 
 -- menu
@@ -120,8 +119,26 @@ INSERT INTO dbo.modal(id_button, input_name, input_value)
 VALUES (14, N'CMTND', '1232454356')
 
 -- insert user
-insert into users(email, _password, name, business_name, phone, _role)
-values ('lekhuongduy1998@gmail.com', 'duy123', 'Duy', 'CD FPT', '0972222111', 'admin')
+select * from users
+insert into users(email, _password, name, business_name, phone, _role,[gende r],_address,date_of_birth,_status,created_date,created_by)
+values ('lekhuongduy1998@gmail.com', 'duy123', 'Duy', 'CD FPT', '0972222111', 'admin',N'Nam',N'Thuong tin HN','10-11-1998',1,N'10-11-2021',N'Duy')
+
+insert into users(email, _password, name, business_name, phone, _role,[gende r],_address,date_of_birth,_status,created_date,created_by)
+values ('le@gmail.com', '$2a$12$Y/pGT8voP/DwgHuqMDkoNepq00j4ASgTq85QM1KecO4/E42C4qveq', 'Duy', 'CD FPT', '0972222111', 'admin',N'Nam',N'Thuong tin HN','10-11-1998',1,N'10-11-2021',N'Duy')
+
+
+insert into users(email, _password, name, business_name, phone, _role,[gende r],_address,date_of_birth,_status,created_date,created_by)
+values ('binh@gmail.com', '$2a$12$IOCJQ3dK.uyRSrNsJPhtbeu6hcH7TGYvU/HuCF97Tqa0pGRQF3FfO', 'Duy', 'CD FPT', '0972222111', 'admin',N'Nam',N'Thuong tin HN','10-11-1998',1,N'10-11-2021',N'Duy')
+
+
+insert into users(email, _password, name, business_name, phone, _role,[gende r],_address,date_of_birth,_status,created_date,created_by)
+values ('tung@gmail.com', '12345678', 'Duy', 'CD FPT', '0972222111', 'customer',N'Nam',N'Thuong tin HN','10-11-1998',1,N'10-11-2021',N'Duy')
+
+-- password 1234567
+insert into users(email, _password, name, business_name, phone, _role,[gende r],_address,date_of_birth,_status,created_date,created_by)
+values ('duy@gmail.com', '$2a$12$Okz8AJ6B2ZgMhuiGJuxeBuIvIyvwVIqYdkjknKNM.6V8Uhmk8kOO6
+', 'Duy', 'CD FPT', '0972222111', 'admin',N'Nam',N'Thuong tin HN','10-11-1998',1,N'10-11-2021',N'Duy')
+
 insert into users(email, _password, name, business_name, phone, _role)
 values ('leanhtung@gmail.com', 'duy123', 'Duy', 'CD FPT', '0972222111', 'admin')
 insert into users(email, _password, name, business_name, phone, _role)
@@ -235,7 +252,7 @@ values ('tung@gmail.com', N'test', '123456789', 'test1@gmail.com', N'Hà Nội',
 
 -- insert servicefee
 
-
+select * from servicefee
 insert into servicefee(name_service, price)
 values ('1 tháng', 59000)
 insert into servicefee(name_service, price)

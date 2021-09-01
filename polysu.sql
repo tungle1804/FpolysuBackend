@@ -5,7 +5,6 @@ use polysu
 go
 
 -- users
-
 CREATE TABLE users(
 email NVARCHAR(50) NOT NULL PRIMARY KEY,
 _password VARCHAR(100),
@@ -23,8 +22,6 @@ created_by NVARCHAR(50)
 )
 
 -- menu
-
-
 CREATE TABLE menu(
 id INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
 email NVARCHAR(50) FOREIGN KEY REFERENCES dbo.users(email),
@@ -107,53 +104,42 @@ date_end date,
 _status bit,
 )
 
-
---insert modal
-SELECT *
-FROM dbo.modal
-INSERT INTO dbo.modal(id_button, input_name, input_value)
-VALUES (14, N'GioiTinh', 'Nam')
-INSERT INTO dbo.modal(id_button, input_name, input_value)
-VALUES (14, N'DoTuoi', 'TrungBinh')
-INSERT INTO dbo.modal(id_button, input_name, input_value)
-VALUES (14, N'CMTND', '1232454356')
-
 -- insert user
-insert into users(email, _password, name, business_name, phone, _role)
-values ('admin@gmail.com', '12345678', 'Admin', 'CD FPT', '0972222111', 'admin')
-insert into users(email, _password, name, business_name, phone, _role)
-values ('leanhtung@gmail.com', 'duy123', 'Duy', 'CD FPT', '0972222111', 'admin')
-insert into users(email, _password, name, business_name, phone, _role)
-values ('leducbinh@gmail.com', '12345678', 'Duy', 'CD FPT', '0972222111', 'customer')
-insert into users(email, _password, name, business_name, phone, _role)
-values ('duongtunglam@gmail.com', 'duy123', 'Duy', 'CD FPT', '0972222111', 'employee')
-insert into users(email, _password, name, business_name, phone, _role)
-values ('nguyenbavinh@gmail.com', 'duy123', 'Duy', 'CD FPT', '0972222111', 'customer')
-insert into users(email, _password, name, business_name, phone, _role)
-values ('vuthanhnam@gmail.com', 'duy123', 'Duy', 'CD FPT', '0972222111', 'customer')
-insert into users(email, _password, name, business_name, phone, _role)
-values ('abc@gmail.com', 'duy123', 'Duy', 'CD FPT', '0972222111', 'employee')
-insert into users(email, _password, name, business_name, phone, _role)
-values ('tung@gmail.com', 'duy123', 'Duy', 'CD FPT', '0972222111', 'customer')
+insert into users (email, _password, name, business_name, phone, _role, _status) 
+values ('admin@gmail.com', '12345678', 'Admin', 'CD FPT', '0972222111', 'admin', 1)
+insert into users (email, _password, name, business_name, phone, _role, _status) 
+values ('leanhtung@gmail.com', 'duy123', 'Lê Anh Tùng', 'CD FPT', '0972222111', 'admin', 1)
+insert into users (email, _password, name, business_name, phone, _role, _status) 
+values ('leducbinh@gmail.com', '12345678', 'Lê Đức Bình', 'CD FPT', '0972222111', 'customer', 1)
+insert into users (email, _password, name, business_name, phone, _role, _status) 
+values ('duongtunglam@gmail.com', 'duy123', 'Dương Tùng Lâm', 'CD FPT', '0972222111', 'employee', 0)
+insert into users (email, _password, name, business_name, phone, _role, _status) 
+values ('nguyenbavinh@gmail.com', 'duy123', 'Nguyễn Bá Vinh', 'CD FPT', '0972222111', 'customer', 1)
+insert into users (email, _password, name, business_name, phone, _role, _status) 
+values ('vuthanhnam@gmail.com', 'duy123', 'Vũ Thành Nam', 'CD FPT', '0972222111', 'customer', 0)
+insert into users (email, _password, name, business_name, phone, _role, _status) 
+values ('nhanvien01@gmail.com', 'duy123', 'Nguyễn Nhân Viên', 'CD FPT', '0972222111', 'employee', 1)
+insert into users (email, _password, name, business_name, phone, _role, _status) 
+values ('tung@gmail.com', 'duy123', 'Trần Thanh Tùng', 'CD FPT', '0972222111', 'customer', 0)
 
 
 -- insert menu
 insert into menu (email, name_menu, color_menu, _status)
-values ('lekhuongduy1998@gmail.com', 'alo', 'red', 1)
+values ('nguyenbavinh@gmail.com', 'alo', 'red', 1)
 insert into menu (email, name_menu, color_menu, _status)
 values ('duongtunglam@gmail.com', 'call', 'red', 0)
 insert into menu (email, name_menu, color_menu, _status)
-values ('leducbinh@gmail.com', 'email', 'red', 1)
+values ('nguyenbavinh@gmail.com', 'email', 'red', 1)
 insert into menu (email, name_menu, color_menu, _status)
-values ('test@gmail.com', 'call', 'blue', 0)
-insert into menu (email, name_menu, color_menu, _status)
-values ('lekhuongduy1998@gmail.com', 'email', 'black', 1)
+values ('vuthanhnam@gmail.com', 'call', 'blue', 0)
 insert into menu (email, name_menu, color_menu, _status)
 values ('vuthanhnam@gmail.com', 'email', 'black', 1)
 insert into menu (email, name_menu, color_menu, _status)
-values ('vuthanhnam@gmail.com', 'zalo', 'black', 0)
+values ('leducbinh@gmail.com', 'email', 'black', 1)
 insert into menu (email, name_menu, color_menu, _status)
-values ('vuthanhnam@gmail.com', 'email', 'black', 0)
+values ('leducbinh@gmail.com', 'zalo', 'black', 0)
+insert into menu (email, name_menu, color_menu, _status)
+values ('leducbinh@gmail.com', 'email', 'black', 0)
 
 
 -- insert button
@@ -206,10 +192,22 @@ values (11, 'facebook', 'red', 'https://www.24h.com.vn/', ':))', 'black', 'blue'
 insert into button(id_menu, name_button, color_text, link, icon, color_background, color_icon)
 values (13, 'facebook', 'red', 'https://www.24h.com.vn/', ':))', 'black', 'blue')
 
+
+
+--insert modal
+SELECT * FROM dbo.modal
+INSERT INTO dbo.modal(id_button, input_name, input_value)
+VALUES (2, N'GioiTinh', 'Nam')
+INSERT INTO dbo.modal(id_button, input_name, input_value)
+VALUES (2, N'DoTuoi', 'TrungBinh')
+INSERT INTO dbo.modal(id_button, input_name, input_value)
+VALUES (2, N'CMTND', '1232454356')
+
+
 -- insert dataofcustomer
 
 insert into dataofcustomer(email, fullname, phone, email_customer, _address, content, notes)
-values ('abc@gmail.com', N'Lê Đức bình', '044445566', 'ducbinh@gmail.com', N'Nghệ An',
+values ('leducbinh@gmail.com', N'Lê Đức bình', '044445566', 'ducbinh@gmail.com', N'Nghệ An',
         N'tôi được nhận vào công ty savis', N'abc')
 insert into dataofcustomer(email, fullname, phone, email_customer, _address, content, notes)
 values ('duongtunglam@gmail.com', N'lê anh tùng', '0343445566', 'leanhtung@gmail.com', N'phú thọ', N'thu nhập 1000$',
@@ -221,7 +219,7 @@ insert into dataofcustomer(email, fullname, phone, email_customer, _address, con
 values ('leducbinh@gmail.com', N'Lê khương duy', '044445566', 'lekhuongduy@gmail.com', N'ha noi', N'THPT lý tử tấn',
         N'cyz')
 insert into dataofcustomer(email, fullname, phone, email_customer, _address, content, notes)
-values ('lekhuongduy1998@gmail.com', N'duong tung lam', '0343445566', 'tunglam@gmail.com', N'Hà Nội',
+values ('leducbinh@gmail.com', N'duong tung lam', '0343445566', 'tunglam@gmail.com', N'Hà Nội',
         N'thu nhập 10000$', N'chưa có người yêu')
 insert into dataofcustomer(email, fullname, phone, email_customer, _address, content, notes)
 values ('vuthanhnam@gmail.com', N'vu thanh nam', '0343445566', 'thanhnam93@gmail.com', N'Hà Nội', N'thu nhập 10000$',
@@ -247,9 +245,9 @@ values ('12 tháng', 350000)
 -- insert payment_history
 
 insert into payment_history(email, id_service, date_end, _status)
-values ('abc@gmail.com', 1, GETDATE(), 0)
+values ('leducbinh@gmail.com', 1, GETDATE(), 0)
 insert into payment_history(email, id_service, date_end, _status)
-values ('abc@gmail.com', 2, GETDATE(), 1)
+values ('nguyenbavinh@gmail.com', 2, GETDATE(), 1)
 insert into payment_history(email, id_service, date_end, _status)
 values ('duongtunglam@gmail.com', 2, GETDATE(), 1)
 insert into payment_history(email, id_service, date_end, _status)

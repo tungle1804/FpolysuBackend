@@ -15,7 +15,7 @@ import java.util.Optional;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/api/v1/")
+@RequestMapping("/api/v1")
 public class UserController {
 
     private final UserService userService;
@@ -50,5 +50,37 @@ public class UserController {
     @GetMapping("/user/{id}")
     public Optional<User> getUserById(@PathVariable String id) {
         return userRepository.findById(id);
+    }
+
+    @GetMapping("/admin/users")
+    public ResponseEntity getUserByRole(){
+        List<User> listUsers = userService.getUserByRole();
+        ResponseEntity response = new ResponseEntity(listUsers, HttpStatus.OK);
+        return response;
+    }
+
+    @GetMapping("/admin/users/role")
+    public ResponseEntity getRoleOfUsers(){
+        List<String> listRole = userRepository.getRole();
+        return new ResponseEntity(listRole, HttpStatus.OK);
+    }
+
+    @PutMapping("/users/{id}")
+    public ResponseEntity updateUser(@RequestBody User user) {
+        User dto = userRepository.save(user);
+        return new ResponseEntity(dto, HttpStatus.OK);
+    }
+
+    @GetMapping("/admin/users/role-customer")
+    public ResponseEntity getUserByRoleCustomer(){
+        List<User> listUsers = userService.getUserByRoleCustomer();
+        ResponseEntity response = new ResponseEntity(listUsers, HttpStatus.OK);
+        return response;
+    }
+
+    @GetMapping("/admin/users/status")
+    public ResponseEntity getStatusOfUsers(){
+        List<String> listRole = userRepository.getRole();
+        return new ResponseEntity(listRole, HttpStatus.OK);
     }
 }

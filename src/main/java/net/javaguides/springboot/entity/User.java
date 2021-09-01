@@ -1,11 +1,13 @@
 package net.javaguides.springboot.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.sql.Date;
 import java.util.Collection;
 
 
@@ -33,11 +35,35 @@ public class User {
     @Column(name = "_role")
     private String role;
 
+	@Column(name="date_of_birth")
+	private Date dateOfBirth;
+
+	@Column(name="gender")
+	private String gender;
+
+	@Column(name="_address")
+	private String address;
+
+	@Column(name="_status")
+	private boolean status;
+
+	@Column(name="created_date")
+	private Date createdDate;
+
+	@Column(name="created_by")
+	private String createdBy;
+
+	@JsonIgnore
     @OneToMany(mappedBy = "users", fetch = FetchType.LAZY)
     private Collection<Menu> menu;
+
+	@JsonIgnore
     @OneToMany(mappedBy = "users", fetch = FetchType.LAZY)
     private Collection<PaymentHistory> paymentHistories;
 
+	@JsonIgnore
+	@OneToMany(mappedBy = "users", fetch = FetchType.LAZY)
+	private Collection<DataOfCustomer> dataOfCustomers;
 
 	public String getEmail() {
 		return email;
@@ -87,6 +113,54 @@ public class User {
 		this.role = role;
 	}
 
+	public Date getDateOfBirth() {
+		return dateOfBirth;
+	}
+
+	public void setDateOfBirth(Date dateOfBirth) {
+		this.dateOfBirth = dateOfBirth;
+	}
+
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public boolean getStatus() {
+		return status;
+	}
+
+	public void setStatus(boolean status) {
+		this.status = status;
+	}
+
+	public Date getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
+
+	public String getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
+	}
+
 	public Collection<Menu> getMenu() {
 		return menu;
 	}
@@ -94,10 +168,6 @@ public class User {
 	public void setMenu(Collection<Menu> menu) {
 		this.menu = menu;
 	}
-
-    @OneToMany(mappedBy = "users", fetch = FetchType.LAZY)
-    private Collection<DataOfCustomer> dataOfCustomers;
-
 
 	public Collection<PaymentHistory> getPaymentHistories() {
 		return paymentHistories;

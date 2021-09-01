@@ -18,7 +18,6 @@ date_of_birth date,
 _status bit,
 created_date date,
 created_by NVARCHAR(50)
-
 )
 
 -- menu
@@ -122,7 +121,6 @@ values ('nhanvien01@gmail.com', 'duy123', 'Nguyễn Nhân Viên', 'CD FPT', '097
 insert into users (email, _password, name, business_name, phone, _role, _status) 
 values ('tung@gmail.com', 'duy123', 'Trần Thanh Tùng', 'CD FPT', '0972222111', 'customer', 0)
 
-
 -- insert menu
 insert into menu (email, name_menu, color_menu, _status)
 values ('nguyenbavinh@gmail.com', 'alo', 'red', 1)
@@ -143,7 +141,6 @@ values ('leducbinh@gmail.com', 'email', 'black', 0)
 
 
 -- insert button
-
 insert into button(id_menu, type_button, name_button, color_text, link, icon, color_background, color_icon)
 values (6, 'call', 'call', 'red', '24h.com.vn', ':))', 'red', 'blue')
 insert into button(id_menu, type_button, name_button, color_text, link, icon, color_background, color_icon)
@@ -162,37 +159,10 @@ insert into button(id_menu, type_button, name_button, color_text, link, icon, co
 values (3, 'facebook', 'facebook', 'red', 'https://www.24h.com.vn/', ':))', 'black', 'blue')
 
 --insert activity
-
 insert into activityButton(id_button)
 values (3)
 insert into activityMenu(id_menu)
 values (3)
-
--- insert dataofcustomer
-
-
--- insert button
-select *
-from button
-WHERE id_menu = '16'
-insert into button(id_menu, name_button, color_text, link, icon, color_background, color_icon)
-values (17, 'call', 'red', '24h.com.vn', 'zalo.png', 'red', 'blue')
-insert into button(id_menu, name_button, color_text, link, icon, color_background, color_icon)
-values (16, 'call', 'black', 'https://www.24h.com.vn/', ':))', 'red', 'blue')
-insert into button(id_menu, name_button, color_text, link, icon, color_background, color_icon)
-values (1, 'call', 'blue', 'https://www.google.com/', ':))', 'black', 'blue')
-insert into button(id_menu, name_button, color_text, link, icon, color_background, color_icon)
-values (2, 'facebook', 'yellow', 'https://www.24h.com.vn/', ':))', 'yellow', 'blue')
-insert into button(id_menu, name_button, color_text, link, icon, color_background, color_icon)
-values (3, 'massage', 'red', 'https://www.24h.com.vn/', ':))', 'black', 'blue')
-insert into button(id_menu, name_button, color_text, link, icon, color_background, color_icon)
-values (12, 'massage', 'red', 'https://www.24h.com.vn/', ':))', 'black', 'blue')
-insert into button(id_menu, name_button, color_text, link, icon, color_background, color_icon)
-values (11, 'facebook', 'red', 'https://www.24h.com.vn/', ':))', 'black', 'blue')
-insert into button(id_menu, name_button, color_text, link, icon, color_background, color_icon)
-values (13, 'facebook', 'red', 'https://www.24h.com.vn/', ':))', 'black', 'blue')
-
-
 
 --insert modal
 SELECT * FROM dbo.modal
@@ -205,7 +175,6 @@ VALUES (2, N'CMTND', '1232454356')
 
 
 -- insert dataofcustomer
-
 insert into dataofcustomer(email, fullname, phone, email_customer, _address, content, notes)
 values ('leducbinh@gmail.com', N'Lê Đức bình', '044445566', 'ducbinh@gmail.com', N'Nghệ An',
         N'tôi được nhận vào công ty savis', N'abc')
@@ -231,8 +200,7 @@ insert into dataofcustomer(email, fullname, phone, email_customer, _address, con
 values ('tung@gmail.com', N'test', '123456789', 'test1@gmail.com', N'Hà Nội', N'thu nhập cao', N'chưa có người yêu')
 
 -- insert servicefee
-
-
+select * from servicefee
 insert into servicefee(name_service, price)
 values ('1 tháng', 59000)
 insert into servicefee(name_service, price)
@@ -243,7 +211,6 @@ insert into servicefee(name_service, price)
 values ('12 tháng', 350000)
 
 -- insert payment_history
-
 insert into payment_history(email, id_service, date_end, _status)
 values ('leducbinh@gmail.com', 1, GETDATE(), 0)
 insert into payment_history(email, id_service, date_end, _status)

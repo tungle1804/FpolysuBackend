@@ -1,39 +1,32 @@
 package net.javaguides.springboot.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import javax.persistence.*;
 import java.sql.Date;
 import java.util.Collection;
 
-
-import javax.persistence.*;
-
 @Entity
-@javax.persistence.Table(name = "users")
+@javax.persistence.Table(name="users")
 public class User {
-    @Id
-    @Column(name = "email")
-    private String email;
+	@Id
+	@Column(name="email")
+	private String email;
 
-    @Column(name = "_password")
-    private String password;
+	@Column(name="_password")
+	private String password;
 
-    @Column(name = "name")
-    private String fullName;
+	@Column(name="name")
+	private String fullName;
 
-    @Column(name = "business_name")
-    private String business;
+	@Column(name="business_name")
+	private String business;
 
-    @Column(name = "phone")
-    private String phone;
+	@Column(name="phone")
+	private String phone;
 
-    @Column(name = "_role")
-    private String role;
+	@Column(name="_role")
+	private String role;
 
 	@Column(name="date_of_birth")
 	private Date dateOfBirth;
@@ -64,6 +57,27 @@ public class User {
 	@JsonIgnore
 	@OneToMany(mappedBy = "users", fetch = FetchType.LAZY)
 	private Collection<DataOfCustomer> dataOfCustomers;
+
+	public User() {
+	}
+
+	public User(String email, String password, String fullName, String business, String phone, String role, Date dateOfBirth, String gender, String address, boolean status, Date createdDate, String createdBy, Collection<Menu> menu, Collection<PaymentHistory> paymentHistories, Collection<DataOfCustomer> dataOfCustomers) {
+		this.email = email;
+		this.password = password;
+		this.fullName = fullName;
+		this.business = business;
+		this.phone = phone;
+		this.role = role;
+		this.dateOfBirth = dateOfBirth;
+		this.gender = gender;
+		this.address = address;
+		this.createdDate = createdDate;
+		this.createdBy = createdBy;
+		this.menu = menu;
+		this.paymentHistories = paymentHistories;
+		this.dataOfCustomers = dataOfCustomers;
+		this.status = status;
+	}
 
 	public String getEmail() {
 		return email;
@@ -137,7 +151,7 @@ public class User {
 		this.address = address;
 	}
 
-	public boolean getStatus() {
+	public boolean isStatus() {
 		return status;
 	}
 
@@ -175,6 +189,14 @@ public class User {
 
 	public void setPaymentHistories(Collection<PaymentHistory> paymentHistories) {
 		this.paymentHistories = paymentHistories;
+	}
+
+	public Collection<DataOfCustomer> getDataOfCustomers() {
+		return dataOfCustomers;
+	}
+
+	public void setDataOfCustomers(Collection<DataOfCustomer> dataOfCustomers) {
+		this.dataOfCustomers = dataOfCustomers;
 	}
 }
 

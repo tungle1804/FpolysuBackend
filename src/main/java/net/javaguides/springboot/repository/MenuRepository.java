@@ -28,7 +28,6 @@ public interface MenuRepository extends JpaRepository<Menu, Integer> {
             "and (p.status = false or ((select count(*) from PaymentHistory) = 0))")
     Integer getBasicPro(User p_email);
 
-//    @Query("select count(m.id) from Menu m inner join User u on m.users = u.email inner join PaymentHistory p on u.email = p.users where p.users = :p_email " +
-//            "and ((select count(*) from PaymentHistory ) = 0)")
-//    Integer getCountHistory(User p_user);
+    @Query("select count(m.id) from Menu m")
+    Integer countAll();
 }

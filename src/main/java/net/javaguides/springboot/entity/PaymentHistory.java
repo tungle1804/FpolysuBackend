@@ -1,6 +1,8 @@
 package net.javaguides.springboot.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -22,6 +24,10 @@ public class PaymentHistory {
     @Column(name = "date_start")
     private Date dateStart;
 
+    @Column(name = "total_price")
+    private double totalPrice;
+
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "email")
     private User users;
@@ -34,11 +40,12 @@ public class PaymentHistory {
     public PaymentHistory() {
     }
 
-    public PaymentHistory(int id, Date dateEnd, boolean status, Date dateStart, User users, ServiceFee serviceFee) {
+    public PaymentHistory(int id, Date dateEnd, boolean status, Date dateStart, double totalPrice, User users, ServiceFee serviceFee) {
         this.id = id;
         this.dateEnd = dateEnd;
         this.status = status;
         this.dateStart = dateStart;
+        this.totalPrice = totalPrice;
         this.users = users;
         this.serviceFee = serviceFee;
     }
@@ -89,5 +96,14 @@ public class PaymentHistory {
 
     public void setServiceFee(ServiceFee serviceFee) {
         this.serviceFee = serviceFee;
+    }
+
+
+    public double getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(double totalPrice) {
+        this.totalPrice = totalPrice;
     }
 }

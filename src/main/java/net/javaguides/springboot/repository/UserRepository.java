@@ -16,6 +16,7 @@ public interface UserRepository extends JpaRepository<User,String> {
 
     Boolean existsByEmail(String email);
 
+
     @Query(value = "from User u where u.role = 'admin' or u.role = 'employee'")
     List<User> getUserByRole();
 
@@ -27,4 +28,7 @@ public interface UserRepository extends JpaRepository<User,String> {
 
     @Query(value = "select distinct u.status from User u ")
     List<String> getStatus();
+
+    int countByRole(String role);
+
 }

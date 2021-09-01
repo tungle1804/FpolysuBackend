@@ -1,18 +1,21 @@
 package net.javaguides.springboot.controller;
 
+
 import java.util.List;
 import java.util.Optional;
 
+import net.javaguides.springboot.entity.User;
+import net.javaguides.springboot.repository.MenuRepository;
+import net.javaguides.springboot.repository.PaymentHistoryRepository;
+import net.javaguides.springboot.repository.UserRepository;
 import net.javaguides.springboot.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.header.Header;
 import org.springframework.web.bind.annotation.*;
 
-import net.javaguides.springboot.entity.User;
-import net.javaguides.springboot.repository.UserRepository;
+
 
 import javax.validation.Valid;
 
@@ -22,16 +25,18 @@ import javax.validation.Valid;
 public class UserController {
 
     private final UserService userService;
+    @Autowired
+    PasswordEncoder encoder;
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private MenuRepository menuRepository;
+    @Autowired
+    private PaymentHistoryRepository paymentHistoryRepository;
 
     public UserController(UserService userService) {
         this.userService = userService;
     }
-
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    PasswordEncoder encoder;
 
     @GetMapping("/user")
     public List<User>getAllUser(){
@@ -56,6 +61,7 @@ public class UserController {
     public Optional<User> getUserById(@PathVariable String id) {
         return userRepository.findById(id);
     }
+
 
     @GetMapping("/admin/users")
     public ResponseEntity getUserByRole(){
@@ -89,5 +95,25 @@ public class UserController {
         return new ResponseEntity(listRole, HttpStatus.OK);
     }
 
+
+    @GetMapping("/sum-employee")
+    public Integer sumEmplyee(){
+        return userRepository.countByRole("employee");
+    }
+
+    @GetMapping("/sum-customer")
+    public Integer sumCustomer(){
+        return userRepository.countByRole("customer");
+    }
+
+    @GetMapping("/sum-menu")
+    public Integer sumMenu(){
+        return menuRepository.countAll();
+    }
+
+    @GetMapping("/total-price")
+    public double totalPrice(){
+      return paymentHistoryRepository.getTotalSumPrice();
+    }
 
 }

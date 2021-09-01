@@ -9,14 +9,14 @@ import java.util.Date;
 @SpringBootApplication
 public class SpringbootPolytu1Application {
 
-	public static void main(String[] args) {
-		
-		SpringApplication.run(SpringbootPolytu1Application.class, args);
-		Date date = new Date();
+    public static void main(String[] args) {
 
-		Calendar calendar = Calendar.getInstance();
-		date = calendar.getTime();
-		System.out.println(date);
-	}
+        SpringApplication.run(SpringbootPolytu1Application.class, args);
+        Date date = new Date();
+
+        Calendar calendar = Calendar.getInstance();
+        date = calendar.getTime();
+        System.out.println(date);
+    }
 
 }

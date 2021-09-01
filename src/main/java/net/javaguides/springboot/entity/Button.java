@@ -1,12 +1,5 @@
 package net.javaguides.springboot.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
 import javax.persistence.*;
 import java.util.Collection;
 
@@ -18,23 +11,25 @@ public class Button {
 	@Column(name="id")
 	private int id;
 
-	@Column(name="type_button")
-	private String TypeButton;
 
-	@Column(name="name_button")
-	private String name_button;
+    @Column(name = "type_button")
+    private String TypeButton;
 
-	@Column(name="color_text")
-	private String color_text;
+    @Column(name = "name_button")
+    private String name_button;
 
-	@Column(name="color_background")
-	private String color_background;
+    @Column(name = "color_text")
+    private String color_text;
 
-	@Column(name="color_icon")
-	private String color_icon;
+    @Column(name = "color_background")
+    private String color_background;
 
-	@Column(name="link")
-	private String link;
+    @Column(name = "color_icon")
+    private String color_icon;
+
+    @Column(name = "link")
+    private String link;
+
 
 	@Column(name="icon")
 	private String icon;
@@ -43,12 +38,15 @@ public class Button {
 	@JoinColumn(name="id_menu")
 	private Menu menu;
 
+
 	@OneToMany(mappedBy = "buttons",fetch = FetchType.LAZY)
 	private Collection<Modal> modal;
 
 
 	public Button() {
 	}
+
+
 	public int getId() {
 		return id;
 	}
@@ -121,5 +119,11 @@ public class Button {
 		this.menu = menu;
 	}
 
+	public Collection<Modal> getModal() {
+		return modal;
+	}
 
+	public void setModal(Collection<Modal> modal) {
+		this.modal = modal;
+	}
 }

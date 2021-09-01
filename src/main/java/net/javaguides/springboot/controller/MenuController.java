@@ -1,24 +1,17 @@
 package net.javaguides.springboot.controller;
 
+import net.javaguides.springboot.entity.Menu;
+import net.javaguides.springboot.exception.ResourceNotFoundException;
+import net.javaguides.springboot.repository.MenuRepository;
+import net.javaguides.springboot.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-
-import net.javaguides.springboot.entity.ActivityMenu;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import net.javaguides.springboot.exception.ResourceNotFoundException;
-
-import net.javaguides.springboot.entity.Menu;
-import net.javaguides.springboot.repository.MenuRepository;
 
 //@CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -26,6 +19,9 @@ import net.javaguides.springboot.repository.MenuRepository;
 public class MenuController {
     @Autowired
     private MenuRepository menuRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @GetMapping("/menu")
     public List<Menu> getAllMenu() {
@@ -74,4 +70,25 @@ public class MenuController {
         return menuRepository.getMenuByStatus(email);
     }
 
+    @GetMapping("countSumMenuCreated")
+    ResponseEntity<?> countSumMenuCreated(@RequestParam(value = "email",required = true) String email){
+       Integer value = menuRepository.countSumMenuCreated(email);
+       return (value!=null)?ResponseEntity.ok(value) : (ResponseEntity<?>) ResponseEntity.badRequest();
+    }
+
+    @GetMapping("statisticsClickByMenu")
+    ResponseEntity<?> statisticsClickByButton(@RequestParam(value = "email",required = true) String email){
+        List<Object> list = menuRepository.statisticsClickByMenu(email);
+        return (list!=null)?ResponseEntity.ok(list) : (ResponseEntity<?>) ResponseEntity.badRequest();
+
+    }
+    @GetMapping("findAllByStatusTrue")
+    ResponseEntity<?> findAllByStatusTrue(@RequestParam(value = "email",required = true)String email){
+try {
+    List<Menu> list = menuRepository.findAllByStatusTrue(email);
+    return ResponseEntity.ok().body(list);
+}catch (Exception e){
+    return (ResponseEntity<String>) ResponseEntity.badRequest().body("Erorr CMNR!");
+}
+    }
 }

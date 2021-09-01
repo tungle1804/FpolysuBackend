@@ -1,17 +1,20 @@
 package net.javaguides.springboot.controller;
 
+
 import com.google.gson.Gson;
-import lombok.extern.log4j.Log4j2;
 import net.javaguides.springboot.dao.PaymentDao;
+
 import net.javaguides.springboot.entity.*;
 import net.javaguides.springboot.exception.ResourceNotFoundException;
 import net.javaguides.springboot.model.response.DataOfCustomerAndModal;
+import net.javaguides.springboot.entity.Book;
+import net.javaguides.springboot.entity.DataOfCustomer;
+import net.javaguides.springboot.entity.Modal;
 import net.javaguides.springboot.repository.DataOfCustomerRepository;
 import net.javaguides.springboot.repository.ModalRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -62,7 +65,6 @@ public class DataOfCustomerController {
 
     @GetMapping("/dataofcustomerbyid/{id}")
     public Optional<DataOfCustomer> getDataOfCustomersById(@PathVariable String id) {
-
         return dataOfCustomerRepository.findById(id);
     }
 
@@ -100,6 +102,5 @@ public class DataOfCustomerController {
         lis  = paymentDao.dataOfCustomerAndModal(id);
         return lis;
     }
-
 
 }

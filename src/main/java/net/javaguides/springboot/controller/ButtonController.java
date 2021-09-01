@@ -1,45 +1,35 @@
 package net.javaguides.springboot.controller;
 
-import java.util.List;
-
-import net.javaguides.springboot.entity.Modal;
-import net.javaguides.springboot.repository.ModalRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
-
-import net.javaguides.springboot.exception.ResourceNotFoundException;
 import net.javaguides.springboot.entity.Book;
 import net.javaguides.springboot.entity.Button;
 import net.javaguides.springboot.entity.Menu;
+import net.javaguides.springboot.entity.Modal;
+import net.javaguides.springboot.exception.ResourceNotFoundException;
 import net.javaguides.springboot.repository.ButtonRepository;
 import net.javaguides.springboot.repository.MenuRepository;
+import net.javaguides.springboot.repository.ModalRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 //@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/api/v1/")
 public class ButtonController {
 
+    Gson gson = new Gson();
     @Autowired
     private ButtonRepository buttonRespository;
-
     @Autowired
     private MenuRepository menuRespository;
+
     @Autowired
     private ModalRepository modalRespository;
 
-    @GetMapping("/button")
-    public List<Button> getAllButton() {
-        return buttonRespository.findAll();
-    }
 //	@GetMapping("/user")
 //	public List<User>getAllUser(){
 //		return userRespository.findAll();
@@ -51,7 +41,10 @@ public class ButtonController {
 //		return buttonRespository.save(button);
 //	}
 
-    Gson gson = new Gson();
+    @GetMapping("/button")
+    public List<Button> getAllButton() {
+        return buttonRespository.findAll();
+    }
 
     @PostMapping("/button")
     public void createButton(@RequestBody Object object) {
@@ -61,9 +54,11 @@ public class ButtonController {
         menuRespository.save(menu1);
         List<Button> button1 = book.getButton();
         List<Modal> modal = book.getModal();
+        Button button = new Button();
         for (int i = 0; i < button1.size(); i++) {
             button1.get(i).setMenu(menu1);
-            buttonRespository.save(button1.get(i));
+            button=  buttonRespository.save(button1.get(i));
+            button.getId();
             for (int j = 0; j < modal.size(); j++) {
                 if (button1.get(i).getId() == modal.get(j).getId()) {
                     modal.get(j).setButtons(button1.get(i));
@@ -99,6 +94,23 @@ public class ButtonController {
         button1.setIcon(button1.getIcon());
         Button updatebutton = buttonRespository.save(button);
         return ResponseEntity.ok(updatebutton);
+    }
+
+
+    @GetMapping("countSumButtonCreated")
+    ResponseEntity<?> countSumButtonCreated(@RequestParam(value = "email",required = true) String email){
+        Integer value = buttonRespository.countSumButtonCreated(email);
+        return (value!=null)?ResponseEntity.ok(value) : (ResponseEntity<?>) ResponseEntity.badRequest();
+    }
+    @GetMapping("statisticsClickByUrl")
+    ResponseEntity<?> statisticsClickByUrl(@RequestParam(value = "email",required = true) String email){
+        List<Object> list = buttonRespository.statisticsClickByUrl(email);
+        return (list!=null)?ResponseEntity.ok(list) : (ResponseEntity<?>) ResponseEntity.badRequest();
+    }
+    @GetMapping("statisticsClickByButton")
+    ResponseEntity<?> statisticsClickByButton(@RequestParam(value = "email",required = true) String email){
+        List<Object> list = buttonRespository.statisticsClickByButton(email);
+        return (list!=null)?ResponseEntity.ok(list) : (ResponseEntity<?>) ResponseEntity.badRequest();
     }
 
 //	public static class Data{

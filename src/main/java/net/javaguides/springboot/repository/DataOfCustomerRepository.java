@@ -1,24 +1,23 @@
 package net.javaguides.springboot.repository;
 
 import net.javaguides.springboot.entity.DataOfCustomer;
-import net.javaguides.springboot.entity.Menu;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 public interface DataOfCustomerRepository  extends JpaRepository<DataOfCustomer,String> {
+
 //    @Query("from DataOfCustomer")
 //    List<DataOfCustomer> listDataOfCustomer();
 
     @Query(value = "from DataOfCustomer where fullName like concat('%',:fullname,'%') ")
     List<DataOfCustomer> getDataOfCustomerByFullName(@Param("fullname") String fullname);
 
-    @Query(value="from DataOfCustomer where email=:email")
+    @Query(value = "from DataOfCustomer where email=:email")
     List<DataOfCustomer> getDataOfCustomersByUsers(String email);
 
 

@@ -1,15 +1,17 @@
 package net.javaguides.springboot.entity;
-import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 
+
 @Entity
-@javax.persistence.Table(name="dataofcustomer")
+@javax.persistence.Table(name = "dataofcustomer")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class DataOfCustomer  {
+public class DataOfCustomer {
     @Id
     @Column(name="id")
     private String id;
@@ -21,18 +23,21 @@ public class DataOfCustomer  {
     private String phone;
 
     @Column(name = "email_customer")
-    private String emailCustomer ;
+    private String emailCustomer;
 
     @Column(name = "_address")
-    private String address ;
+    private String address;
 
     @Column(name = "content")
-    private String conTent  ;
+    private String conTent;
 
     @Column(name = "notes ")
     private String notes;
-    @Column(name="create_date")
+    @Column(name = "create_date")
     private String createDate;
+    @ManyToOne
+    @JoinColumn(name = "email")
+    private User users;
 
     @OneToMany(mappedBy = "dataOfCustomer", fetch = FetchType.LAZY)
     private Collection<Modal> modal;
@@ -44,10 +49,6 @@ public class DataOfCustomer  {
     public void setCreateDate(String createDate) {
         this.createDate = createDate;
     }
-
-    @ManyToOne
-    @JoinColumn(name="email")
-    private User users;
 
 //    public DataOfCustomer(int id, String fullName, String phone, String emailCustomer, String address, String conTent, String notes, User users) {
 //        this.id = id;

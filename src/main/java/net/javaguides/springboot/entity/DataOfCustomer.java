@@ -3,6 +3,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 
 @Entity
@@ -10,8 +11,8 @@ import java.util.Date;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class DataOfCustomer  {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    @Column(name="id")
+    private String id;
 
     @Column(name = "fullname")
     private String fullName;
@@ -32,6 +33,9 @@ public class DataOfCustomer  {
     private String notes;
     @Column(name="create_date")
     private String createDate;
+
+    @OneToMany(mappedBy = "dataOfCustomer", fetch = FetchType.LAZY)
+    private Collection<Modal> modal;
 
     public String getCreateDate() {
         return createDate;
@@ -59,11 +63,12 @@ public class DataOfCustomer  {
 //    public DataOfCustomer() {
 //    }
 
-    public int getId() {
+
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

@@ -24,6 +24,10 @@ public interface MenuRepository extends JpaRepository<Menu,Integer>{
 
 	@Query(" from Menu m where m.status=true and m.users.email=:email ")
 	List<Menu> getMenuByStatus(@Param("email") String email);
+
+	@Query(" from Menu m  where m.menuCode=:menucode and m.status=true")
+	List<Menu> getMenuByMenuCode(@Param("menucode") String menucode);
+
 //	@Query(value = "select m from Menu m where m.users.email=:email")
 //	Page<Menu> findAllByUser(@Param("email") String email, PageRequest pageRequest);
 }

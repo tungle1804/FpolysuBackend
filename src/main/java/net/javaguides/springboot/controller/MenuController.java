@@ -56,7 +56,10 @@ public class MenuController {
     public List<Menu> getButtonByEmail(@PathVariable String email) {
         return menuRepository.getMenuByEmail(email);
     }
-
+    @PostMapping("/getMenuByMenuCode/{menucode}")
+    public List<Menu> getMenuByMenuCode(@PathVariable String menucode) {
+        return menuRepository.getMenuByMenuCode(menucode);
+    }
     @PutMapping("/menu/{id}")
     public ResponseEntity<Menu> updateMenu(@PathVariable int id, @RequestBody Menu menu) {
         Menu menu1 = menuRepository.findById(id)

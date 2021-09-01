@@ -16,12 +16,12 @@ public interface ActivityMenuRepository extends JpaRepository<ActivityMenu, Inte
     //////////////////////////////////////////////////////////////////////////
     @Query(value = "select count(*) as TotalClickOnMenuEnable from activity_button join  button on button.id = activity_button.id_button \n" +
             "join menu on menu.id = button.id_menu join  users on users.email = menu.email \n" +
-            "where users.email =:email and menu._status = 1 \n" +
+            "where users.email =:email and menu.id=:idMenu \n" +
             "and DATEPART(HOUR,activity_button.created_at) =:hour\n" +
             "and DAY(activity_button.created_at) =:day\n" +
             "and MONTH(activity_button.created_at) =:month\n" +
             "and YEAR(activity_button.created_at) =:year", nativeQuery = true)
-    Integer statisticAllActionOnThisMenuEnable(@Param("email") String email, @Param("hour") Integer hour, @Param("day") Integer day
+    Integer statisticAllActionOnThisMenuEnable(@Param("email") String email,@Param("idMenu")Integer idMenu, @Param("hour") Integer hour, @Param("day") Integer day
             , @Param("month") Integer month, @Param("year") Integer year);
 
 
@@ -29,6 +29,11 @@ public interface ActivityMenuRepository extends JpaRepository<ActivityMenu, Inte
             "join menu on menu.id = button.id_menu join  users on users.email = menu.email \n" +
             "where users.email =:email and menu.id =:idMenu and activity_button.created_at LIKE CONCAT(:day,'%')", nativeQuery = true)
     Integer statisticAllActionOnThisMenu(@Param("email") String email, @Param("idMenu") Integer idMenu, @Param("day") String day);
+
+    @Query(value = "select count(*) as TotalClickOnMenuEnable from activity_button join  button on button.id = activity_button.id_button \n" +
+            "join menu on menu.id = button.id_menu join  users on users.email = menu.email \n" +
+            "where users.email =:email and activity_button.created_at LIKE CONCAT(:day,'%')", nativeQuery = true)
+    Integer statisticAllActionOnAllMenu(@Param("email") String email, @Param("day") String day);
 
     //////////////////////////////////////////////////////
     @Query(value = "select distinct menu.name_menu, count(*) as countNumberClickMenu from activity_button join button on button.id = activity_button.id_button \n" +
@@ -97,4 +102,17 @@ public interface ActivityMenuRepository extends JpaRepository<ActivityMenu, Inte
     )
     Page<Object[]> getStatisticInformationOfActionWithSearch(@Param("email") String email,@Param("start") Date start,
                                                    @Param("end") Date end,@Param("search") String search, Pageable pageable);
+
+    @Query(value = "select distinct activity_button.from_url, count(*) as Total from activity_button join button on button.id = activity_button.id_button\n" +
+            "         join menu on menu.id = button.id_menu where menu.email=:email and activity_button.created_at between :start AND :end group by activity_button.from_url",nativeQuery = true)
+    Page<Object[]> countTotalClickBuFromUrl(@Param("email") String email,@Param("start") String start,
+                                            @Param("end") String end, Pageable pageable);
+
+
+ // This is query to Statistics for Page Dashboard
+ @Query(value = "select count(*) as countNumberClickMenu from activity_button join button on button.id = activity_button.id_button \n" +
+         "join menu on menu.id = button.id_menu where menu.email =:email ", nativeQuery = true)
+ Integer getTotalNumberClickByUser(@Param("email") String email);
+
+
 }

@@ -74,7 +74,7 @@ public class ActivityMenuController {
     @GetMapping("/statisticAllActionOnThisMenuEnable")
     ResponseEntity<?> statisticAllActionOnThisMenuEnable(
             @RequestParam(name = "email", required = true) String email,
-            // @RequestParam(name = "hour", required = true) String hour,
+            @RequestParam(name = "idMenu", required = true) String idMenu,
             @RequestParam(name = "day", required = true) String day,
             @RequestParam(name = "month", required = true) String month,
             @RequestParam(name = "year", required = true) String year
@@ -82,7 +82,7 @@ public class ActivityMenuController {
         try {
             List<Integer> list = new ArrayList<>();
             for (int i = 0; i < 24; i++) {
-                Integer dtoPage = activityMenuRepository.statisticAllActionOnThisMenuEnable(email, Integer.parseInt(String.valueOf(i)),
+                Integer dtoPage = activityMenuRepository.statisticAllActionOnThisMenuEnable(email,Integer.parseInt(idMenu), Integer.parseInt(String.valueOf(i)),
                         Integer.parseInt(day), Integer.parseInt(month), Integer.parseInt(year));
                 list.add(dtoPage);
             }
@@ -104,7 +104,7 @@ public class ActivityMenuController {
             @RequestParam(name = "email", required = true) String email,
             @RequestParam(name = "start") String s,
             @RequestParam(name = "end") String e,
-            @RequestParam(name = "idMenu", required = true) String idMenu
+            @RequestParam(name = "idMenu", required = false) String idMenu
 
 
     ) {
@@ -118,8 +118,14 @@ public class ActivityMenuController {
                 totalDates.add(start);
                 start = start.plusDays(1);
             }
-            list = totalDates.stream().map(item -> activityMenuRepository.statisticAllActionOnThisMenu
-                    (email, Integer.parseInt(idMenu), item.toString())).collect(Collectors.toList());
+            if(idMenu!=null){
+                list = totalDates.stream().map(item -> activityMenuRepository.statisticAllActionOnThisMenu
+                        (email, Integer.parseInt(idMenu), item.toString())).collect(Collectors.toList());
+            }else {
+                list = totalDates.stream().map(item -> activityMenuRepository.statisticAllActionOnAllMenu
+                        (email, item.toString())).collect(Collectors.toList());
+            }
+
             return new ResponseEntity<>(list, new HttpHeaders(), HttpStatus.OK);
             //       return new ResponseEntity<>(dtoPage, new HttpHeaders(), HttpStatus.OK);
 
@@ -164,7 +170,7 @@ public class ActivityMenuController {
         try {
             PageRequest pageRequest = PageRequest.of(Integer.parseInt(pageNo), Integer.parseInt(limit));
             Page<Object[]> dtoPage = null;
-            if (start.length() > 0 && end.length() > 0) {
+            if (start!=null && end!=null) {
                 dtoPage = activityMenuRepository.getTotalNumberClickOnMenuByTime(email, start, end, Integer.parseInt(menuId), pageRequest);
             } else {
                 dtoPage = activityMenuRepository.getTotalNumberClickOnMenu(email, pageRequest);
@@ -194,7 +200,7 @@ public class ActivityMenuController {
         try {
             PageRequest pageRequest = PageRequest.of(Integer.parseInt(pageNo), Integer.parseInt(limit));
             Page<Object[]> dtoPage = null;
-            if (start.length() > 0 && end.length() > 0) {
+            if (start != null && end != null) {
 
             } else {
                 dtoPage = activityMenuRepository.getTotalNumberActionDisplayOnMenu(email, pageRequest);
@@ -312,6 +318,7 @@ public class ActivityMenuController {
                 totalDates.add(start);
                 start = start.plusDays(1);
             }
+
             return new ResponseEntity<>(totalDates, new HttpHeaders(), HttpStatus.OK);
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -320,4 +327,37 @@ public class ActivityMenuController {
         }
 
     }
+    @GetMapping("/countTotalClickBuFromUrl")
+    ResponseEntity<?> countTotalClickBuFromUrl(
+            @RequestParam(name = "email") String email,
+            @RequestParam(name = "start", required = false) String start,
+            @RequestParam(name = "end", required = false) String end,
+            @RequestParam(name = "pageNo", defaultValue = "0", required = false) String pageNo,
+            @RequestParam(name = "limit", defaultValue = "5", required = false) String limit
+    ) {
+        try {
+            PageRequest pageRequest = PageRequest.of(Integer.parseInt(pageNo), Integer.parseInt(limit));
+            Page<Object[]> dtoPage = null;
+            if (start.length() > 0 && end.length() > 0) {
+                dtoPage = activityMenuRepository.countTotalClickBuFromUrl(email,start,end,pageRequest);
+            } else {
+
+            }
+
+            if (dtoPage != null) {
+                return new ResponseEntity<>(dtoPage, new HttpHeaders(), HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>("Data need search not exist", new HttpHeaders(), HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body("Page Empty");
+        }
+
+    }
+    @GetMapping("getTotalNumberClickByUser")
+   ResponseEntity<?> getTotalNumberClickByUser(@RequestParam(value = "email",required = true) String email){
+        int sum = activityMenuRepository.getTotalNumberClickByUser(email);
+        return new ResponseEntity<>(sum, new HttpHeaders(), HttpStatus.OK);
+   }
 }

@@ -67,14 +67,25 @@ public class MenuController {
         return menuRepository.getMenuByStatus(email);
     }
 
-    @GetMapping("/getBasicPro/{email}")
-    public String getBasicPro(@PathVariable String email){
-        int countBasic = menuRepository.getBasicPro(userRepository.findOneByEmail(email));
-//        int countHistory = menuRepository.getCountHistory(userRepository.findOneByEmail(email));
-        System.out.println("AAAAAAAA      " + countBasic );
-        if(countBasic > 10){
-            return "Lỗi, tài khoản của bạn chưa nâng cấp";
-        }
-        return "OK";
+    @GetMapping("countSumMenuCreated")
+    ResponseEntity<?> countSumMenuCreated(@RequestParam(value = "email",required = true) String email){
+       Integer value = menuRepository.countSumMenuCreated(email);
+       return (value!=null)?ResponseEntity.ok(value) : (ResponseEntity<?>) ResponseEntity.badRequest();
+    }
+
+    @GetMapping("statisticsClickByMenu")
+    ResponseEntity<?> statisticsClickByButton(@RequestParam(value = "email",required = true) String email){
+        List<Object> list = menuRepository.statisticsClickByMenu(email);
+        return (list!=null)?ResponseEntity.ok(list) : (ResponseEntity<?>) ResponseEntity.badRequest();
+
+    }
+    @GetMapping("findAllByStatusTrue")
+    ResponseEntity<?> findAllByStatusTrue(@RequestParam(value = "email",required = true)String email){
+try {
+    List<Menu> list = menuRepository.findAllByStatusTrue(email);
+    return ResponseEntity.ok().body(list);
+}catch (Exception e){
+    return (ResponseEntity<String>) ResponseEntity.badRequest().body("Erorr CMNR!");
+}
     }
 }

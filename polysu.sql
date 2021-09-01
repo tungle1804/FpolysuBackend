@@ -1,10 +1,10 @@
-drop database polysu
+﻿drop database polysu
 create database polysu
 go
 use polysu
 go
 
--- users
+
 CREATE TABLE users(
 email NVARCHAR(50) NOT NULL PRIMARY KEY,
 _password VARCHAR(100),
@@ -31,36 +31,43 @@ menu_type nvarchar(10),
 date_start date,
 display_time int,
 menu_location nvarchar(20)
+>>>>>>> 68c3d3823bca71c502abb7693481e8df0e1bdbe4
 )
-select * from menu
 
 --button
-
-CREATE TABLE button (
-id INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
-id_menu INT FOREIGN KEY REFERENCES menu(id),
-type_button nvarchar(100),
-name_button NVARCHAR(100),
-color_text NVARCHAR(300),
-link NVARCHAR(300),
-icon NVARCHAR(300),
-color_background NVARCHAR(300),
-color_icon NVARCHAR(300)
+CREATE TABLE button
+(
+    id               INT IDENTITY (1,1) NOT NULL PRIMARY KEY,
+    id_menu          INT FOREIGN KEY REFERENCES menu (id),
+    type_button      nvarchar(100),
+    name_button      NVARCHAR(100),
+    color_text       NVARCHAR(300),
+    link             NVARCHAR(300),
+    icon             NVARCHAR(300),
+    color_background NVARCHAR(300),
+    color_icon       NVARCHAR(300)
 )
-
-
-create table activityButton(
-id int identity not null primary key,
-id_button int foreign key references dbo.button(id) not null,
-created_at datetime default getdate() null,
-from_url nvarchar(300),
-Equipment  bit
+create table activity_button
+(
+    id         int identity                                   not null primary key,
+    id_button  int foreign key references dbo.button (id) not null,
+    created_at datetime default getdate()                     null,
+    from_url   nvarchar(300)                                  null,
+	equipment bit null,
+	ip_address nvarchar(100) null,
+	user_address nvarchar(100) null,
+	languages nvarchar(50) null,
+	supplier nvarchar(50) null
 )
+select * from activity_button where DATEPART(day,activity_button.created_at)=30
 
-create table activityMenu(
-id int identity not null primary key,
-id_menu int foreign key references dbo.menu(id) not null,
-created_at datetime default getdate() null
+select * from activity_menu
+
+create table activity_menu
+(
+    id         int identity                                 not null primary key,
+    id_menu    int foreign key references dbo.menu (id) not null,
+    created_at datetime default getdate()                   null
 )
 
 -- modal
@@ -72,36 +79,78 @@ CREATE TABLE modal
     input_value NVARCHAR(50)       NOT NULL
 )
 -- dataofcustom
-create table dataofcustomer(
-id INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
-email NVARCHAR(50) FOREIGN KEY REFERENCES dbo.users(email),
-id_modal INT FOREIGN KEY REFERENCES modal(id),
-fullname NVARCHAR(100),
-phone varchar(15),
-email_customer NVARCHAR(100),
-_address NVARCHAR(200),
-content NVARCHAR(MAX),
-notes NVARCHAR(MAX),
-create_date Datetime,
+create table dataofcustomer
+(
+    id             INT IDENTITY (1,1) NOT NULL PRIMARY KEY,
+    email          NVARCHAR(50) FOREIGN KEY REFERENCES dbo.users (email),
+    fullname       NVARCHAR(100),
+    phone          varchar(15),
+    email_customer NVARCHAR(100),
+    _address       NVARCHAR(200),
+    content        NVARCHAR(MAX),
+    notes          NVARCHAR(MAX),
 )
 
------------------------
 -- servicefee
-create table servicefee(
-id INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
-name_service NVARCHAR(200),
-price float,
+create table servicefee
+(
+    id           INT IDENTITY (1,1) NOT NULL PRIMARY KEY,
+    name_service NVARCHAR(200),
+    price        INT,
 )
 
 -- payment_history
-create table payment_history(
-id INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
-email NVARCHAR(50) FOREIGN KEY REFERENCES dbo.users(email),
-id_service INT FOREIGN KEY REFERENCES servicefee(id),
-date_start date,
-date_end date,
-_status bit,
+create table payment_history
+(
+    id         INT IDENTITY (1,1) NOT NULL PRIMARY KEY,
+    email      NVARCHAR(50) FOREIGN KEY REFERENCES dbo.users (email),
+    id_service INT FOREIGN KEY REFERENCES servicefee (id),
+    date_end   datetime,
+    _status    nvarchar(100),
 )
+
+select *
+from payment_history
+alter table payment_history
+    alter column date_end date
+alter table payment_history
+    alter column _status bit
+alter table payment_history
+    add date_start date
+
+-- button fake
+
+CREATE TABLE button_fake
+(
+    id_button        INT           NOT NULL PRIMARY KEY,
+    name_button      NVARCHAR(100) NOT NULL,
+    color_text       NVARCHAR(300) NOT NULL,
+    link             NVARCHAR(300) NOT NULL,
+    icon             NVARCHAR(300) NOT NULL,
+    color_background NVARCHAR(300) NOT NULL,
+    color_icon       NVARCHAR(300) NOT NULL
+)
+
+
+
+CREATE TABLE modal
+(
+    id          INT IDENTITY (1,1) NOT NULL PRIMARY KEY,
+    id_button   INT FOREIGN KEY REFERENCES dbo.button (id),
+    input_name  NVARCHAR(50)       NOT NULL,
+    input_value NVARCHAR(50)       NOT NULL
+)
+
+--insert modal
+SELECT *
+FROM dbo.modal
+INSERT INTO dbo.modal(id_button, input_name, input_value)
+VALUES (14, N'GioiTinh', 'Nam')
+INSERT INTO dbo.modal(id_button, input_name, input_value)
+VALUES (14, N'DoTuoi', 'TrungBinh')
+INSERT INTO dbo.modal(id_button, input_name, input_value)
+VALUES (14, N'CMTND', '1232454356')
+
 
 -- insert user
 insert into users (email, _password, name, business_name, phone, _role, _status) 
@@ -137,7 +186,10 @@ values ('leducbinh@gmail.com', 'email', 'black', 1)
 insert into menu (email, name_menu, color_menu, _status)
 values ('leducbinh@gmail.com', 'zalo', 'black', 0)
 insert into menu (email, name_menu, color_menu, _status)
-values ('leducbinh@gmail.com', 'email', 'black', 0)
+values ('thanhnam.humg93@gmail.com', 'email', 'black', 1)
+select * from menu where email= 'thanhnam.humg93@gmail.com'
+insert into button(id_menu, type_button, name_button, color_text, link, icon, color_background, color_icon)
+values (10, 'Nam', 'Nam', 'red', '24h.com.vn', ':))', 'red', 'blue')
 
 
 -- insert button
@@ -265,6 +317,7 @@ from activity_button
 where users.email = 'vuthanhnam@gmail.com'
   and menu.id = 6
   and activity_button.created_at like '2021-08-19'
+ 
 
 -------------------------------------------------------------------------Table 1--------------------------------------------------------
 -- get Total number Click on one Menu group by MenuID of username: countNumberClickMenu = Total Click all Button of this
@@ -326,4 +379,43 @@ from activity_button
          join menu on menu.id = button.id_menu
          join users on users.email = menu.email
 where users.email = 'vuthanhnam@gmail.com' and activity_button.created_at between '2021-08-17' and '2021-08-22'
-SET LANGUAGE us_english;  
+
+select distinct button.name_button, count(*) as countNumber
+from activity_button join button on button.id=activity_button.id_button
+join menu on menu.id = button.id_menu
+join activity_menu
+ on menu.id = activity_menu.id_menu
+where menu.email = 'vuthanhnam@gmail.com'
+ group by button.name_button
+
+
+select distinct button.name_button, count(*) as countNumberActionByButton from button join menu on menu.id=button.id_menu
+         join activity_menu on menu.id=activity_menu.id_menu where menu.email = 'vuthanhnam@gmail.com'
+         group by button.name_button
+
+
+		 select distinct button.name_button, count(*) as countNumberClickButton from activity_button join button on button.id = activity_button.id_button
+           join menu on menu.id = button.id_menu join  users on users.email = menu.email and
+           users.email ='vuthanhnam@gmail.com'  group by button.name_button
+
+
+select equipment ,count(*) from activity_button group by equipment
+select distinct button.type_button,count(*) from button 
+join activity_button on button.id = activity_button.id_button 
+join menu on menu.id = button.id_menu where email='vuthanhnam@gmail.com' group by button.type_button
+
+
+select activity_button.from_url,count(*) as Total from activity_button 
+join button on button.id=activity_button.id_button 
+join menu on menu.id = button.id_menu 
+where menu.email='vuthanhnam@gmail.com' 
+group by  activity_button.from_url 
+order by Total desc
+
+select * from activity_button where DATEPART(day,activity_button.created_at)=31
+
+delete from activity_button where DATEPART(day,activity_button.created_at)= 31
+
+select activity_button.ip_address,user_address, count(*) from activity_button join button on button.id = activity_button.id_button
+           join menu on menu.id = button.id_menu join  users on users.email = menu.email and
+           users.email ='vuthanhnam@gmail.com'  group by activity_button.ip_address,user_address

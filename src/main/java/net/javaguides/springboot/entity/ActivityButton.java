@@ -23,6 +23,22 @@ public class ActivityButton {
     private Date CreatedAt = new Date();
     @Column(name = "from_url")
     private String fromUrl;
+
+    @Column(name = "equipment")
+    private Boolean equipment;
+
+    @Column(name = "ip_address")
+    private String ipAddress;
+
+    @Column(name = "user_address")
+    private String userAddress;
+
+        @Column(name = "languages")
+    private String languages;
+
+    @Column(name = "supplier")
+    private String supplier;
+
     @Column(name = "id_button")
     private int buttonId;
 

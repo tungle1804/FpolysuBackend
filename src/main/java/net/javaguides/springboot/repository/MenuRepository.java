@@ -14,20 +14,26 @@ import java.util.List;
 public interface MenuRepository extends JpaRepository<Menu, Integer> {
     @Query("  from Menu")
     List<Menu> listmenu();
-
     //	@Query(" from Menu m  where m.users.email like CONCAT('%',:email,'%')")
     @Query(" from Menu m  where m.users.email=:email")
     List<Menu> getMenuByEmail(@Param("email") String email);
-
     @Query(" from Menu m where m.status=true and m.users.email=:email ")
     List<Menu> getMenuByStatus(@Param("email") String email);
 //	@Query(value = "select m from Menu m where m.users.email=:email")
 //	Page<Menu> findAllByUser(@Param("email") String email, PageRequest pageRequest);
-
-    @Query("select count(m.id) from Menu m inner join User u on m.users = u.email inner join PaymentHistory p on u.email = p.users where p.users = :p_email " +
-            "and (p.status = false or ((select count(*) from PaymentHistory) = 0))")
-    Integer getBasicPro(User p_email);
-
+    //function to get total menu created by users
+    @Query("select count(m) from Menu m where m.users.email=:email")
+    Integer countSumMenuCreated(@Param("email")String email);
+    @Query(value = "select menu.name_menu,count(*) as Total from activity_button \n" +
+            "join button on button.id=activity_button.id_button \n" +
+            "join menu on menu.id = button.id_menu \n" +
+            "where menu.email=:email \n" +
+            "group by  menu.name_menu \n" +
+            "order by Total desc",nativeQuery = true)
+    List<Object> statisticsClickByMenu(@Param("email")String email);
+    @Query(value = "select m from Menu m where m.users.email=:email and m.status=true")
+List<Menu> findAllByStatusTrue(@Param("email")String email);
     @Query("select count(m.id) from Menu m")
     Integer countAll();
+
 }

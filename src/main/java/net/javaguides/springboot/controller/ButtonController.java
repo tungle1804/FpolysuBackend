@@ -94,6 +94,23 @@ public class ButtonController {
         return ResponseEntity.ok(updatebutton);
     }
 
+
+    @GetMapping("countSumButtonCreated")
+    ResponseEntity<?> countSumButtonCreated(@RequestParam(value = "email",required = true) String email){
+        Integer value = buttonRespository.countSumButtonCreated(email);
+        return (value!=null)?ResponseEntity.ok(value) : (ResponseEntity<?>) ResponseEntity.badRequest();
+    }
+    @GetMapping("statisticsClickByUrl")
+    ResponseEntity<?> statisticsClickByUrl(@RequestParam(value = "email",required = true) String email){
+        List<Object> list = buttonRespository.statisticsClickByUrl(email);
+        return (list!=null)?ResponseEntity.ok(list) : (ResponseEntity<?>) ResponseEntity.badRequest();
+    }
+    @GetMapping("statisticsClickByButton")
+    ResponseEntity<?> statisticsClickByButton(@RequestParam(value = "email",required = true) String email){
+        List<Object> list = buttonRespository.statisticsClickByButton(email);
+        return (list!=null)?ResponseEntity.ok(list) : (ResponseEntity<?>) ResponseEntity.badRequest();
+    }
+
 //	public static class Data{
 //		private Menu menu;
 //		private Button button;

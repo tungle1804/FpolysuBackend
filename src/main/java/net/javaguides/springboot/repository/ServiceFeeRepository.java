@@ -7,4 +7,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ServiceFeeRepository extends JpaRepository<ServiceFee, Integer> {
     ServiceFee findServiceFeeByPrice(double price);
+
 }

@@ -1,5 +1,7 @@
 package net.javaguides.springboot.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Collection;
 
@@ -16,6 +18,7 @@ public class ServiceFee {
     @Column(name = "price")
     private double price;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "serviceFee", fetch = FetchType.LAZY)
     private Collection<PaymentHistory> paymentHistories;
 

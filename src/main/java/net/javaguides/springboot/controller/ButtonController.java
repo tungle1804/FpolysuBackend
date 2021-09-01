@@ -54,9 +54,11 @@ public class ButtonController {
         menuRespository.save(menu1);
         List<Button> button1 = book.getButton();
         List<Modal> modal = book.getModal();
+        Button button = new Button();
         for (int i = 0; i < button1.size(); i++) {
             button1.get(i).setMenu(menu1);
-            buttonRespository.save(button1.get(i));
+            button=  buttonRespository.save(button1.get(i));
+            button.getId();
             for (int j = 0; j < modal.size(); j++) {
                 if (button1.get(i).getId() == modal.get(j).getId()) {
                     modal.get(j).setButtons(button1.get(i));

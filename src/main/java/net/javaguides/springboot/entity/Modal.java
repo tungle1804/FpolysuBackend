@@ -17,7 +17,12 @@ public class Modal {
     private String inputValue;
 
     @ManyToOne
-    @JoinColumn(name = "id_button")
+
+    @JoinColumn(name="id_dataofcustomer")
+    private DataOfCustomer dataOfCustomer;
+    @ManyToOne
+    @JoinColumn(name="id_button")
+
     private Button buttons;
 
     public int getId() {
@@ -50,5 +55,13 @@ public class Modal {
 
     public void setButtons(Button buttons) {
         this.buttons = buttons;
+    }
+
+    public DataOfCustomer getDataOfCustomer() {
+        return dataOfCustomer;
+    }
+
+    public void setDataOfCustomer(DataOfCustomer dataOfCustomer) {
+        this.dataOfCustomer = dataOfCustomer;
     }
 }

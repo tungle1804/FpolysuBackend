@@ -10,8 +10,11 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 
+
 @Repository
 public interface MenuRepository extends JpaRepository<Menu, Integer> {
+    @Query(" from Menu m  where m.menuCode=:menucode and m.status=true")
+    List<Menu> getMenuByMenuCode(@Param("menucode") String menucode);
     @Query("  from Menu")
     List<Menu> listmenu();
     //	@Query(" from Menu m  where m.users.email like CONCAT('%',:email,'%')")

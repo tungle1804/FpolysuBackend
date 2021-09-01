@@ -2,13 +2,10 @@ package net.javaguides.springboot.controller;
 
 
 import com.google.gson.Gson;
-import lombok.extern.log4j.Log4j2;
 import net.javaguides.springboot.dao.PaymentDao;
-import net.javaguides.springboot.entity.*;
-import net.javaguides.springboot.exception.ResourceNotFoundException;
-
+import net.javaguides.springboot.entity.Book;
 import net.javaguides.springboot.entity.DataOfCustomer;
-
+import net.javaguides.springboot.entity.Modal;
 import net.javaguides.springboot.repository.DataOfCustomerRepository;
 import net.javaguides.springboot.repository.ModalRepository;
 import org.slf4j.Logger;

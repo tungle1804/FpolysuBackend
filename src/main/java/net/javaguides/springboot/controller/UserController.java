@@ -1,9 +1,6 @@
 package net.javaguides.springboot.controller;
 
 
-import java.util.List;
-import java.util.Optional;
-
 import net.javaguides.springboot.entity.User;
 import net.javaguides.springboot.repository.MenuRepository;
 import net.javaguides.springboot.repository.PaymentHistoryRepository;
@@ -15,9 +12,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-
-
 import javax.validation.Valid;
+import java.util.List;
+import java.util.Optional;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -62,7 +59,6 @@ public class UserController {
         return userRepository.findById(id);
     }
 
-
     @GetMapping("/admin/users")
     public ResponseEntity getUserByRole(){
         List<User> listUsers = userService.getUserByRole();
@@ -94,7 +90,6 @@ public class UserController {
         List<String> listRole = userRepository.getRole();
         return new ResponseEntity(listRole, HttpStatus.OK);
     }
-
 
     @GetMapping("/sum-employee")
     public Integer sumEmplyee(){

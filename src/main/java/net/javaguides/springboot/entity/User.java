@@ -1,11 +1,10 @@
 package net.javaguides.springboot.entity;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
-import java.sql.Date;
-import java.util.Collection;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.sql.Date;
+import java.util.Collection;
 
 @Entity
 @javax.persistence.Table(name="users")
@@ -38,8 +37,8 @@ public class User {
 	@Column(name="_address")
 	private String address;
 
-	@Column(name="status")
-	private String status;
+	@Column(name="_status")
+	private boolean status;
 
 	@Column(name="created_date")
 	private Date createdDate;
@@ -47,18 +46,22 @@ public class User {
 	@Column(name="created_by")
 	private String createdBy;
 
-	@OneToMany(mappedBy ="users",fetch = FetchType.LAZY)
-	private Collection<Menu> menu;
-	@OneToMany(mappedBy ="users",fetch = FetchType.LAZY)
-	private Collection<PaymentHistory> paymentHistories;
+	@JsonIgnore
+    @OneToMany(mappedBy = "users", fetch = FetchType.LAZY)
+    private Collection<Menu> menu;
 
-	@OneToMany(mappedBy ="users",fetch = FetchType.LAZY)
+	@JsonIgnore
+    @OneToMany(mappedBy = "users", fetch = FetchType.LAZY)
+    private Collection<PaymentHistory> paymentHistories;
+
+	@JsonIgnore
+	@OneToMany(mappedBy = "users", fetch = FetchType.LAZY)
 	private Collection<DataOfCustomer> dataOfCustomers;
 
 	public User() {
 	}
 
-	public User(String email, String password, String fullName, String business, String phone, String role, Date dateOfBirth, String gender, String address, String status, Date createdDate, String createdBy, Collection<Menu> menu, Collection<PaymentHistory> paymentHistories, Collection<DataOfCustomer> dataOfCustomers) {
+	public User(String email, String password, String fullName, String business, String phone, String role, Date dateOfBirth, String gender, String address, boolean status, Date createdDate, String createdBy, Collection<Menu> menu, Collection<PaymentHistory> paymentHistories, Collection<DataOfCustomer> dataOfCustomers) {
 		this.email = email;
 		this.password = password;
 		this.fullName = fullName;
@@ -84,6 +87,14 @@ public class User {
 		this.email = email;
 	}
 
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
 	public String getFullName() {
 		return fullName;
 	}
@@ -106,14 +117,6 @@ public class User {
 
 	public void setPhone(String phone) {
 		this.phone = phone;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
 	}
 
 	public String getRole() {
@@ -148,6 +151,14 @@ public class User {
 		this.address = address;
 	}
 
+	public boolean isStatus() {
+		return status;
+	}
+
+	public void setStatus(boolean status) {
+		this.status = status;
+	}
+
 	public Date getCreatedDate() {
 		return createdDate;
 	}
@@ -162,6 +173,30 @@ public class User {
 
 	public void setCreatedBy(String createdBy) {
 		this.createdBy = createdBy;
+	}
+
+	public Collection<Menu> getMenu() {
+		return menu;
+	}
+
+	public void setMenu(Collection<Menu> menu) {
+		this.menu = menu;
+	}
+
+	public Collection<PaymentHistory> getPaymentHistories() {
+		return paymentHistories;
+	}
+
+	public void setPaymentHistories(Collection<PaymentHistory> paymentHistories) {
+		this.paymentHistories = paymentHistories;
+	}
+
+	public Collection<DataOfCustomer> getDataOfCustomers() {
+		return dataOfCustomers;
+	}
+
+	public void setDataOfCustomers(Collection<DataOfCustomer> dataOfCustomers) {
+		this.dataOfCustomers = dataOfCustomers;
 	}
 }
 

@@ -16,5 +16,4 @@ public interface UserService {
 
     public List<User> getUserByRoleCustomer();
 
-
 }

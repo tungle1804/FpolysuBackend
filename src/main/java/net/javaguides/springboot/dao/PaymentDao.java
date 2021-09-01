@@ -2,8 +2,6 @@ package net.javaguides.springboot.dao;
 
 import net.javaguides.springboot.entity.Modal;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;

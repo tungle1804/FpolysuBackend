@@ -43,7 +43,7 @@ public class PaymentDao {
 //            }
 //        }
 //    }
-    public int updateValueInput(Modal modal, String idDataOfCustomer) {
+    public int updateValueInput(Modal modal, int idDataOfCustomer) {
         try {
             String sql = "update modal SET input_value = ? , id_dataofcustomer = ? where id = ?";
             int result = 0;

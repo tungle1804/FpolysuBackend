@@ -9,7 +9,11 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
+<<<<<<< HEAD
 public interface DataOfCustomerRepository extends JpaRepository<DataOfCustomer, String> {
+=======
+public interface DataOfCustomerRepository  extends JpaRepository<DataOfCustomer,Integer> {
+>>>>>>> d72fff00065cc0c712d96b4c01edc6266772614e
 
 //    @Query("from DataOfCustomer")
 //    List<DataOfCustomer> listDataOfCustomer();

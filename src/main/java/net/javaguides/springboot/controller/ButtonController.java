@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 //@CrossOrigin(origins = "http://localhost:3000")
@@ -57,11 +58,15 @@ public class ButtonController {
         Button button = new Button();
         for (int i = 0; i < button1.size(); i++) {
             button1.get(i).setMenu(menu1);
+<<<<<<< HEAD
             button = buttonRespository.save(button1.get(i));
             button.getId();
+=======
+            button=  buttonRespository.save(button1.get(i));
+>>>>>>> d72fff00065cc0c712d96b4c01edc6266772614e
             for (int j = 0; j < modal.size(); j++) {
                 if (button1.get(i).getId() == modal.get(j).getId()) {
-                    modal.get(j).setButtons(button1.get(i));
+                    modal.get(j).setButtons(button);
                     modalRespository.save(modal.get(j));
                 }
             }

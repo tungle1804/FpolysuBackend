@@ -24,12 +24,14 @@ public class Menu {
     private String menuLocation;
     @Column(name = "menu_code")
     private String menuCode;
+    @Column(name = "opacity")
+    private float  opacity;
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "email")
     private User users;
 
-
+    @JsonIgnore
     @OneToMany(mappedBy = "menu", fetch = FetchType.LAZY)
     private Collection<Button> button;
 
@@ -102,4 +104,11 @@ public class Menu {
         this.menuLocation = menuLocation;
     }
 
+    public float getOpacity() {
+        return opacity;
+    }
+
+    public void setOpacity(float opacity) {
+        this.opacity = opacity;
+    }
 }

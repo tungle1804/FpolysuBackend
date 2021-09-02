@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface DataOfCustomerRepository  extends JpaRepository<DataOfCustomer,String> {
+public interface DataOfCustomerRepository  extends JpaRepository<DataOfCustomer,Integer> {
 
 //    @Query("from DataOfCustomer")
 //    List<DataOfCustomer> listDataOfCustomer();

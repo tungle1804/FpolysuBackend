@@ -53,7 +53,7 @@ public class MenuController {
         return menuRepository.getMenuByEmail(email);
     }
 
-    @PutMapping("/menu/{id}")
+        @PutMapping("/menu/{id}")
     public ResponseEntity<Menu> updateMenu(@PathVariable int id, @RequestBody Menu menu) {
         Menu menu1 = menuRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Categories not exist with id :" + id));

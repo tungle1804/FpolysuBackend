@@ -29,15 +29,17 @@ color_menu NVARCHAR(50),
 _status BIT,
 menu_type nvarchar(20),
 date_start date,
-display_time int,
 menu_location nvarchar(20)
-menu_code VARCHAR(50)
+menu_code VARCHAR(50),
+opacity NVARCHAR(10),
+from_display_time int default (0),
+to_display_time int default (2359)
 )
 
 --button
 CREATE TABLE button
 (
-   id NVARCHAR(10)  NOT NULL PRIMARY KEY,
+   id INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
     id_menu          INT FOREIGN KEY REFERENCES menu (id),
     type_button      nvarchar(100),
     name_button      NVARCHAR(100),
@@ -81,15 +83,15 @@ create table activity_menu
 
 CREATE TABLE modal (
 id INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
-id_button NVARCHAR(10) FOREIGN KEY REFERENCES dbo.button(id),
-id_dataofcustomer NVARCHAR(20) FOREIGN KEY REFERENCES dbo.dataofcustomer(id),
+id_button int  FOREIGN KEY REFERENCES dbo.button(id),
+id_dataofcustomer int FOREIGN KEY REFERENCES dbo.dataofcustomer(id),
 input_name NVARCHAR(50) NOT NULL,
 input_value NVARCHAR(50)
 )
 
 -- dataofcustom
 create table dataofcustomer(
-id  nvarchar(20) NOT NULL PRIMARY KEY,
+id INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
 email NVARCHAR(50) FOREIGN KEY REFERENCES dbo.users(email),
 fullname NVARCHAR(100),
 phone varchar(15),

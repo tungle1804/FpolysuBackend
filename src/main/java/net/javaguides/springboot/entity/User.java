@@ -7,196 +7,196 @@ import java.sql.Date;
 import java.util.Collection;
 
 @Entity
-@javax.persistence.Table(name="users")
+@javax.persistence.Table(name = "users")
 public class User {
-	@Id
-	@Column(name="email")
-	private String email;
+    @Id
+    @Column(name = "email")
+    private String email;
 
-	@Column(name="_password")
-	private String password;
+    @Column(name = "_password")
+    private String password;
 
-	@Column(name="name")
-	private String fullName;
+    @Column(name = "name")
+    private String fullName;
 
-	@Column(name="business_name")
-	private String business;
+    @Column(name = "business_name")
+    private String business;
 
-	@Column(name="phone")
-	private String phone;
+    @Column(name = "phone")
+    private String phone;
 
-	@Column(name="_role")
-	private String role;
+    @Column(name = "_role")
+    private String role;
 
-	@Column(name="date_of_birth")
-	private Date dateOfBirth;
+    @Column(name = "date_of_birth")
+    private Date dateOfBirth;
 
-	@Column(name="gender")
-	private String gender;
+    @Column(name = "gender")
+    private String gender;
 
-	@Column(name="_address")
-	private String address;
+    @Column(name = "_address")
+    private String address;
 
-	@Column(name="_status")
-	private boolean status;
+    @Column(name = "_status")
+    private boolean status;
 
-	@Column(name="created_date")
-	private Date createdDate;
+    @Column(name = "created_date")
+    private Date createdDate;
 
-	@Column(name="created_by")
-	private String createdBy;
+    @Column(name = "created_by")
+    private String createdBy;
 
-	@JsonIgnore
+    @JsonIgnore
     @OneToMany(mappedBy = "users", fetch = FetchType.LAZY)
     private Collection<Menu> menu;
 
-	@JsonIgnore
+    @JsonIgnore
     @OneToMany(mappedBy = "users", fetch = FetchType.LAZY)
     private Collection<PaymentHistory> paymentHistories;
 
-	@JsonIgnore
-	@OneToMany(mappedBy = "users", fetch = FetchType.LAZY)
-	private Collection<DataOfCustomer> dataOfCustomers;
+    @JsonIgnore
+    @OneToMany(mappedBy = "users", fetch = FetchType.LAZY)
+    private Collection<DataOfCustomer> dataOfCustomers;
 
-	public User() {
-	}
+    public User() {
+    }
 
-	public User(String email, String password, String fullName, String business, String phone, String role, Date dateOfBirth, String gender, String address, boolean status, Date createdDate, String createdBy, Collection<Menu> menu, Collection<PaymentHistory> paymentHistories, Collection<DataOfCustomer> dataOfCustomers) {
-		this.email = email;
-		this.password = password;
-		this.fullName = fullName;
-		this.business = business;
-		this.phone = phone;
-		this.role = role;
-		this.dateOfBirth = dateOfBirth;
-		this.gender = gender;
-		this.address = address;
-		this.createdDate = createdDate;
-		this.createdBy = createdBy;
-		this.menu = menu;
-		this.paymentHistories = paymentHistories;
-		this.dataOfCustomers = dataOfCustomers;
-		this.status = status;
-	}
+    public User(String email, String password, String fullName, String business, String phone, String role, Date dateOfBirth, String gender, String address, boolean status, Date createdDate, String createdBy, Collection<Menu> menu, Collection<PaymentHistory> paymentHistories, Collection<DataOfCustomer> dataOfCustomers) {
+        this.email = email;
+        this.password = password;
+        this.fullName = fullName;
+        this.business = business;
+        this.phone = phone;
+        this.role = role;
+        this.dateOfBirth = dateOfBirth;
+        this.gender = gender;
+        this.address = address;
+        this.createdDate = createdDate;
+        this.createdBy = createdBy;
+        this.menu = menu;
+        this.paymentHistories = paymentHistories;
+        this.dataOfCustomers = dataOfCustomers;
+        this.status = status;
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    public String getEmail() {
+        return email;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-	public String getPassword() {
-		return password;
-	}
+    public String getPassword() {
+        return password;
+    }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-	public String getFullName() {
-		return fullName;
-	}
+    public String getFullName() {
+        return fullName;
+    }
 
-	public void setFullName(String fullName) {
-		this.fullName = fullName;
-	}
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
 
-	public String getBusiness() {
-		return business;
-	}
+    public String getBusiness() {
+        return business;
+    }
 
-	public void setBusiness(String business) {
-		this.business = business;
-	}
+    public void setBusiness(String business) {
+        this.business = business;
+    }
 
-	public String getPhone() {
-		return phone;
-	}
+    public String getPhone() {
+        return phone;
+    }
 
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
 
-	public String getRole() {
-		return role;
-	}
+    public String getRole() {
+        return role;
+    }
 
-	public void setRole(String role) {
-		this.role = role;
-	}
+    public void setRole(String role) {
+        this.role = role;
+    }
 
-	public Date getDateOfBirth() {
-		return dateOfBirth;
-	}
+    public Date getDateOfBirth() {
+        return dateOfBirth;
+    }
 
-	public void setDateOfBirth(Date dateOfBirth) {
-		this.dateOfBirth = dateOfBirth;
-	}
+    public void setDateOfBirth(Date dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
 
-	public String getGender() {
-		return gender;
-	}
+    public String getGender() {
+        return gender;
+    }
 
-	public void setGender(String gender) {
-		this.gender = gender;
-	}
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
 
-	public String getAddress() {
-		return address;
-	}
+    public String getAddress() {
+        return address;
+    }
 
-	public void setAddress(String address) {
-		this.address = address;
-	}
+    public void setAddress(String address) {
+        this.address = address;
+    }
 
-	public boolean isStatus() {
-		return status;
-	}
+    public boolean isStatus() {
+        return status;
+    }
 
-	public void setStatus(boolean status) {
-		this.status = status;
-	}
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
 
-	public Date getCreatedDate() {
-		return createdDate;
-	}
+    public Date getCreatedDate() {
+        return createdDate;
+    }
 
-	public void setCreatedDate(Date createdDate) {
-		this.createdDate = createdDate;
-	}
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
+    }
 
-	public String getCreatedBy() {
-		return createdBy;
-	}
+    public String getCreatedBy() {
+        return createdBy;
+    }
 
-	public void setCreatedBy(String createdBy) {
-		this.createdBy = createdBy;
-	}
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
 
-	public Collection<Menu> getMenu() {
-		return menu;
-	}
+    public Collection<Menu> getMenu() {
+        return menu;
+    }
 
-	public void setMenu(Collection<Menu> menu) {
-		this.menu = menu;
-	}
+    public void setMenu(Collection<Menu> menu) {
+        this.menu = menu;
+    }
 
-	public Collection<PaymentHistory> getPaymentHistories() {
-		return paymentHistories;
-	}
+    public Collection<PaymentHistory> getPaymentHistories() {
+        return paymentHistories;
+    }
 
-	public void setPaymentHistories(Collection<PaymentHistory> paymentHistories) {
-		this.paymentHistories = paymentHistories;
-	}
+    public void setPaymentHistories(Collection<PaymentHistory> paymentHistories) {
+        this.paymentHistories = paymentHistories;
+    }
 
-	public Collection<DataOfCustomer> getDataOfCustomers() {
-		return dataOfCustomers;
-	}
+    public Collection<DataOfCustomer> getDataOfCustomers() {
+        return dataOfCustomers;
+    }
 
-	public void setDataOfCustomers(Collection<DataOfCustomer> dataOfCustomers) {
-		this.dataOfCustomers = dataOfCustomers;
-	}
+    public void setDataOfCustomers(Collection<DataOfCustomer> dataOfCustomers) {
+        this.dataOfCustomers = dataOfCustomers;
+    }
 }
 

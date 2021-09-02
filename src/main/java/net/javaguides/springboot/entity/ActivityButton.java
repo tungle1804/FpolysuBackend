@@ -33,7 +33,7 @@ public class ActivityButton {
     @Column(name = "user_address")
     private String userAddress;
 
-        @Column(name = "languages")
+    @Column(name = "languages")
     private String languages;
 
     @Column(name = "supplier")

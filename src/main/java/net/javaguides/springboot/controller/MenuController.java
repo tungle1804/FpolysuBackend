@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-//@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin()
 @RestController
 @RequestMapping("/api/v1/")
 public class MenuController {
@@ -53,7 +53,12 @@ public class MenuController {
         return menuRepository.getMenuByEmail(email);
     }
 
-        @PutMapping("/menu/{id}")
+    @PostMapping("/getMenuByMenuCode/{menucode}")
+    public List<Menu> getMenuByMenuCode(@PathVariable String menucode) {
+        return menuRepository.getMenuByMenuCode(menucode);
+    }
+
+    @PutMapping("/menu/{id}")
     public ResponseEntity<Menu> updateMenu(@PathVariable int id, @RequestBody Menu menu) {
         Menu menu1 = menuRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Categories not exist with id :" + id));
@@ -68,24 +73,25 @@ public class MenuController {
     }
 
     @GetMapping("countSumMenuCreated")
-    ResponseEntity<?> countSumMenuCreated(@RequestParam(value = "email",required = true) String email){
-       Integer value = menuRepository.countSumMenuCreated(email);
-       return (value!=null)?ResponseEntity.ok(value) : (ResponseEntity<?>) ResponseEntity.badRequest();
+    ResponseEntity<?> countSumMenuCreated(@RequestParam(value = "email", required = true) String email) {
+        Integer value = menuRepository.countSumMenuCreated(email);
+        return (value != null) ? ResponseEntity.ok(value) : (ResponseEntity<?>) ResponseEntity.badRequest();
     }
 
     @GetMapping("statisticsClickByMenu")
-    ResponseEntity<?> statisticsClickByButton(@RequestParam(value = "email",required = true) String email){
+    ResponseEntity<?> statisticsClickByButton(@RequestParam(value = "email", required = true) String email) {
         List<Object> list = menuRepository.statisticsClickByMenu(email);
-        return (list!=null)?ResponseEntity.ok(list) : (ResponseEntity<?>) ResponseEntity.badRequest();
+        return (list != null) ? ResponseEntity.ok(list) : (ResponseEntity<?>) ResponseEntity.badRequest();
 
     }
+
     @GetMapping("findAllByStatusTrue")
-    ResponseEntity<?> findAllByStatusTrue(@RequestParam(value = "email",required = true)String email){
-try {
-    List<Menu> list = menuRepository.findAllByStatusTrue(email);
-    return ResponseEntity.ok().body(list);
-}catch (Exception e){
-    return (ResponseEntity<String>) ResponseEntity.badRequest().body("Erorr CMNR!");
-}
+    ResponseEntity<?> findAllByStatusTrue(@RequestParam(value = "email", required = true) String email) {
+        try {
+            List<Menu> list = menuRepository.findAllByStatusTrue(email);
+            return ResponseEntity.ok().body(list);
+        } catch (Exception e) {
+            return (ResponseEntity<String>) ResponseEntity.badRequest().body("Erorr CMNR!");
+        }
     }
 }

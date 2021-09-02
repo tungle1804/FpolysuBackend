@@ -22,8 +22,8 @@ public class Menu {
     private String menuType;
     @Column(name = "menu_location")
     private String menuLocation;
-
-
+    @Column(name = "menu_code")
+    private String menuCode;
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "email")
@@ -43,6 +43,15 @@ public class Menu {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+
+    public String getMenuCode() {
+        return menuCode;
+    }
+
+    public void setMenuCode(String menuCode) {
+        this.menuCode = menuCode;
     }
 
     public String getName_menu() {

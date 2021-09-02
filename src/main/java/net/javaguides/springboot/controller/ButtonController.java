@@ -54,9 +54,11 @@ public class ButtonController {
         menuRespository.save(menu1);
         List<Button> button1 = book.getButton();
         List<Modal> modal = book.getModal();
+        Button button = new Button();
         for (int i = 0; i < button1.size(); i++) {
             button1.get(i).setMenu(menu1);
-            buttonRespository.save(button1.get(i));
+            button = buttonRespository.save(button1.get(i));
+            button.getId();
             for (int j = 0; j < modal.size(); j++) {
                 if (button1.get(i).getId() == modal.get(j).getId()) {
                     modal.get(j).setButtons(button1.get(i));
@@ -96,19 +98,21 @@ public class ButtonController {
 
 
     @GetMapping("countSumButtonCreated")
-    ResponseEntity<?> countSumButtonCreated(@RequestParam(value = "email",required = true) String email){
+    ResponseEntity<?> countSumButtonCreated(@RequestParam(value = "email", required = true) String email) {
         Integer value = buttonRespository.countSumButtonCreated(email);
-        return (value!=null)?ResponseEntity.ok(value) : (ResponseEntity<?>) ResponseEntity.badRequest();
+        return (value != null) ? ResponseEntity.ok(value) : (ResponseEntity<?>) ResponseEntity.badRequest();
     }
+
     @GetMapping("statisticsClickByUrl")
-    ResponseEntity<?> statisticsClickByUrl(@RequestParam(value = "email",required = true) String email){
+    ResponseEntity<?> statisticsClickByUrl(@RequestParam(value = "email", required = true) String email) {
         List<Object> list = buttonRespository.statisticsClickByUrl(email);
-        return (list!=null)?ResponseEntity.ok(list) : (ResponseEntity<?>) ResponseEntity.badRequest();
+        return (list != null) ? ResponseEntity.ok(list) : (ResponseEntity<?>) ResponseEntity.badRequest();
     }
+
     @GetMapping("statisticsClickByButton")
-    ResponseEntity<?> statisticsClickByButton(@RequestParam(value = "email",required = true) String email){
+    ResponseEntity<?> statisticsClickByButton(@RequestParam(value = "email", required = true) String email) {
         List<Object> list = buttonRespository.statisticsClickByButton(email);
-        return (list!=null)?ResponseEntity.ok(list) : (ResponseEntity<?>) ResponseEntity.badRequest();
+        return (list != null) ? ResponseEntity.ok(list) : (ResponseEntity<?>) ResponseEntity.badRequest();
     }
 
 //	public static class Data{

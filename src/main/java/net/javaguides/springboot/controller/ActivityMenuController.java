@@ -82,7 +82,7 @@ public class ActivityMenuController {
         try {
             List<Integer> list = new ArrayList<>();
             for (int i = 0; i < 24; i++) {
-                Integer dtoPage = activityMenuRepository.statisticAllActionOnThisMenuEnable(email,Integer.parseInt(idMenu), Integer.parseInt(String.valueOf(i)),
+                Integer dtoPage = activityMenuRepository.statisticAllActionOnThisMenuEnable(email, Integer.parseInt(idMenu), Integer.parseInt(String.valueOf(i)),
                         Integer.parseInt(day), Integer.parseInt(month), Integer.parseInt(year));
                 list.add(dtoPage);
             }
@@ -118,10 +118,10 @@ public class ActivityMenuController {
                 totalDates.add(start);
                 start = start.plusDays(1);
             }
-            if(idMenu!=null){
+            if (idMenu != null) {
                 list = totalDates.stream().map(item -> activityMenuRepository.statisticAllActionOnThisMenu
                         (email, Integer.parseInt(idMenu), item.toString())).collect(Collectors.toList());
-            }else {
+            } else {
                 list = totalDates.stream().map(item -> activityMenuRepository.statisticAllActionOnAllMenu
                         (email, item.toString())).collect(Collectors.toList());
             }
@@ -170,7 +170,7 @@ public class ActivityMenuController {
         try {
             PageRequest pageRequest = PageRequest.of(Integer.parseInt(pageNo), Integer.parseInt(limit));
             Page<Object[]> dtoPage = null;
-            if (start!=null && end!=null) {
+            if (start != null && end != null) {
                 dtoPage = activityMenuRepository.getTotalNumberClickOnMenuByTime(email, start, end, Integer.parseInt(menuId), pageRequest);
             } else {
                 dtoPage = activityMenuRepository.getTotalNumberClickOnMenu(email, pageRequest);
@@ -268,7 +268,7 @@ public class ActivityMenuController {
             @RequestParam(name = "email") String email,
             @RequestParam(name = "start", required = false) String start,
             @RequestParam(name = "end", required = false) String end,
-            @RequestParam(name = "search",required = false) String search,
+            @RequestParam(name = "search", required = false) String search,
             @RequestParam(name = "pageNo", defaultValue = "0", required = false) String pageNo,
             @RequestParam(name = "limit", defaultValue = "5", required = false) String limit
     ) {
@@ -279,11 +279,11 @@ public class ActivityMenuController {
             System.out.println(startd.toString());
             System.out.println(endd.toString());
             PageRequest pageRequest = PageRequest.of(Integer.parseInt(pageNo), Integer.parseInt(limit), Sort.by("id").descending());
-            Page<Object[]> dtoPage =null;
-            if(search.length()>0){
-                dtoPage = activityMenuRepository.getStatisticInformationOfAction(email,startd,endd, pageRequest);
-            }else {
-                dtoPage = activityMenuRepository.getStatisticInformationOfActionWithSearch(email,startd,endd,search,pageRequest);
+            Page<Object[]> dtoPage = null;
+            if (search.length() > 0) {
+                dtoPage = activityMenuRepository.getStatisticInformationOfAction(email, startd, endd, pageRequest);
+            } else {
+                dtoPage = activityMenuRepository.getStatisticInformationOfActionWithSearch(email, startd, endd, search, pageRequest);
             }
 
             if (dtoPage != null) {
@@ -327,6 +327,7 @@ public class ActivityMenuController {
         }
 
     }
+
     @GetMapping("/countTotalClickBuFromUrl")
     ResponseEntity<?> countTotalClickBuFromUrl(
             @RequestParam(name = "email") String email,
@@ -339,7 +340,7 @@ public class ActivityMenuController {
             PageRequest pageRequest = PageRequest.of(Integer.parseInt(pageNo), Integer.parseInt(limit));
             Page<Object[]> dtoPage = null;
             if (start.length() > 0 && end.length() > 0) {
-                dtoPage = activityMenuRepository.countTotalClickBuFromUrl(email,start,end,pageRequest);
+                dtoPage = activityMenuRepository.countTotalClickBuFromUrl(email, start, end, pageRequest);
             } else {
 
             }
@@ -355,9 +356,10 @@ public class ActivityMenuController {
         }
 
     }
+
     @GetMapping("getTotalNumberClickByUser")
-   ResponseEntity<?> getTotalNumberClickByUser(@RequestParam(value = "email",required = true) String email){
+    ResponseEntity<?> getTotalNumberClickByUser(@RequestParam(value = "email", required = true) String email) {
         int sum = activityMenuRepository.getTotalNumberClickByUser(email);
         return new ResponseEntity<>(sum, new HttpHeaders(), HttpStatus.OK);
-   }
+    }
 }

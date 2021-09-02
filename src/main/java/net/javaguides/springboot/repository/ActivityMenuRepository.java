@@ -21,7 +21,7 @@ public interface ActivityMenuRepository extends JpaRepository<ActivityMenu, Inte
             "and DAY(activity_button.created_at) =:day\n" +
             "and MONTH(activity_button.created_at) =:month\n" +
             "and YEAR(activity_button.created_at) =:year", nativeQuery = true)
-    Integer statisticAllActionOnThisMenuEnable(@Param("email") String email,@Param("idMenu")Integer idMenu, @Param("hour") Integer hour, @Param("day") Integer day
+    Integer statisticAllActionOnThisMenuEnable(@Param("email") String email, @Param("idMenu") Integer idMenu, @Param("hour") Integer hour, @Param("day") Integer day
             , @Param("month") Integer month, @Param("year") Integer year);
 
 
@@ -90,7 +90,7 @@ public interface ActivityMenuRepository extends JpaRepository<ActivityMenu, Inte
             "join Menu m on m.id = b.menu.id\n" +
             "join User u on u.email = m.users.email where u.email=:email and ab.CreatedAt between :start AND :end"
     )
-    Page<Object[]> getStatisticInformationOfAction(@Param("email") String email,@Param("start") Date start,
+    Page<Object[]> getStatisticInformationOfAction(@Param("email") String email, @Param("start") Date start,
                                                    @Param("end") Date end, Pageable pageable);
 
     @Query(value = "select  ab.CreatedAt as ClickTime,m.name_menu, b.name_button, b.link,ab.fromUrl from \n" +
@@ -100,19 +100,19 @@ public interface ActivityMenuRepository extends JpaRepository<ActivityMenu, Inte
             "and m.name_menu like %:search% or b.name_button like %:search% or b.link like %:search% " +
             "or ab.fromUrl like %:search%"
     )
-    Page<Object[]> getStatisticInformationOfActionWithSearch(@Param("email") String email,@Param("start") Date start,
-                                                   @Param("end") Date end,@Param("search") String search, Pageable pageable);
+    Page<Object[]> getStatisticInformationOfActionWithSearch(@Param("email") String email, @Param("start") Date start,
+                                                             @Param("end") Date end, @Param("search") String search, Pageable pageable);
 
     @Query(value = "select distinct activity_button.from_url, count(*) as Total from activity_button join button on button.id = activity_button.id_button\n" +
-            "         join menu on menu.id = button.id_menu where menu.email=:email and activity_button.created_at between :start AND :end group by activity_button.from_url",nativeQuery = true)
-    Page<Object[]> countTotalClickBuFromUrl(@Param("email") String email,@Param("start") String start,
+            "         join menu on menu.id = button.id_menu where menu.email=:email and activity_button.created_at between :start AND :end group by activity_button.from_url", nativeQuery = true)
+    Page<Object[]> countTotalClickBuFromUrl(@Param("email") String email, @Param("start") String start,
                                             @Param("end") String end, Pageable pageable);
 
 
- // This is query to Statistics for Page Dashboard
- @Query(value = "select count(*) as countNumberClickMenu from activity_button join button on button.id = activity_button.id_button \n" +
-         "join menu on menu.id = button.id_menu where menu.email =:email ", nativeQuery = true)
- Integer getTotalNumberClickByUser(@Param("email") String email);
+    // This is query to Statistics for Page Dashboard
+    @Query(value = "select count(*) as countNumberClickMenu from activity_button join button on button.id = activity_button.id_button \n" +
+            "join menu on menu.id = button.id_menu where menu.email =:email ", nativeQuery = true)
+    Integer getTotalNumberClickByUser(@Param("email") String email);
 
 
 }

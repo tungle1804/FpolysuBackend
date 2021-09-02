@@ -85,12 +85,12 @@ public class ActivityButtonController {
         try {
             PageRequest pageRequest = PageRequest.of(Integer.parseInt(pageNo), Integer.parseInt(limit));
             Page<Object[]> dtoPage;
-            List<Object[]>  list;
-            if (start!=null && end!=null) {
+            List<Object[]> list;
+            if (start != null && end != null) {
                 dtoPage = activityButtonRepository.countNumberClickButtonByRangeTimeSelect(email, start, end, Integer.parseInt(menuId), pageRequest);
                 return new ResponseEntity<>(dtoPage, new HttpHeaders(), HttpStatus.OK);
             } else {
-               list = activityButtonRepository.getTotalNumberClickOnButton(email);
+                list = activityButtonRepository.getTotalNumberClickOnButton(email);
                 return new ResponseEntity<>(list, new HttpHeaders(), HttpStatus.OK);
             }
 
@@ -102,7 +102,6 @@ public class ActivityButtonController {
         }
 
     }
-
 
 
     @GetMapping("/statisticAllActionOnThisButtonByDay")
@@ -133,9 +132,10 @@ public class ActivityButtonController {
         }
 
     }
+
     @GetMapping("statisticActionButtonByRangeTimeSelect")
     ResponseEntity<?> statisticActionButtonByRangeTimeSelect(
-           @RequestParam(name = "email",required = true) String email,
+            @RequestParam(name = "email", required = true) String email,
             @RequestParam(name = "pageNo", defaultValue = "0", required = false) String pageNo,
             @RequestParam(name = "limit", defaultValue = "5", required = false) String limit
     ) {
@@ -154,22 +154,24 @@ public class ActivityButtonController {
         }
 
     }
-@GetMapping("statisticsActivityByEquipment")
-ResponseEntity<?> statisticsActivityByEquipment(
-        @RequestParam(name="email",required = true) String email
-){
+
+    @GetMapping("statisticsActivityByEquipment")
+    ResponseEntity<?> statisticsActivityByEquipment(
+            @RequestParam(name = "email", required = true) String email
+    ) {
         List<Object> list = null;
         list = activityButtonRepository.statisticsActivityByEquipment(email);
-    if (list != null) {
-        return new ResponseEntity<>(list, new HttpHeaders(), HttpStatus.OK);
-    } else {
-        return new ResponseEntity<>("Data not Exist", new HttpHeaders(), HttpStatus.NOT_FOUND);
+        if (list != null) {
+            return new ResponseEntity<>(list, new HttpHeaders(), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("Data not Exist", new HttpHeaders(), HttpStatus.NOT_FOUND);
+        }
     }
-}
+
     @GetMapping("statisticsActivityBySupplier")
     ResponseEntity<?> statisticsActivityBySupplier(
-            @RequestParam(name="email",required = true) String email
-    ){
+            @RequestParam(name = "email", required = true) String email
+    ) {
         List<Object> list = null;
         list = activityButtonRepository.statisticsActivityBySupplier(email);
         if (list != null) {
@@ -178,10 +180,11 @@ ResponseEntity<?> statisticsActivityByEquipment(
             return new ResponseEntity<>("Data not Exist", new HttpHeaders(), HttpStatus.NOT_FOUND);
         }
     }
+
     @GetMapping("statisticsActivityByAddress")
     ResponseEntity<?> statisticsActivityByAddress(
-            @RequestParam(name="email",required = true) String email
-    ){
+            @RequestParam(name = "email", required = true) String email
+    ) {
         List<Object> list = null;
         list = activityButtonRepository.statisticsActivityByAddress(email);
         if (list != null) {
@@ -193,13 +196,13 @@ ResponseEntity<?> statisticsActivityByEquipment(
 
     @GetMapping("statisticsActivityByIp")
     ResponseEntity<?> statisticsActivityByIp(
-            @RequestParam(name = "email",required = true) String email,
+            @RequestParam(name = "email", required = true) String email,
             @RequestParam(name = "pageNo", defaultValue = "0", required = false) String pageNo,
             @RequestParam(name = "limit", defaultValue = "5", required = false) String limit
-    ){
+    ) {
         PageRequest pageRequest = PageRequest.of(Integer.parseInt(pageNo), Integer.parseInt(limit));
 
-        Page<Object> page = activityButtonRepository.statisticsActivityByIp(email,pageRequest);
+        Page<Object> page = activityButtonRepository.statisticsActivityByIp(email, pageRequest);
         if (page != null) {
             return new ResponseEntity<>(page, new HttpHeaders(), HttpStatus.OK);
         } else {

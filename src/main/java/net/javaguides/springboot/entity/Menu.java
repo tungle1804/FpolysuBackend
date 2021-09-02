@@ -26,7 +26,7 @@ public class Menu {
     private String menuCode;
     @Column(name = "opacity")
     private float  opacity;
-    @JsonIgnore
+
     @ManyToOne
     @JoinColumn(name = "email")
     private User users;

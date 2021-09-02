@@ -12,14 +12,11 @@ import java.util.Collection;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class DataOfCustomer {
     @Id
-<<<<<<< HEAD
-    @Column(name = "id")
-    private String id;
-=======
+
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
->>>>>>> d72fff00065cc0c712d96b4c01edc6266772614e
+
 
     @Column(name = "fullname")
     private String fullName;

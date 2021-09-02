@@ -9,16 +9,12 @@ import java.util.Collection;
 @javax.persistence.Table(name = "button")
 public class Button {
 
-<<<<<<< HEAD
-    @Id
-    @Column(name = "id")
-    private int id;
-=======
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private int id;
->>>>>>> d72fff00065cc0c712d96b4c01edc6266772614e
+
 
 
     @Column(name = "type_button")
@@ -40,29 +36,17 @@ public class Button {
     private String link;
 
 
-<<<<<<< HEAD
-    @Column(name = "icon")
-    private String icon;
-    //@JsonIgnore
-    @ManyToOne
-    @JoinColumn(name = "id_menu")
-    private Menu menu;
 
-
-    @OneToMany(mappedBy = "buttons", fetch = FetchType.LAZY)
-    private Collection<Modal> modal;
-=======
 	@Column(name="icon")
 	private String icon;
 
 	@ManyToOne
 	@JoinColumn(name="id_menu")
 	private Menu menu;
-
 	@JsonIgnore
 	@OneToMany(mappedBy = "buttons",fetch = FetchType.LAZY)
 	private Collection<Modal> modal;
->>>>>>> d72fff00065cc0c712d96b4c01edc6266772614e
+
 
 
     public Button() {

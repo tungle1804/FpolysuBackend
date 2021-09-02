@@ -46,7 +46,7 @@ public class User {
     @Column(name = "created_by")
     private String createdBy;
 
-    @JsonIgnore
+
     @OneToMany(mappedBy = "users", fetch = FetchType.LAZY)
     private Collection<Menu> menu;
 

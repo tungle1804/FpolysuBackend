@@ -4,7 +4,7 @@ create database polysu
 use polysu
     go
 
-
+select * from menu where menu.email='vuthanhnam@gmail.com'
 CREATE TABLE users
 (
     email         NVARCHAR(50) NOT NULL PRIMARY KEY,
@@ -20,7 +20,7 @@ CREATE TABLE users
     created_date  date,
     created_by    NVARCHAR(50)
 )
-
+select * from menu
 -- menu
 CREATE TABLE menu
 (

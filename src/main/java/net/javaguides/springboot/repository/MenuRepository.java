@@ -18,7 +18,7 @@ public interface MenuRepository extends JpaRepository<Menu, Integer> {
     List<Menu> listmenu();
 
     //	@Query(" from Menu m  where m.users.email like CONCAT('%',:email,'%')")
-    @Query(" from Menu m  where m.users.email=:email")
+    @Query(value = "select * from menu where menu.email=:email",nativeQuery = true)
     List<Menu> getMenuByEmail(@Param("email") String email);
 
     @Query(" from Menu m where m.status=true and m.users.email=:email ")

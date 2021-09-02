@@ -17,19 +17,11 @@ public class Modal {
     private String inputValue;
 
     @ManyToOne
-<<<<<<< HEAD
-
-    @JoinColumn(name = "id_dataofcustomer")
-    private DataOfCustomer dataOfCustomer;
-    @ManyToOne
-    @JoinColumn(name = "id_button")
-
-=======
     @JoinColumn(name="id_dataofcustomer")
     private DataOfCustomer dataOfCustomer;
     @ManyToOne
     @JoinColumn(name="id_button")
->>>>>>> d72fff00065cc0c712d96b4c01edc6266772614e
+
     private Button buttons;
 
     public int getId() {

@@ -42,29 +42,29 @@ public class DataOfCustomerController {
         Book book = gson.fromJson(json, Book.class);
         DataOfCustomer dataOfCustomer = book.getDataOfCustomers().get(0);
 //        String idDataOfCustomer = UUID.randomUUID().toString();
-<<<<<<< HEAD
-        Random rand = new Random();
-        int code = (int) Math.floor(((Math.random() * 899999) + 100000));
-        String idDataOfCustomer = String.valueOf("CU" + code);
-        dataOfCustomer.setId(idDataOfCustomer);
-        dataOfCustomerRepository.save(dataOfCustomer);
-=======
+//<<<<<<< HEAD
+//        Random rand = new Random();
+//        int code = (int) Math.floor(((Math.random() * 899999) + 100000));
+//        String idDataOfCustomer = String.valueOf("CU" + code);
+//        dataOfCustomer.setId(idDataOfCustomer);
+//        dataOfCustomerRepository.save(dataOfCustomer);
+//=======
 //
 //        dataOfCustomer.setId(idDataOfCustomer);  Random rand = new Random();
 ////        int code = (int) Math.floor(((Math.random() * 899999) + 100000));
 ////        String idDataOfCustomer = String.valueOf("CU" +code);
         DataOfCustomer idDataOfCustomer = new DataOfCustomer();
         idDataOfCustomer= dataOfCustomerRepository.save(dataOfCustomer);
->>>>>>> d72fff00065cc0c712d96b4c01edc6266772614e
+
         List<Modal> modal = book.getModal();
         if (modal != null & modal.size() > 0) {
             for (Modal modals : modal) {
                 int updateValueInput = 0;
-<<<<<<< HEAD
-                updateValueInput = paymentDao.updateValueInput(modals, idDataOfCustomer);
-=======
+//<<<<<<< HEAD
+//                updateValueInput = paymentDao.updateValueInput(modals, idDataOfCustomer);
+//=======
                 updateValueInput = paymentDao.updateValueInput(modals,idDataOfCustomer.getId());
->>>>>>> d72fff00065cc0c712d96b4c01edc6266772614e
+
                 if (updateValueInput == 0) {
                     logger.info("Update khong thanh thong");
                 } else {

@@ -1,8 +1,9 @@
-﻿drop database polysu
+drop database polysu
 create database polysu
     go
 use polysu
     go
+
 
 select * from menu where menu.email='vuthanhnam@gmail.com'
 CREATE TABLE users
@@ -19,9 +20,9 @@ CREATE TABLE users
     _status       bit,
     created_date  date,
     created_by    NVARCHAR(50)
+
 )
-select * from users
--- menu
+
 CREATE TABLE menu
 (
     id            INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
@@ -32,7 +33,7 @@ CREATE TABLE menu
     menu_type     nvarchar(20),
     date_start    date,
     display_time  int,
-    menu_location nvarchar(20)
+    menu_location nvarchar(20),
         menu_code VARCHAR (50)
 ) --button
 
@@ -52,6 +53,8 @@ CREATE TABLE button
 
 
 
+
+
 create table activity_button
 (
     id           int identity not null primary key,
@@ -66,19 +69,16 @@ create table activity_button
 )
 
 
-select *
-from activity_button
-where DATEPART(day, activity_button.created_at) = 30
 
-select *
-from activity_menu
 
 create table activity_menu
 (
     id         int identity not null primary key,
     id_menu    int foreign key references dbo.menu (id) not null,
-    created_at datetime default getdate() null
-)
+    created_at datetime default getdate() null)
+
+
+
 
 -- modal
 
@@ -92,6 +92,7 @@ CREATE TABLE modal
 )
 
 -- dataofcustom
+
 create table dataofcustomer
 (
     id             nvarchar(20) NOT NULL PRIMARY KEY,
@@ -125,22 +126,16 @@ create table payment_history
     total_price float
 )
 
-select *
-from payment_history
-alter table payment_history
-    alter column date_end date
-alter table payment_history
-    alter column _status bit
-alter table payment_history
-    add date_start date
 
 
-select * from menu
-DROP TABLE dbo.modal
-update modal
-SET input_value ='column4' set
-where id = '30'
-    --
+CREATE TABLE modal
+(
+    id          INT IDENTITY (1,1) NOT NULL PRIMARY KEY,
+    id_button   INT FOREIGN KEY REFERENCES dbo.button (id),
+    input_name  NVARCHAR(50)       NOT NULL,
+    input_value NVARCHAR(50)       NOT NULL
+)
+
 insert modal
 SELECT *
 FROM dbo.modal
@@ -152,10 +147,7 @@ VALUES (14, N'DoTuoi', 'TrungBinh')
 INSERT INTO dbo.modal(id_button, input_name, input_value)
 VALUES (14, N'CMTND', '1232454356')
 
-select *
-from users
-DELETE dbo.users
-WHERE email = 'tung@gmail.com'
+
 -- insert user
 insert into users(email, _password, name, business_name, phone, _role)
 values ('lekhuongduy1998@gmail.com', 'duy123', 'Duy', 'CD FPT', '0972222111', 'admin')
@@ -454,10 +446,10 @@ from activity_menu
               on users.email = menu.email
 where users.email = 'vuthanhnam@gmail.com'
 group by menu.name_menu
-             - -two query
-on up certain have problem because action of menu
-    --independence
-with action of button (have action menu but can 't action button  but have action button must action of menu  --FUCK--)
+--two query
+--on up certain have problem because action of menu
+--independence
+--with action of button (have action menu but can 't action button  but have action button must action of menu  --FUCK--)
 -------------------------------------------------------------------------Table 2--------------------------------------------------------
 -- get Total number display of button by TypeButton
 select button.type_button, count(*) as countNumberActionButtonByType
@@ -520,6 +512,7 @@ join button on button.id=activity_button.id_button
 join menu on menu.id = button.id_menu 
 where menu.email=' vuthanhnam@gmail.com '
 group by  activity_button.from_url 
+
 order by Total desc
 
 select * from activity_button where DATEPART(day,activity_button.created_at)=31
@@ -529,3 +522,4 @@ delete from activity_button where DATEPART(day,activity_button.created_at)= 31
 select activity_button.ip_address,user_address, count(*) from activity_button join button on button.id = activity_button.id_button
            join menu on menu.id = button.id_menu join  users on users.email = menu.email and
            users.email =' vuthanhnam@gmail.com '  group by activity_button.ip_address,user_address
+

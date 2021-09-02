@@ -37,7 +37,9 @@ public interface ButtonRepository extends JpaRepository<Button, Integer> {
             "join menu on menu.id = button.id_menu \n" +
             "where menu.email=:email\n" +
             "group by  button.name_button \n" +
+
             "order by Total desc", nativeQuery = true)
     List<Object> statisticsClickByButton(@Param("email") String email);
+
 
 }

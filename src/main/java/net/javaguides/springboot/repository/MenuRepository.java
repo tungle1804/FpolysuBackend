@@ -38,10 +38,12 @@ public interface MenuRepository extends JpaRepository<Menu, Integer> {
             "order by Total desc", nativeQuery = true)
     List<Object> statisticsClickByMenu(@Param("email") String email);
 
+
     @Query(value = "select m from Menu m where m.users.email=:email and m.status=true")
     List<Menu> findAllByStatusTrue(@Param("email") String email);
 
     @Query("select count(m.id) from Menu m")
     Integer countAll();
+
 
 }

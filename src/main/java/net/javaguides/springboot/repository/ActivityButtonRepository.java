@@ -57,4 +57,5 @@ public interface ActivityButtonRepository extends JpaRepository<ActivityButton, 
             "           join Menu m on m.id = b.menu.id join User u on u.email = m.users.email and\n" +
             "           u.email =:email group by ab.ipAddress,ab.userAddress order by count(ab) desc ")
     Page<Object> statisticsActivityByIp(@Param("email") String email, Pageable pageable);
+
 }

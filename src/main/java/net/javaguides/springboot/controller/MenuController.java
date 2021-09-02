@@ -85,6 +85,7 @@ public class MenuController {
 
     }
 
+
     @GetMapping("findAllByStatusTrue")
     ResponseEntity<?> findAllByStatusTrue(@RequestParam(value = "email", required = true) String email) {
         try {
@@ -94,4 +95,5 @@ public class MenuController {
             return (ResponseEntity<String>) ResponseEntity.badRequest().body("Erorr CMNR!");
         }
     }
+
 }

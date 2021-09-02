@@ -318,7 +318,6 @@ public class ActivityMenuController {
                 totalDates.add(start);
                 start = start.plusDays(1);
             }
-
             return new ResponseEntity<>(totalDates, new HttpHeaders(), HttpStatus.OK);
         } catch (Exception ex) {
             ex.printStackTrace();

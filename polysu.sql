@@ -20,7 +20,7 @@ CREATE TABLE users
     created_date  date,
     created_by    NVARCHAR(50)
 )
-select * from menu
+select * from users
 -- menu
 CREATE TABLE menu
 (
@@ -35,6 +35,7 @@ CREATE TABLE menu
     menu_location nvarchar(20)
         menu_code VARCHAR (50)
 ) --button
+
 CREATE TABLE button
 (
     id               NVARCHAR(10) NOT NULL PRIMARY KEY,
@@ -134,7 +135,7 @@ alter table payment_history
     add date_start date
 
 
-
+select * from menu
 DROP TABLE dbo.modal
 update modal
 SET input_value ='column4' set

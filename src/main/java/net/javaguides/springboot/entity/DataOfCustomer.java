@@ -1,5 +1,6 @@
 package net.javaguides.springboot.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
@@ -13,8 +14,9 @@ import java.util.Date;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class DataOfCustomer {
     @Id
-    @Column(name="id")
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private int id;
 
     @Column(name = "fullname")
     private String fullName;
@@ -39,6 +41,7 @@ public class DataOfCustomer {
     @JoinColumn(name = "email")
     private User users;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "dataOfCustomer", fetch = FetchType.LAZY)
     private Collection<Modal> modal;
 
@@ -65,11 +68,11 @@ public class DataOfCustomer {
 //    }
 
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

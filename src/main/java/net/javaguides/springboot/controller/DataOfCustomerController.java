@@ -42,16 +42,17 @@ public class DataOfCustomerController {
         Book book = gson.fromJson(json, Book.class);
         DataOfCustomer dataOfCustomer = book.getDataOfCustomers().get(0);
 //        String idDataOfCustomer = UUID.randomUUID().toString();
-        Random rand = new Random();
-        int code = (int) Math.floor(((Math.random() * 899999) + 100000));
-        String idDataOfCustomer = String.valueOf("CU" +code);
-        dataOfCustomer.setId(idDataOfCustomer);
-        dataOfCustomerRepository.save(dataOfCustomer);
+//
+//        dataOfCustomer.setId(idDataOfCustomer);  Random rand = new Random();
+////        int code = (int) Math.floor(((Math.random() * 899999) + 100000));
+////        String idDataOfCustomer = String.valueOf("CU" +code);
+        DataOfCustomer idDataOfCustomer = new DataOfCustomer();
+        idDataOfCustomer= dataOfCustomerRepository.save(dataOfCustomer);
         List<Modal> modal = book.getModal();
         if (modal != null & modal.size() > 0) {
             for (Modal modals : modal) {
                 int updateValueInput = 0;
-                updateValueInput = paymentDao.updateValueInput(modals,idDataOfCustomer);
+                updateValueInput = paymentDao.updateValueInput(modals,idDataOfCustomer.getId());
                 if (updateValueInput == 0) {
                     logger.info("Update khong thanh thong");
                 } else {
@@ -64,7 +65,7 @@ public class DataOfCustomerController {
     }
 
     @GetMapping("/dataofcustomerbyid/{id}")
-    public Optional<DataOfCustomer> getDataOfCustomersById(@PathVariable String id) {
+    public Optional<DataOfCustomer> getDataOfCustomersById(@PathVariable int id) {
         return dataOfCustomerRepository.findById(id);
     }
 

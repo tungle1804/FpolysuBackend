@@ -1,5 +1,7 @@
 package net.javaguides.springboot.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Collection;
 
@@ -8,7 +10,8 @@ import java.util.Collection;
 public class Button {
 
 	@Id
-	@Column(name="id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
 	private int id;
 
 
@@ -33,12 +36,12 @@ public class Button {
 
 	@Column(name="icon")
 	private String icon;
-	//@JsonIgnore
+
 	@ManyToOne
 	@JoinColumn(name="id_menu")
 	private Menu menu;
 
-
+	@JsonIgnore
 	@OneToMany(mappedBy = "buttons",fetch = FetchType.LAZY)
 	private Collection<Modal> modal;
 

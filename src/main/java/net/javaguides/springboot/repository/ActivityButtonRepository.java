@@ -53,9 +53,11 @@ public interface ActivityButtonRepository extends JpaRepository<ActivityButton, 
             "           users.email =:email  group by activity_button.user_address", nativeQuery = true)
     List<Object> statisticsActivityByAddress(@Param("email") String email);
 
+
     @Query(value = "select ab.ipAddress,ab.userAddress, count(ab) from ActivityButton ab join Button b on b.id = ab.buttonId\n" +
             "           join Menu m on m.id = b.menu.id join User u on u.email = m.users.email and\n" +
             "           u.email =:email group by ab.ipAddress,ab.userAddress order by count(ab) desc ")
     Page<Object> statisticsActivityByIp(@Param("email") String email, Pageable pageable);
+
 
 }

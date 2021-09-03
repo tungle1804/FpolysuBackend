@@ -21,8 +21,7 @@ public interface ActivityMenuRepository extends JpaRepository<ActivityMenu, Inte
             "and DAY(activity_button.created_at) =:day\n" +
             "and MONTH(activity_button.created_at) =:month\n" +
             "and YEAR(activity_button.created_at) =:year", nativeQuery = true)
-
-    Integer statisticAllActionOnThisMenuEnable(@Param("email") String email, @Param("idMenu") Integer idMenu, @Param("hour") Integer hour, @Param("day") Integer day
+    Integer statisticAllActionOnThisMenuEnable(@Param("email") String email,@Param("idMenu")Integer idMenu, @Param("hour") Integer hour, @Param("day") Integer day
             , @Param("month") Integer month, @Param("year") Integer year);
 
 

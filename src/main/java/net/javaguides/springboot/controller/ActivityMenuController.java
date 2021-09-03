@@ -82,7 +82,7 @@ public class ActivityMenuController {
         try {
             List<Integer> list = new ArrayList<>();
             for (int i = 0; i < 24; i++) {
-                Integer dtoPage = activityMenuRepository.statisticAllActionOnThisMenuEnable(email, Integer.parseInt(idMenu), Integer.parseInt(String.valueOf(i)),
+                Integer dtoPage = activityMenuRepository.statisticAllActionOnThisMenuEnable(email,Integer.parseInt(idMenu), Integer.parseInt(String.valueOf(i)),
                         Integer.parseInt(day), Integer.parseInt(month), Integer.parseInt(year));
                 list.add(dtoPage);
             }

@@ -5,8 +5,6 @@ use polysu
     go
 
 
-
-
 CREATE TABLE users
 (
     email         NVARCHAR(50) NOT NULL PRIMARY KEY,
@@ -20,27 +18,30 @@ CREATE TABLE users
     date_of_birth date,
     _status       bit,
     created_date  date,
-    created_by    NVARCHAR(50)
+    created_by    NVARCHAR(50))
 
+-- menu
+CREATE TABLE menu(
+id INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+email NVARCHAR(50) FOREIGN KEY REFERENCES dbo.users(email),
+name_menu NVARCHAR(30),
+color_menu NVARCHAR(50),
+_status BIT,
+menu_type nvarchar(20),
+date_start date,
+menu_location nvarchar(20)
+menu_code VARCHAR(50),
+opacity NVARCHAR(10),
+from_display_time int default (0),
+to_display_time int default (2359)
 )
 
-CREATE TABLE menu
-(
-    id            INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
-    email         NVARCHAR(50) FOREIGN KEY REFERENCES dbo.users(email),
-    name_menu     NVARCHAR(30),
-    color_menu    NVARCHAR(50),
-    _status       BIT,
-    menu_type     nvarchar(20),
-    date_start    date,
-    display_time  int,
-    menu_location nvarchar(20),
-        menu_code VARCHAR (50)
-) --button
+--button
 
 CREATE TABLE button
 (
     id               int NOT NULL PRIMARY KEY,
+   id INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
     id_menu          INT FOREIGN KEY REFERENCES menu (id),
     type_button      nvarchar(100),
     name_button      NVARCHAR(100),
@@ -89,18 +90,17 @@ CREATE TABLE modal
     created_at datetime default getdate()null)
 
 
+
+
 -- dataofcustom
-drop table dataofcustomer
-create table dataofcustomer
-(
-    id             INT IDENTITY NOT NULL PRIMARY KEY,
-    email          NVARCHAR(50) FOREIGN KEY REFERENCES dbo.users(email),
-    fullname       NVARCHAR(100),
-    phone          varchar(15),
-    email_customer NVARCHAR(100),
-    _address       NVARCHAR(200),
-    content        NVARCHAR(MAX
-) ,
+create table dataofcustomer(
+id INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+email NVARCHAR(50) FOREIGN KEY REFERENCES dbo.users(email),
+fullname NVARCHAR(100),
+phone varchar(15),
+email_customer NVARCHAR(100),
+_address NVARCHAR(200),
+content NVARCHAR(MAX),
 notes NVARCHAR(MAX),
 create_date datetime
 )
@@ -124,55 +124,6 @@ create table payment_history
     total_price float
 )
 
-
-
-INSERT INTO dbo.modal(id_button, input_name, input_value)
-VALUES (14, N'GioiTinh', 'Nam')
-INSERT INTO dbo.modal(id_button, input_name, input_value)
-VALUES (14, N'DoTuoi', 'TrungBinh')
-INSERT INTO dbo.modal(id_button, input_name, input_value)
-VALUES (14, N'CMTND', '1232454356')
-
-
-
-
-
-
--- insert menu
-insert into menu (email, name_menu, color_menu, _status)
-values ('tung@gmail.com', 'alo', 'red', 1)
-insert into menu (email, name_menu, color_menu, _status)
-values ('duongtunglam@gmail.com', 'call', 'red', 0)
-insert into menu (email, name_menu, color_menu, _status)
-values ('leanhtung@gmail.com', 'email', 'red', 1)
-insert into menu (email, name_menu, color_menu, _status)
-values ('lekhuongduy1998@gmail.com', 'email', 'black', 1)
-insert into menu (email, name_menu, color_menu, _status)
-values ('vuthanhnam@gmail.com', 'email', 'black', 1)
-insert into menu (email, name_menu, color_menu, _status)
-values ('vuthanhnam@gmail.com', 'zalo', 'black', 0)
-
-
--- insert button
-
-
-insert into button(id,id_menu, type_button, name_button, color_text, link, icon, color_background, color_icon)
-values (17, 'call', 'call', 'red', '24h.com.vn', ':))', 'red', 'blue')
-insert into button(id_menu, type_button, name_button, color_text, link, icon, color_background, color_icon)
-values (19, 'call', 'call', 'black', 'https://www.24h.com.vn/', ':))', 'red', 'blue')
-insert into button(id_menu, type_button, name_button, color_text, link, icon, color_background, color_icon)
-values (19, 'call', 'call', 'blue', 'https://www.google.com/', ':))', 'black', 'blue')
-insert into button(id_menu, type_button, name_button, color_text, link, icon, color_background, color_icon)
-values (23, 'facebook', 'facebook', 'yellow', 'https://www.24h.com.vn/', ':))', 'yellow', 'blue')
-insert into button(id_menu, type_button, name_button, color_text, link, icon, color_background, color_icon)
-values (26, 'massage', 'massage', 'red', 'https://www.24h.com.vn/', ':))', 'black', 'blue')
-insert into button(id_menu, type_button, name_button, color_text, link, icon, color_background, color_icon)
-values (25, 'massage', 'massage', 'red', 'https://www.24h.com.vn/', ':))', 'black', 'blue')
-insert into button(id_menu, type_button, name_button, color_text, link, icon, color_background, color_icon)
-values (18, 'facebook', 'facebook', 'red', 'https://www.24h.com.vn/', ':))', 'black', 'blue')
-insert into button(id_menu, type_button, name_button, color_text, link, icon, color_background, color_icon)
-values (23, 'facebook', 'facebook', 'red', 'https://www.24h.com.vn/', ':))', 'black', 'blue')
--- insert dataofcustomer
 
 -- insert user
 insert into users (email, _password, name, business_name, phone, _role, _status)
@@ -285,7 +236,7 @@ values ('leanhtung@gmail.com', 1, GETDATE(), 0)
 insert into payment_history(email, id_service, date_end, _status)
 values ('leducbinh@gmail.com', 4, GETDATE(), 1)
 
-select * from menu 
+
 --Note: Button had Click----------> Menu had Action but Menu had Action ----------not sure Button had Click
 -------------------------------------------------------------------------Char 1--------------------------------------------------------
 select count(*) as TotalClickOnMenuEnable

@@ -29,7 +29,7 @@ color_menu NVARCHAR(50),
 _status BIT,
 menu_type nvarchar(20),
 date_start date,
-menu_location nvarchar(20)
+menu_location nvarchar(20),
 menu_code VARCHAR(50),
 opacity NVARCHAR(10),
 from_display_time int default (0),
@@ -40,7 +40,6 @@ to_display_time int default (2359)
 
 CREATE TABLE button
 (
-    id               int NOT NULL PRIMARY KEY,
    id INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
     id_menu          INT FOREIGN KEY REFERENCES menu (id),
     type_button      nvarchar(100),
@@ -159,7 +158,7 @@ values ('leducbinh@gmail.com', 'email', 'black', 1)
 insert into menu (email, name_menu, color_menu, _status)
 values ('leducbinh@gmail.com', 'zalo', 'black', 0)
 insert into menu (email, name_menu, color_menu, _status)
-values ('thanhnam.humg93@gmail.com', 'email', 'black', 1)
+values ('vuthanhnam@gmail.com', 'email', 'black', 1)
 
 -- insert button
 insert into button(id_menu, type_button, name_button, color_text, link, icon, color_background, color_icon)

@@ -52,10 +52,12 @@ public class MenuController {
     public List<Menu> getButtonByEmail(@PathVariable String email) {
         return menuRepository.getMenuByEmail(email);
     }
+
     @PostMapping("/getMenuByMenuCode/{menucode}")
     public List<Menu> getMenuByMenuCode(@PathVariable String menucode) {
         return menuRepository.getMenuByMenuCode(menucode);
     }
+
     @PutMapping("/menu/{id}")
     public ResponseEntity<Menu> updateMenu(@PathVariable int id, @RequestBody Menu menu) {
         Menu menu1 = menuRepository.findById(id)
@@ -71,24 +73,36 @@ public class MenuController {
     }
 
     @GetMapping("countSumMenuCreated")
-    ResponseEntity<?> countSumMenuCreated(@RequestParam(value = "email",required = true) String email){
-       Integer value = menuRepository.countSumMenuCreated(email);
-       return (value!=null)?ResponseEntity.ok(value) : (ResponseEntity<?>) ResponseEntity.badRequest();
+    ResponseEntity<?> countSumMenuCreated(@RequestParam(value = "email", required = true) String email) {
+        Integer value = menuRepository.countSumMenuCreated(email);
+        return (value != null) ? ResponseEntity.ok(value) : (ResponseEntity<?>) ResponseEntity.badRequest();
     }
 
     @GetMapping("statisticsClickByMenu")
-    ResponseEntity<?> statisticsClickByButton(@RequestParam(value = "email",required = true) String email){
+    ResponseEntity<?> statisticsClickByButton(@RequestParam(value = "email", required = true) String email) {
         List<Object> list = menuRepository.statisticsClickByMenu(email);
-        return (list!=null)?ResponseEntity.ok(list) : (ResponseEntity<?>) ResponseEntity.badRequest();
+        return (list != null) ? ResponseEntity.ok(list) : (ResponseEntity<?>) ResponseEntity.badRequest();
 
     }
+
     @GetMapping("findAllByStatusTrue")
-    ResponseEntity<?> findAllByStatusTrue(@RequestParam(value = "email",required = true)String email){
-try {
-    List<Menu> list = menuRepository.findAllByStatusTrue(email);
-    return ResponseEntity.ok().body(list);
-}catch (Exception e){
-    return (ResponseEntity<String>) ResponseEntity.badRequest().body("Erorr CMNR!");
-}
+    ResponseEntity<?> findAllByStatusTrue(@RequestParam(value = "email", required = true) String email) {
+        try {
+            List<Menu> list = menuRepository.findAllByStatusTrue(email);
+            return ResponseEntity.ok().body(list);
+        } catch (Exception e) {
+            return (ResponseEntity<String>) ResponseEntity.badRequest().body("Erorr CMNR!");
+        }
+    }
+
+    @GetMapping("/getBasicPro/{email}")
+    public String getBasicPro(@PathVariable String email) {
+        int countBasic = menuRepository.getBasicPro(userRepository.findOneByEmail(email));
+//        int countHistory = menuRepository.getCountHistory(userRepository.findOneByEmail(email));
+        System.out.println("AAAAAAAA      " + countBasic);
+        if (countBasic > 10) {
+            return "Lỗi, tài khoản của bạn chưa nâng cấp";
+        }
+        return "OK";
     }
 }

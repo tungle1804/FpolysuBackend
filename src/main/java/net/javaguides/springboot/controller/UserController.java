@@ -2,6 +2,7 @@ package net.javaguides.springboot.controller;
 
 
 import net.javaguides.springboot.entity.User;
+import net.javaguides.springboot.repository.ButtonRepository;
 import net.javaguides.springboot.repository.MenuRepository;
 import net.javaguides.springboot.repository.PaymentHistoryRepository;
 import net.javaguides.springboot.repository.UserRepository;
@@ -30,6 +31,8 @@ public class UserController {
     private MenuRepository menuRepository;
     @Autowired
     private PaymentHistoryRepository paymentHistoryRepository;
+    @Autowired
+    private ButtonRepository buttonRepository;
 
     public UserController(UserService userService) {
         this.userService = userService;
@@ -109,6 +112,11 @@ public class UserController {
     @GetMapping("/total-price")
     public double totalPrice(){
       return paymentHistoryRepository.getTotalSumPrice();
+    }
+
+    @GetMapping("/sum-button")
+    public Integer sumButtons(){
+        return buttonRepository.countAllButton();
     }
 
 }

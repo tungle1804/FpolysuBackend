@@ -1,10 +1,12 @@
 package net.javaguides.springboot.controller;
 
 import net.javaguides.springboot.entity.Menu;
+import net.javaguides.springboot.entity.ServiceFee;
 import net.javaguides.springboot.exception.ResourceNotFoundException;
 import net.javaguides.springboot.repository.MenuRepository;
 import net.javaguides.springboot.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -58,11 +60,20 @@ public class MenuController {
         return menuRepository.getMenuByMenuCode(menucode);
     }
 
-    @PutMapping("/menu/{id}")
-    public ResponseEntity<Menu> updateMenu(@PathVariable int id, @RequestBody Menu menu) {
-        Menu menu1 = menuRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Categories not exist with id :" + id));
+
+    @PutMapping("/menu")
+    public ResponseEntity<Menu> updateMenu( @RequestBody Menu menu) {
+        Menu menu1 = menuRepository.findById(menu.getId())
+                .orElseThrow(() -> new ResourceNotFoundException("Categories not exist with id :" + menu.getId()));
         menu1.setStatus(menu.isStatus());
+        menu1.setColor_menu(menu.getColor_menu());
+        menu1.setMenuCode(menu.getMenuCode());
+        menu1.setMenuType(menu.getMenuType());
+        menu1.setFromDisplayTime(menu.getFromDisplayTime());
+        menu1.setToDisplayTime(menu.getToDisplayTime());
+        menu1.setOpacity(menu.getOpacity());
+        menu1.setMenuLocation(menu.getMenuLocation());
+        menu1.setName_menu(menu.getName_menu());
         Menu updateMenu = menuRepository.save(menu1);
         return ResponseEntity.ok(updateMenu);
     }
@@ -93,6 +104,27 @@ public class MenuController {
         } catch (Exception e) {
             return (ResponseEntity<String>) ResponseEntity.badRequest().body("Erorr CMNR!");
         }
+
     }
+
+    @GetMapping("/getBasicPro/{email}")
+    public String getBasicPro(@PathVariable String email) {
+        int countBasic = menuRepository.getBasicPro(userRepository.findOneByEmail(email));
+//        int countHistory = menuRepository.getCountHistory(userRepository.findOneByEmail(email));
+        System.out.println("AAAAAAAA      " + countBasic);
+        if (countBasic > 10) {
+            return "Lỗi, tài khoản của bạn chưa nâng cấp";
+        }
+        return "OK";
+    }
+    @PutMapping("/updateStatusMenu/{id}")
+    public ResponseEntity<Menu> updateMenu(@PathVariable int id, @RequestBody Menu menu) {
+        Menu menu1 = menuRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Menu not exist with id :" + id));
+        menu1.setStatus(menu.isStatus());
+        Menu updateMenu = menuRepository.save(menu1);
+        return ResponseEntity.ok(updateMenu);
+    }
+
 
 }

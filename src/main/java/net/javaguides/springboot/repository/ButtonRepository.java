@@ -42,4 +42,7 @@ public interface ButtonRepository extends JpaRepository<Button, Integer> {
 
 
 
+    @Query("select count(b.id) from Button b")
+    Integer countAllButton();
+
 }

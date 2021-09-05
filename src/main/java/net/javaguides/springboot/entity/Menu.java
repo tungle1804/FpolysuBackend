@@ -30,6 +30,7 @@ public class Menu {
     private int fromDisplayTime;
     @Column(name="to_display_time")
     private int toDisplayTime;
+
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "email")
@@ -131,4 +132,6 @@ public class Menu {
     public void setToDisplayTime(int toDisplayTime) {
         this.toDisplayTime = toDisplayTime;
     }
+
+
 }

@@ -40,6 +40,9 @@ public class Button {
 	@Column(name="icon")
 	private String icon;
 
+	@Column(name="caption_content")
+	private String captionContent;
+
 	@ManyToOne
 	@JoinColumn(name="id_menu")
 	private Menu menu;
@@ -129,7 +132,17 @@ public class Button {
         return modal;
     }
 
-    public void setModal(Collection<Modal> modal) {
-        this.modal = modal;
-    }
+
+	public void setModal(Collection<Modal> modal) {
+		this.modal = modal;
+	}
+
+	public String getCaptionContent() {
+		return captionContent;
+	}
+
+	public void setCaptionContent(String captionContent) {
+		this.captionContent = captionContent;
+	}
+
 }

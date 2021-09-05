@@ -21,6 +21,7 @@ public class Modal {
     private DataOfCustomer dataOfCustomer;
     @ManyToOne
     @JoinColumn(name="id_button")
+
     private Button buttons;
 
     public int getId() {

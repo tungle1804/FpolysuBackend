@@ -3,13 +3,10 @@ package net.javaguides.springboot.controller;
 
 import com.google.gson.Gson;
 import net.javaguides.springboot.dao.PaymentDao;
-
-import net.javaguides.springboot.entity.*;
-import net.javaguides.springboot.exception.ResourceNotFoundException;
-import net.javaguides.springboot.model.response.DataOfCustomerAndModal;
 import net.javaguides.springboot.entity.Book;
 import net.javaguides.springboot.entity.DataOfCustomer;
 import net.javaguides.springboot.entity.Modal;
+import net.javaguides.springboot.model.response.DataOfCustomerAndModal;
 import net.javaguides.springboot.repository.DataOfCustomerRepository;
 import net.javaguides.springboot.repository.ModalRepository;
 import org.slf4j.Logger;
@@ -17,18 +14,21 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.Random;
 
 @RestController
 @RequestMapping("/api/v1")
 public class DataOfCustomerController {
     Logger logger = LoggerFactory.getLogger(PaypalController.class);
     @Autowired
+    PaymentDao paymentDao;
+    @Autowired
     private DataOfCustomerRepository dataOfCustomerRepository;
     @Autowired
     private ModalRepository modalRepository;
-    @Autowired
-    PaymentDao paymentDao;
 
     @GetMapping("/dataofcustomer")
     public List<DataOfCustomer> getAllDataOfCustomer() {
@@ -42,17 +42,29 @@ public class DataOfCustomerController {
         Book book = gson.fromJson(json, Book.class);
         DataOfCustomer dataOfCustomer = book.getDataOfCustomers().get(0);
 //        String idDataOfCustomer = UUID.randomUUID().toString();
+//<<<<<<< HEAD
+//        Random rand = new Random();
+//        int code = (int) Math.floor(((Math.random() * 899999) + 100000));
+//        String idDataOfCustomer = String.valueOf("CU" + code);
+//        dataOfCustomer.setId(idDataOfCustomer);
+//        dataOfCustomerRepository.save(dataOfCustomer);
+//=======
 //
 //        dataOfCustomer.setId(idDataOfCustomer);  Random rand = new Random();
 ////        int code = (int) Math.floor(((Math.random() * 899999) + 100000));
 ////        String idDataOfCustomer = String.valueOf("CU" +code);
         DataOfCustomer idDataOfCustomer = new DataOfCustomer();
         idDataOfCustomer= dataOfCustomerRepository.save(dataOfCustomer);
+
         List<Modal> modal = book.getModal();
         if (modal != null & modal.size() > 0) {
             for (Modal modals : modal) {
                 int updateValueInput = 0;
+//<<<<<<< HEAD
+//                updateValueInput = paymentDao.updateValueInput(modals, idDataOfCustomer);
+//=======
                 updateValueInput = paymentDao.updateValueInput(modals,idDataOfCustomer.getId());
+
                 if (updateValueInput == 0) {
                     logger.info("Update khong thanh thong");
                 } else {
@@ -100,7 +112,7 @@ public class DataOfCustomerController {
     @GetMapping("/datacustomerandmodal/{id}")
     public List<DataOfCustomerAndModal> dataOfCustomerAndModal(@PathVariable String id) {
         List<DataOfCustomerAndModal> lis = new ArrayList<DataOfCustomerAndModal>();
-        lis  = paymentDao.dataOfCustomerAndModal(id);
+        lis = paymentDao.dataOfCustomerAndModal(id);
         return lis;
     }
 

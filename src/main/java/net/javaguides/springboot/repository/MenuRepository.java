@@ -45,8 +45,9 @@ public interface MenuRepository extends JpaRepository<Menu, Integer> {
     List<Menu> findAllByStatusTrue(@Param("email") String email);
 
 
-    @Query("select count(m.id) from Menu m inner join User u on m.users = u.email inner join PaymentHistory p on u.email = p.users where p.users = :p_email " +
-            "and(p.status = false or ((select count(*) from PaymentHistory) = 0))")
+    @Query("select count(m.id) from Menu m inner join User u on m.users = u.email where m.users = :p_email " +
+            "and u.email not in (select us.email from User us inner join PaymentHistory ph on us.email = ph.users where " +
+            "ph.users = :p_email and ph.status = true)")
     Integer getBasicPro(User p_email);
 
 

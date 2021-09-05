@@ -284,9 +284,6 @@ insert into activity_button(id_button,created_at,from_url,equipment,ip_address,u
 insert into activity_button(id_button,created_at,from_url,equipment,ip_address,user_address,languages,supplier) values(1,'8-07-2021','',1,'102.74.58.0/23',N'IPv4',N'USA','VIB')
 
 
-
-
-
 select * from users
 select * from menu
 select * from button
@@ -296,14 +293,6 @@ select * from activity_button
 select * from activity_menu
 select * from servicefee
 select * from payment_history
-
-
-
-
-
-
-
-
 
 select menu.id, activity_button.created_at
 from activity_button
@@ -435,6 +424,4 @@ delete from activity_button where DATEPART(day,activity_button.created_at)= 31
 
 select activity_button.ip_address,user_address, count(*) from activity_button join button on button.id = activity_button.id_button
                                                                               join menu on menu.id = button.id_menu join  users on users.email = menu.email and
-  users.email ='vuthanhnam@gmail.com'  group by activity_button.ip_address,user_address
-
-select * from activity_button
+                                                                                                                                   users.email ='vuthanhnam@gmail.com'  group by activity_button.ip_address,user_address

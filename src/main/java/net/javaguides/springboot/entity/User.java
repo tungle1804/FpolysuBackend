@@ -38,7 +38,7 @@ public class User {
 	private String address;
 
 	@Column(name="_status")
-	private boolean status;
+	private String status ;
 
 	@Column(name="created_date")
 	private Date createdDate;
@@ -61,7 +61,7 @@ public class User {
 	public User() {
 	}
 
-	public User(String email, String password, String fullName, String business, String phone, String role, Date dateOfBirth, String gender, String address, boolean status, Date createdDate, String createdBy, Collection<Menu> menu, Collection<PaymentHistory> paymentHistories, Collection<DataOfCustomer> dataOfCustomers) {
+	public User(String email, String password, String fullName, String business, String phone, String role, Date dateOfBirth, String gender, String address, String status, Date createdDate, String createdBy, Collection<Menu> menu, Collection<PaymentHistory> paymentHistories, Collection<DataOfCustomer> dataOfCustomers) {
 		this.email = email;
 		this.password = password;
 		this.fullName = fullName;
@@ -71,12 +71,12 @@ public class User {
 		this.dateOfBirth = dateOfBirth;
 		this.gender = gender;
 		this.address = address;
+		this.status = status;
 		this.createdDate = createdDate;
 		this.createdBy = createdBy;
 		this.menu = menu;
 		this.paymentHistories = paymentHistories;
 		this.dataOfCustomers = dataOfCustomers;
-		this.status = status;
 	}
 
 	public String getEmail() {
@@ -151,11 +151,11 @@ public class User {
 		this.address = address;
 	}
 
-	public boolean isStatus() {
+	public String getStatus() {
 		return status;
 	}
 
-	public void setStatus(boolean status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
 

@@ -15,7 +15,7 @@ _role VARCHAR(15),
 gender NVARCHAR(15),
 _address NVARCHAR(100),
 date_of_birth date,
-_status bit,
+_status NVARCHAR(50),
 created_date date,
 created_by NVARCHAR(50)
 )
@@ -29,7 +29,7 @@ color_menu NVARCHAR(50),
 _status BIT,
 menu_type nvarchar(20),
 date_start date,
-menu_location nvarchar(20)
+menu_location nvarchar(20),
 menu_code VARCHAR(50),
 opacity NVARCHAR(10),
 from_display_time int default (0),
@@ -48,7 +48,6 @@ CREATE TABLE button
     icon             NVARCHAR(300),
     color_background NVARCHAR(300),
     color_icon       NVARCHAR(300),
-    type_button      NVARCHAR(300)
 )
 
 
@@ -79,16 +78,6 @@ create table activity_menu
     created_at datetime default getdate()                   null
 )
 
--- modal
-
-CREATE TABLE modal (
-id INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
-id_button int  FOREIGN KEY REFERENCES dbo.button(id),
-id_dataofcustomer int FOREIGN KEY REFERENCES dbo.dataofcustomer(id),
-input_name NVARCHAR(50) NOT NULL,
-input_value NVARCHAR(50)
-)
-
 -- dataofcustom
 create table dataofcustomer(
 id INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
@@ -101,6 +90,17 @@ content NVARCHAR(MAX),
 notes NVARCHAR(MAX),
 create_date datetime
 )
+
+-- modal
+
+CREATE TABLE modal (
+id INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+id_button int  FOREIGN KEY REFERENCES dbo.button(id),
+id_dataofcustomer int FOREIGN KEY REFERENCES dbo.dataofcustomer(id),
+input_name NVARCHAR(50) NOT NULL,
+input_value NVARCHAR(50)
+)
+
 
 -- servicefee
 create table servicefee
@@ -460,3 +460,18 @@ delete from activity_button where DATEPART(day,activity_button.created_at)= 31
 select activity_button.ip_address,user_address, count(*) from activity_button join button on button.id = activity_button.id_button
            join menu on menu.id = button.id_menu join  users on users.email = menu.email and
            users.email ='vuthanhnam@gmail.com'  group by activity_button.ip_address,user_address
+
+
+
+
+---Bình
+--- Tổng số lượng khách hàng
+select count(email) as 'Số lượng users' from users where _role = 'customer' and created_date between '2021-08-10' and '2021-08-29'
+
+---Số lượng khách hàng basic
+select count(payment_history.email) as 'Số lượng khách hàng basic' from users join payment_history on users.email = payment_history.email where users.created_date between '2021-08-05' and '2021-08-29' and payment_history._status = 0 
+
+---Số lượng khách hàng pro
+select count(distinct payment_history.email) as 'Số lượng khách hàng pro' from users join payment_history on users.email = payment_history.email where users.created_date between '2021-08-05' and '2021-08-29' and payment_history._status = 1 
+
+select * from users

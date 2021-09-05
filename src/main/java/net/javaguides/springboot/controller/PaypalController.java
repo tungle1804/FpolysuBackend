@@ -77,6 +77,7 @@ public class PaypalController {
         paymentHistory.setUsers(user);
         paymentHistory.setStatus(true);
         paymentHistory.setDateStart(date);
+        paymentHistory.setTotalPrice(serviceFee.getPrice());
         if (serviceFee.getNameService().equals("1 tháng")) {
             cal.add(Calendar.MONTH, 1);
             date = cal.getTime();

@@ -38,4 +38,7 @@ public interface ButtonRepository extends JpaRepository<Button, Integer> {
             "order by Total desc",nativeQuery = true)
     List<Object> statisticsClickByButton(@Param("email")String email);
 
+    @Query("select count(b.id) from Button b")
+    Integer countAllButton();
+
 }

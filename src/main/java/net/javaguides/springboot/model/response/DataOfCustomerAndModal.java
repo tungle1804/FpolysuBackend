@@ -3,7 +3,6 @@ package net.javaguides.springboot.model.response;
 import net.javaguides.springboot.entity.Modal;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class DataOfCustomerAndModal {
@@ -28,16 +27,16 @@ public class DataOfCustomerAndModal {
         return phone;
     }
 
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
     public List<Modal> getModal() {
         return modal;
     }
 
     public void setModal(List<Modal> modal) {
         this.modal = modal;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
     }
 
     public String getEmailCustomer() {

@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-//@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin()
 @RestController
 @RequestMapping("/api/v1/")
 public class MenuController {
@@ -60,6 +60,7 @@ public class MenuController {
         return menuRepository.getMenuByMenuCode(menucode);
     }
 
+
     @PutMapping("/menu")
     public ResponseEntity<Menu> updateMenu( @RequestBody Menu menu) {
         Menu menu1 = menuRepository.findById(menu.getId())
@@ -103,6 +104,7 @@ public class MenuController {
         } catch (Exception e) {
             return (ResponseEntity<String>) ResponseEntity.badRequest().body("Erorr CMNR!");
         }
+
     }
 
     @GetMapping("/getBasicPro/{email}")
@@ -123,5 +125,6 @@ public class MenuController {
         Menu updateMenu = menuRepository.save(menu1);
         return ResponseEntity.ok(updateMenu);
     }
+
 
 }

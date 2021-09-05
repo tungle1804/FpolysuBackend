@@ -39,7 +39,7 @@ public class UserController {
     }
 
     @GetMapping("/user")
-    public List<User>getAllUser(){
+    public List<User> getAllUser() {
         return userRepository.findAll();
     }
 
@@ -63,14 +63,14 @@ public class UserController {
     }
 
     @GetMapping("/admin/users")
-    public ResponseEntity getUserByRole(){
+    public ResponseEntity getUserByRole() {
         List<User> listUsers = userService.getUserByRole();
         ResponseEntity response = new ResponseEntity(listUsers, HttpStatus.OK);
         return response;
     }
 
     @GetMapping("/admin/users/role")
-    public ResponseEntity getRoleOfUsers(){
+    public ResponseEntity getRoleOfUsers() {
         List<String> listRole = userRepository.getRole();
         return new ResponseEntity(listRole, HttpStatus.OK);
     }
@@ -82,36 +82,36 @@ public class UserController {
     }
 
     @GetMapping("/admin/users/role-customer")
-    public ResponseEntity getUserByRoleCustomer(){
+    public ResponseEntity getUserByRoleCustomer() {
         List<User> listUsers = userService.getUserByRoleCustomer();
         ResponseEntity response = new ResponseEntity(listUsers, HttpStatus.OK);
         return response;
     }
 
     @GetMapping("/admin/users/status")
-    public ResponseEntity getStatusOfUsers(){
+    public ResponseEntity getStatusOfUsers() {
         List<String> listRole = userRepository.getRole();
         return new ResponseEntity(listRole, HttpStatus.OK);
     }
 
     @GetMapping("/sum-employee")
-    public Integer sumEmplyee(){
+    public Integer sumEmplyee() {
         return userRepository.countByRole("employee");
     }
 
     @GetMapping("/sum-customer")
-    public Integer sumCustomer(){
+    public Integer sumCustomer() {
         return userRepository.countByRole("customer");
     }
 
     @GetMapping("/sum-menu")
-    public Integer sumMenu(){
+    public Integer sumMenu() {
         return menuRepository.countAll();
     }
 
     @GetMapping("/total-price")
-    public double totalPrice(){
-      return paymentHistoryRepository.getTotalSumPrice();
+    public double totalPrice() {
+        return paymentHistoryRepository.getTotalSumPrice();
     }
 
     @GetMapping("/sum-button")

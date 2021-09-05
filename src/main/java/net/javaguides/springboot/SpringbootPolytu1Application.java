@@ -12,11 +12,7 @@ public class SpringbootPolytu1Application {
     public static void main(String[] args) {
 
         SpringApplication.run(SpringbootPolytu1Application.class, args);
-        Date date = new Date();
 
-        Calendar calendar = Calendar.getInstance();
-        date = calendar.getTime();
-        System.out.println(date);
     }
 
 }

@@ -27,14 +27,21 @@ public interface ActivityMenuRepository extends JpaRepository<ActivityMenu, Inte
 
     @Query(value = "select count(*) as TotalClickOnMenuEnable from activity_button join  button on button.id = activity_button.id_button \n" +
             "join menu on menu.id = button.id_menu join  users on users.email = menu.email \n" +
-            "where users.email =:email and menu.id =:idMenu and activity_button.created_at LIKE CONCAT(:day,'%')", nativeQuery = true)
+            "where users.email =:email and menu.id =:idMenu and LEFT(CONVERT(VARCHAR, activity_button.created_at, 120), 10) LIKE CONCAT(:day,'%')", nativeQuery = true)
     Integer statisticAllActionOnThisMenu(@Param("email") String email, @Param("idMenu") Integer idMenu, @Param("day") String day);
-
     @Query(value = "select count(*) as TotalClickOnMenuEnable from activity_button join  button on button.id = activity_button.id_button \n" +
             "join menu on menu.id = button.id_menu join  users on users.email = menu.email \n" +
-            "where users.email =:email and activity_button.created_at LIKE CONCAT(:day,'%')", nativeQuery = true)
+            "where users.email =:email and menu.id =:idMenu and LEFT(CONVERT(VARCHAR, activity_button.created_at, 120), 10) LIKE CONCAT(:day,'%')", nativeQuery = true)
+    Integer statisticAllActionOnThisMenuByMenuId(@Param("email") String email, @Param("idMenu") Integer idMenu, @Param("day") String day);
+    @Query(value = "select count(*) as TotalClickOnMenuEnable from activity_button join  button on button.id = activity_button.id_button \n" +
+            "join menu on menu.id = button.id_menu join  users on users.email = menu.email \n" +
+            "where users.email =:email and LEFT(CONVERT(VARCHAR, activity_button.created_at, 120), 10) LIKE CONCAT(:day,'%')", nativeQuery = true)
     Integer statisticAllActionOnAllMenu(@Param("email") String email, @Param("day") String day);
 
+    @Query(value = "select count(*) as TotalClickOnMenuEnableWithId from activity_button join  button on button.id = activity_button.id_button \n" +
+            "join menu on menu.id = button.id_menu join  users on users.email = menu.email \n" +
+            "where users.email =:email and menu.id=:idMenu and activity_button.created_at LIKE CONCAT(:day,'%')", nativeQuery = true)
+    Integer TotalClickOnMenuEnableWithId(@Param("email") String email,@Param("idMenu") Integer idMenu, @Param("day") String day);
     //////////////////////////////////////////////////////
     @Query(value = "select distinct menu.name_menu, count(*) as countNumberClickMenu from activity_button join button on button.id = activity_button.id_button \n" +
             "join menu on menu.id = button.id_menu join  users on users.email = menu.email and" +
@@ -43,34 +50,23 @@ public interface ActivityMenuRepository extends JpaRepository<ActivityMenu, Inte
 
     @Query(value = "select count(*) as countNumberClickMenu from activity_button join button on button.id = activity_button.id_button \n" +
             "join menu on menu.id = button.id_menu join  users on users.email = menu.email and users.email =:email and activity_button.created_at\n" +
-            "between :start AND :end and menu.id =:menuId", nativeQuery = true)
+            "between CONVERT(date,:start,120) AND DATEADD(day,1,CONVERT(date,:end,120)) and menu.id =:menuId", nativeQuery = true)
     Page<Object[]> getTotalNumberClickOnMenuByTime(@Param("email") String email, @Param("start") String start,
                                                    @Param("end") String end, @Param("menuId") Integer menuId, Pageable pageable);
 
-//    @Query(value = "select distinct menu.name_menu, count(*) as countNumberClickMenu from activity_button join button on button.id = activity_button.id_button \n" +
-//            "join menu on menu.id = button.id_menu join  users on users.email = menu.email and" +
-//            " users.email =:email and activity_button.created_at between ?1start and end group by menu.name_menu",nativeQuery = true)
-//    Page<Object[]> getTotalNumberClickOnMenuByTimeSelect(@Param("email")String email,Pageable pageable);
+
 
     @Query(value = "select distinct menu.name_menu, count(*) as countNumberActionMenu from activity_menu join menu on menu.id = activity_menu.id_menu join users\n" +
             "on users.email = menu.email where users.email =:email group by menu.name_menu", nativeQuery = true)
     Page<Object[]> getTotalNumberActionDisplayOnMenu(@Param("email") String email, Pageable pageable);
 
-//    @Query(value = "select distinct menu.name_menu, count(*) as countNumberActionMenu from activity_menu join menu on menu.id = activity_menu.id_menu join users\n" +
-//            "on users.email = menu.email where users.email =:email and  group by menu.name_menu",nativeQuery = true)
-//    Page<Object[]> getTotalNumberActionDisplayOnMenuByTime(@Param("email")String email,Pageable pageable);
 
     ///////////////////////////////////////////////////////////
     @Query(value = "select button.type_button, count(*) as countNumberActionButtonByType from button join menu on menu.id = button.id_menu join activity_menu\n" +
             "on menu.id = activity_menu.id_menu join users on users.email = menu.email where users.email =:email group by button.type_button", nativeQuery = true)
     Page<Object[]> getTotalNumberActionDisplayOnButtonByType(@Param("email") String email, Pageable pageable);
 
-    //    @Query(value = "select  button.type_button, count(*) as countNumberActionButtonByType \n" +
-//            "from activity_button join button on button.id = activity_button.id_button\n" +
-//            "join menu on menu.id = button.id_menu \n" +
-//            "join users on users.email = menu.email \n" +
-//            "where users.email =:email and button.id_menu in (select distinct activity_menu.id_menu from activity_menu)\n" +
-//            "group by button.type_button",nativeQuery = true)
+
     @Query(value = "select  b.TypeButton, count(ab) as countNumberActionButtonByType \n" +
             "from ActivityButton ab join Button b on b.id = ab.buttonId\n" +
             "join Menu m on m.id = b.menu.id \n" +
@@ -80,39 +76,37 @@ public interface ActivityMenuRepository extends JpaRepository<ActivityMenu, Inte
     Page<Object[]> getTotalNumberClickOnButtonByType(@Param("email") String email, Pageable pageable);
 
     //////////////////////////////////////////////////////////////////
-//    @Query(value = "select activity_button.created_at as ClickTime,menu.name_menu, button.name_button, button.link,activity_button.from_url from \n" +
-//            "activity_button join button on button.id = activity_button.id_button\n" +
-//            "join menu on menu.id = button.id_menu\n" +
-//            "join users on users.email = menu.email\n"
-//            )
+
     @Query(value = "select  ab.CreatedAt as ClickTime,m.name_menu, b.name_button, b.link,ab.fromUrl from \n" +
             "ActivityButton ab join Button b on b.id = ab.buttonId\n" +
             "join Menu m on m.id = b.menu.id\n" +
             "join User u on u.email = m.users.email where u.email=:email and ab.CreatedAt between :start AND :end"
     )
-    Page<Object[]> getStatisticInformationOfAction(@Param("email") String email,@Param("start") Date start,
+    Page<Object[]> getStatisticInformationOfAction(@Param("email") String email, @Param("start") Date start,
                                                    @Param("end") Date end, Pageable pageable);
 
     @Query(value = "select  ab.CreatedAt as ClickTime,m.name_menu, b.name_button, b.link,ab.fromUrl from \n" +
             "ActivityButton ab join Button b on b.id = ab.buttonId\n" +
             "join Menu m on m.id = b.menu.id\n" +
             "join User u on u.email = m.users.email where u.email=:email and ab.CreatedAt between :start AND :end " +
-            "and m.name_menu like %:search% or b.name_button like %:search% or b.link like %:search% " +
+            "and  b.name_button like %:search% or b.link like %:search% " +
             "or ab.fromUrl like %:search%"
     )
-    Page<Object[]> getStatisticInformationOfActionWithSearch(@Param("email") String email,@Param("start") Date start,
-                                                   @Param("end") Date end,@Param("search") String search, Pageable pageable);
+    Page<Object[]> getStatisticInformationOfActionWithSearch(@Param("email") String email, @Param("start") Date start,
+                                                             @Param("end") Date end, @Param("search") String search, Pageable pageable);
 
     @Query(value = "select distinct activity_button.from_url, count(*) as Total from activity_button join button on button.id = activity_button.id_button\n" +
-            "         join menu on menu.id = button.id_menu where menu.email=:email and activity_button.created_at between :start AND :end group by activity_button.from_url",nativeQuery = true)
-    Page<Object[]> countTotalClickBuFromUrl(@Param("email") String email,@Param("start") String start,
+            "         join menu on menu.id = button.id_menu where menu.email=:email and menu.id=:idMenu and" +
+            " activity_button.created_at between CONVERT(date,:start,120) AND DATEADD(day,1,CONVERT(date,:end,120)) " +
+            "group by activity_button.from_url order by Total desc", nativeQuery = true)
+    Page<Object[]> countTotalClickBuFromUrl(@Param("email") String email,@Param("idMenu")Integer idMenu, @Param("start") String start,
                                             @Param("end") String end, Pageable pageable);
 
 
- // This is query to Statistics for Page Dashboard
- @Query(value = "select count(*) as countNumberClickMenu from activity_button join button on button.id = activity_button.id_button \n" +
-         "join menu on menu.id = button.id_menu where menu.email =:email ", nativeQuery = true)
- Integer getTotalNumberClickByUser(@Param("email") String email);
+    // This is query to Statistics for Page Dashboard
+    @Query(value = "select count(*) as countNumberClickMenu from activity_button join button on button.id = activity_button.id_button \n" +
+            "join menu on menu.id = button.id_menu where menu.email =:email ", nativeQuery = true)
+    Integer getTotalNumberClickByUser(@Param("email") String email);
 
 
 }

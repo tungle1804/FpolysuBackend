@@ -49,6 +49,7 @@ CREATE TABLE button
     color_background NVARCHAR(300),
     color_icon       NVARCHAR(300),
     type_button      NVARCHAR(300)
+    caption_content  NVARCHAR(300)
 )
 
 

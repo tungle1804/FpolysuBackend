@@ -1,24 +1,24 @@
 drop database polysu
 create database polysu
-    go
+go
 use polysu
-    go
+go
 
+CREATE TABLE users(
+email NVARCHAR(50) NOT NULL PRIMARY KEY,
+_password VARCHAR(100),
+name NVARCHAR(100),
+business_name NVARCHAR(200),
+phone NVARCHAR(15),
+_role VARCHAR(15),
+gender NVARCHAR(15),
+_address NVARCHAR(100),
+date_of_birth date,
+_status NVARCHAR(50),
+created_date date,
+created_by NVARCHAR(50)
+)
 
-CREATE TABLE users
-(
-    email         NVARCHAR(50) NOT NULL PRIMARY KEY,
-    _password     VARCHAR(100),
-    name          NVARCHAR(100),
-    business_name NVARCHAR(200),
-    phone         NVARCHAR(15),
-    _role         VARCHAR(15),
-    gender        NVARCHAR(15),
-    _address      NVARCHAR(100),
-    date_of_birth date,
-    _status       bit,
-    created_date  date,
-    created_by    NVARCHAR(50))
 
 -- menu
 CREATE TABLE menu(
@@ -50,6 +50,7 @@ CREATE TABLE button
     color_background NVARCHAR(300),
     color_icon       NVARCHAR(300),
     caption_content  NVARCHAR(300)
+
 )
 
 
@@ -77,7 +78,6 @@ create table activity_menu
 
 
 
-
 -- modal
 
 CREATE TABLE modal
@@ -88,8 +88,6 @@ CREATE TABLE modal
     input_name        NVARCHAR(50) NOT NULL,
     input_value       NVARCHAR(50),
     created_at datetime default getdate()null)
-
-
 
 
 -- dataofcustom
@@ -104,6 +102,17 @@ content NVARCHAR(MAX),
 notes NVARCHAR(MAX),
 create_date datetime
 )
+
+-- modal
+
+CREATE TABLE modal (
+id INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+id_button int  FOREIGN KEY REFERENCES dbo.button(id),
+id_dataofcustomer int FOREIGN KEY REFERENCES dbo.dataofcustomer(id),
+input_name NVARCHAR(50) NOT NULL,
+input_value NVARCHAR(50)
+)
+
 
 -- servicefee
 create table servicefee
@@ -358,6 +367,24 @@ order by Total desc
 
 select activity_button.ip_address,user_address, count(*) from activity_button join button on button.id = activity_button.id_button
            join menu on menu.id = button.id_menu join  users on users.email = menu.email and
+
+           users.email ='vuthanhnam@gmail.com'  group by activity_button.ip_address,user_address
+
+
+
+
+---Bình
+--- Tổng số lượng khách hàng
+select count(email) as 'Số lượng users' from users where _role = 'customer' and created_date between '2021-08-10' and '2021-08-29'
+
+---Số lượng khách hàng basic
+select count(payment_history.email) as 'Số lượng khách hàng basic' from users join payment_history on users.email = payment_history.email where users.created_date between '2021-08-05' and '2021-08-29' and payment_history._status = 0 
+
+---Số lượng khách hàng pro
+select count(distinct payment_history.email) as 'Số lượng khách hàng pro' from users join payment_history on users.email = payment_history.email where users.created_date between '2021-08-05' and '2021-08-29' and payment_history._status = 1 
+
+select * from users
+
            users.email =' vuthanhnam@gmail.com '  group by activity_button.ip_address,user_address
 
 		  
@@ -378,3 +405,4 @@ select count(*) as TotalClickOnMenuEnable from activity_button join  button on b
             join menu on menu.id = button.id_menu join  users on users.email = menu.email and users.email = 'namvtph09571@fpt.edu.vn'
       and activity_button.created_at between '2021-08-01' and '2022-09-05' and menu.id=9 group by button.id,activity_button.id,activity_button.created_at
 		--and (DATEDIFF(day, activity_button.created_at, '2021-09-05')>=0 and DATEDIFF(day,'2021-08-01', activity_button.created_at)>=0)
+

@@ -53,10 +53,10 @@ public class PaypalController {
 
         User user = userRepository.findOneByEmail(bill.getEmail());
         ServiceFee serviceFee = serviceFeeRepository.findServiceFeeByPrice(bill.getPrice());
-        PaymentHistory existHistory = paymentHistoryRepository.getPaymentHistoriesByUsersAndStatus(user,true);
-        if (existHistory != null){
+        PaymentHistory existHistory = paymentHistoryRepository.getPaymentHistoriesByUsersAndStatus(user, true);
+        if (existHistory != null) {
             cal.setTime(existHistory.getDateEnd());
-            existHistory.setTotalPrice(existHistory.getTotalPrice()+serviceFee.getPrice());
+            existHistory.setTotalPrice(existHistory.getTotalPrice() + serviceFee.getPrice());
             if (serviceFee.getNameService().equals("1 tháng")) {
                 cal.add(Calendar.MONTH, 1);
                 existHistory.setDateEnd(cal.getTime());
@@ -70,13 +70,14 @@ public class PaypalController {
                 cal.add(Calendar.MONTH, 12);
                 existHistory.setDateEnd(cal.getTime());
             }
-            return new ResponseEntity<>(paymentHistoryRepository.save(existHistory),HttpStatus.OK);
+            return new ResponseEntity<>(paymentHistoryRepository.save(existHistory), HttpStatus.OK);
         }
         PaymentHistory paymentHistory = new PaymentHistory();
         paymentHistory.setServiceFee(serviceFee);
         paymentHistory.setUsers(user);
         paymentHistory.setStatus(true);
         paymentHistory.setDateStart(date);
+        paymentHistory.setTotalPrice(serviceFee.getPrice());
         if (serviceFee.getNameService().equals("1 tháng")) {
             cal.add(Calendar.MONTH, 1);
             date = cal.getTime();

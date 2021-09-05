@@ -19,23 +19,24 @@ public class ServiceFreeController {
 
 
     @GetMapping("/servicefee")
-    public List<ServiceFee> getAllServiceFee(){
+    public List<ServiceFee> getAllServiceFee() {
         return serviceFeeRepository.findAll();
     }
+
     @GetMapping("/servicefee/{id}")
-    public Optional<ServiceFee> getServiceFeeById(@PathVariable int id){
+    public Optional<ServiceFee> getServiceFeeById(@PathVariable int id) {
         return serviceFeeRepository.findById(id);
     }
 
     @PostMapping("/servicefee/create")
-    public ServiceFee createServiceFee(@RequestBody ServiceFee serviceFee){
+    public ServiceFee createServiceFee(@RequestBody ServiceFee serviceFee) {
         return serviceFeeRepository.save(serviceFee);
     }
 
     @PutMapping("/servicefee/update")
-    public ResponseEntity updateServiceFee(@RequestBody ServiceFee serviceFee){
+    public ResponseEntity updateServiceFee(@RequestBody ServiceFee serviceFee) {
         ServiceFee dto = serviceFeeRepository.save(serviceFee);
-        System.out.println("servicefeeeeeeeee" +serviceFee);
+        System.out.println("servicefeeeeeeeee" + serviceFee);
         return new ResponseEntity(dto, HttpStatus.OK);
     }
 

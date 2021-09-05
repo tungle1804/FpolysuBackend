@@ -1,13 +1,10 @@
 package net.javaguides.springboot.dao;
 
-import net.javaguides.springboot.controller.PaypalController;
 import net.javaguides.springboot.entity.Modal;
 import net.javaguides.springboot.mapper.DataOfCustomerAndModalMapper;
 import net.javaguides.springboot.mapper.ModalMapper;
 import net.javaguides.springboot.model.response.DataOfCustomerAndModal;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,17 +13,16 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
-import java.util.ArrayList;
 import java.util.List;
 
 @Repository("PaymentDao")
 @Transactional
 public class PaymentDao {
+    Logger logger = LoggerFactory.getLogger(PaymentDao.class);
     @Autowired
     private JdbcTemplate jdbcTemplate;
     @Autowired
     private EntityManager entityManager;
-    Logger logger = LoggerFactory.getLogger(PaymentDao.class);
 
     private Session getSession() {
         return entityManager.unwrap(Session.class);
@@ -65,7 +61,7 @@ public class PaymentDao {
         logger.info("Begin DataOfCustomerAndModal");
 //        String sql = "select * from dbo.dataofcustomer left JOIN dbo.modal ON modal.id_dataofcustomer = dataofcustomer.id WHERE dbo.dataofcustomer.id = ?";
         String sql = "select  * from dbo.dataofcustomer where dbo.dataofcustomer.id = ?";
-        String sql1 ="SELECT * FROM dbo.modal where dbo.modal.id_dataofcustomer = ? ";
+        String sql1 = "SELECT * FROM dbo.modal where dbo.modal.id_dataofcustomer = ? ";
         List<DataOfCustomerAndModal> dataOfCustomerAndModal = null;
         List<Modal> modal = null;
         try {

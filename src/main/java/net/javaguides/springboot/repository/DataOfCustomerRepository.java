@@ -9,6 +9,8 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
+
+
 public interface DataOfCustomerRepository  extends JpaRepository<DataOfCustomer,Integer> {
 
 //    @Query("from DataOfCustomer")
@@ -17,7 +19,7 @@ public interface DataOfCustomerRepository  extends JpaRepository<DataOfCustomer,
     @Query(value = "from DataOfCustomer where fullName like concat('%',:fullname,'%') ")
     List<DataOfCustomer> getDataOfCustomerByFullName(@Param("fullname") String fullname);
 
-    @Query(value = "from DataOfCustomer where email=:email")
+    @Query(value = "from DataOfCustomer d where d.users.email=:email")
     List<DataOfCustomer> getDataOfCustomersByUsers(String email);
 
 

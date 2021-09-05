@@ -79,38 +79,42 @@ public class ButtonController {
         return buttonRespository.listButtonByIdMenu(id_menu);
     }
 
-    @PutMapping("/button/{id}")
-    public ResponseEntity<Button> updateButton(@PathVariable int id, @RequestBody Button button) {
-
-        Button button1 = buttonRespository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Categories not exist with id :" + id));
-        System.out.println(button1.getMenu());
-        button1.setColor_background(button1.getColor_background());
-        button1.setColor_icon(button1.getColor_icon());
-        button1.setColor_text(button1.getColor_text());
-        button1.setLink(button1.getLink());
-        button1.setName_button(button1.getName_button());
-        button1.setMenu(button1.getMenu());
-        button1.setIcon(button1.getIcon());
-        Button updatebutton = buttonRespository.save(button);
+    @PutMapping("/button")
+    public ResponseEntity<Button> updateButton( @RequestBody Button button) {
+        System.out.println(button);
+        Button button1 = buttonRespository.findById(button.getId())
+                .orElseThrow(() -> new ResourceNotFoundException("Categories not exist with id :" + button.getId()));
+//        System.out.println(button.getMenu());
+        button1.setColor_background(button.getColor_background());
+        button1.setColor_icon(button.getColor_icon());
+        button1.setColor_text(button.getColor_text());
+        button1.setLink(button.getLink());
+        button1.setName_button(button.getName_button());
+//        button1.setMenu(button.getMenu());
+        button1.setIcon(button.getIcon());
+        button1.setCaptionContent(button.getCaptionContent());
+        button1.setTypeButton(button.getTypeButton());
+        Button updatebutton = buttonRespository.save(button1);
         return ResponseEntity.ok(updatebutton);
     }
 
 
     @GetMapping("countSumButtonCreated")
-    ResponseEntity<?> countSumButtonCreated(@RequestParam(value = "email",required = true) String email){
+    ResponseEntity<?> countSumButtonCreated(@RequestParam(value = "email", required = true) String email) {
         Integer value = buttonRespository.countSumButtonCreated(email);
-        return (value!=null)?ResponseEntity.ok(value) : (ResponseEntity<?>) ResponseEntity.badRequest();
+        return (value != null) ? ResponseEntity.ok(value) : (ResponseEntity<?>) ResponseEntity.badRequest();
     }
+
     @GetMapping("statisticsClickByUrl")
-    ResponseEntity<?> statisticsClickByUrl(@RequestParam(value = "email",required = true) String email){
+    ResponseEntity<?> statisticsClickByUrl(@RequestParam(value = "email", required = true) String email) {
         List<Object> list = buttonRespository.statisticsClickByUrl(email);
-        return (list!=null)?ResponseEntity.ok(list) : (ResponseEntity<?>) ResponseEntity.badRequest();
+        return (list != null) ? ResponseEntity.ok(list) : (ResponseEntity<?>) ResponseEntity.badRequest();
     }
+
     @GetMapping("statisticsClickByButton")
-    ResponseEntity<?> statisticsClickByButton(@RequestParam(value = "email",required = true) String email){
+    ResponseEntity<?> statisticsClickByButton(@RequestParam(value = "email", required = true) String email) {
         List<Object> list = buttonRespository.statisticsClickByButton(email);
-        return (list!=null)?ResponseEntity.ok(list) : (ResponseEntity<?>) ResponseEntity.badRequest();
+        return (list != null) ? ResponseEntity.ok(list) : (ResponseEntity<?>) ResponseEntity.badRequest();
     }
 
 //	public static class Data{

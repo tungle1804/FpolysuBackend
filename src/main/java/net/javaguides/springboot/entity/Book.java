@@ -13,15 +13,15 @@ public class Book {
 
     private List<DataOfCustomer> dataOfCustomers = new ArrayList<>();
 
+    public Book() {
+    }
+
     public List<Modal> getModal() {
         return modal;
     }
 
     public void setModal(List<Modal> modal) {
         this.modal = modal;
-    }
-
-    public Book() {
     }
 
     public List<Menu> getMenu() {
@@ -36,15 +36,15 @@ public class Book {
         return buttons;
     }
 
+    public void setButton(List<Button> button) {
+        this.buttons = button;
+    }
+
     public List<DataOfCustomer> getDataOfCustomers() {
         return dataOfCustomers;
     }
 
     public void setDataOfCustomers(List<DataOfCustomer> dataOfCustomers) {
         this.dataOfCustomers = dataOfCustomers;
-    }
-
-    public void setButton(List<Button> button) {
-        this.buttons = button;
     }
 }

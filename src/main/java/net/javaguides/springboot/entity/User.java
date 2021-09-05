@@ -7,50 +7,50 @@ import java.sql.Date;
 import java.util.Collection;
 
 @Entity
-@javax.persistence.Table(name="users")
+@javax.persistence.Table(name = "users")
 public class User {
-	@Id
-	@Column(name="email")
-	private String email;
+    @Id
+    @Column(name = "email")
+    private String email;
 
-	@Column(name="_password")
-	private String password;
+    @Column(name = "_password")
+    private String password;
 
-	@Column(name="name")
-	private String fullName;
+    @Column(name = "name")
+    private String fullName;
 
-	@Column(name="business_name")
-	private String business;
+    @Column(name = "business_name")
+    private String business;
 
-	@Column(name="phone")
-	private String phone;
+    @Column(name = "phone")
+    private String phone;
 
-	@Column(name="_role")
-	private String role;
+    @Column(name = "_role")
+    private String role;
 
-	@Column(name="date_of_birth")
-	private Date dateOfBirth;
+    @Column(name = "date_of_birth")
+    private Date dateOfBirth;
 
-	@Column(name="gender")
-	private String gender;
+    @Column(name = "gender")
+    private String gender;
 
-	@Column(name="_address")
-	private String address;
+    @Column(name = "_address")
+    private String address;
 
 	@Column(name="_status")
 	private String status ;
 
-	@Column(name="created_date")
-	private Date createdDate;
+    @Column(name = "created_date")
+    private Date createdDate;
 
-	@Column(name="created_by")
-	private String createdBy;
+    @Column(name = "created_by")
+    private String createdBy;
 
-	@JsonIgnore
+
     @OneToMany(mappedBy = "users", fetch = FetchType.LAZY)
     private Collection<Menu> menu;
 
-	@JsonIgnore
+    @JsonIgnore
     @OneToMany(mappedBy = "users", fetch = FetchType.LAZY)
     private Collection<PaymentHistory> paymentHistories;
 
@@ -179,24 +179,24 @@ public class User {
 		return menu;
 	}
 
-	public void setMenu(Collection<Menu> menu) {
-		this.menu = menu;
-	}
+    public void setMenu(Collection<Menu> menu) {
+        this.menu = menu;
+    }
 
-	public Collection<PaymentHistory> getPaymentHistories() {
-		return paymentHistories;
-	}
+    public Collection<PaymentHistory> getPaymentHistories() {
+        return paymentHistories;
+    }
 
-	public void setPaymentHistories(Collection<PaymentHistory> paymentHistories) {
-		this.paymentHistories = paymentHistories;
-	}
+    public void setPaymentHistories(Collection<PaymentHistory> paymentHistories) {
+        this.paymentHistories = paymentHistories;
+    }
 
-	public Collection<DataOfCustomer> getDataOfCustomers() {
-		return dataOfCustomers;
-	}
+    public Collection<DataOfCustomer> getDataOfCustomers() {
+        return dataOfCustomers;
+    }
 
-	public void setDataOfCustomers(Collection<DataOfCustomer> dataOfCustomers) {
-		this.dataOfCustomers = dataOfCustomers;
-	}
+    public void setDataOfCustomers(Collection<DataOfCustomer> dataOfCustomers) {
+        this.dataOfCustomers = dataOfCustomers;
+    }
 }
 

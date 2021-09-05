@@ -197,16 +197,35 @@ public class ActivityButtonController {
     @GetMapping("statisticsActivityByIp")
     ResponseEntity<?> statisticsActivityByIp(
             @RequestParam(name = "email", required = true) String email,
+            @RequestParam(name = "userAddress",required = false)String userAddress,
             @RequestParam(name = "pageNo", defaultValue = "0", required = false) String pageNo,
             @RequestParam(name = "limit", defaultValue = "5", required = false) String limit
     ) {
         PageRequest pageRequest = PageRequest.of(Integer.parseInt(pageNo), Integer.parseInt(limit));
-
-        Page<Object> page = activityButtonRepository.statisticsActivityByIp(email, pageRequest);
+        Page<Object> page=null;
+if(userAddress!=null){
+    page = activityButtonRepository.statisticsActivityByIpAndLocation(email,userAddress,pageRequest);
+}else {
+    page = activityButtonRepository.statisticsActivityByIp(email, pageRequest);
+}
         if (page != null) {
             return new ResponseEntity<>(page, new HttpHeaders(), HttpStatus.OK);
         } else {
             return new ResponseEntity<>("Data not Exist", new HttpHeaders(), HttpStatus.NOT_FOUND);
         }
     }
+    @GetMapping("statisticsActivityOfOneButtonByAddress")
+    ResponseEntity<?> statisticsActivityOfOneButtonByAddress(
+            @RequestParam(name = "email", required = true) String email,
+            @RequestParam(name = "url", required = true) String url
+    ) {
+        List<Object[]> list = null;
+        list = activityButtonRepository.statisticsActivityOfOneButtonByAddress(email,url);
+        if (list != null) {
+            return new ResponseEntity<>(list, new HttpHeaders(), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("Data not Exist", new HttpHeaders(), HttpStatus.NOT_FOUND);
+        }
+    }
+
 }

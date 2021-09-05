@@ -57,12 +57,12 @@ create table activity_button
     id           int identity not null primary key,
     id_button    int foreign key references dbo.button (id) not null,
     created_at   datetime default getdate() null,
-    from_url     nvarchar(300)              null,
-    equipment    bit                        null,
-    ip_address   nvarchar(100)              null,
-    user_address nvarchar(100)              null,
-    languages    nvarchar(50)               null,
-    supplier     nvarchar(50)               null
+    from_url     nvarchar(300) default 'http://localhost:3000/this-URL-from-local-environment'            null,
+    equipment    bit   null,
+    ip_address   nvarchar(100)  default '0.0.0.0'   null,
+    user_address nvarchar(100)    null,
+    languages    nvarchar(50)    default 'vietnamese'  null,
+    supplier     nvarchar(100)    default 'Local-Host' null
 )
 
 
@@ -319,7 +319,7 @@ from activity_button
          join button on button.id = activity_button.id_button
          join menu on menu.id = button.id_menu
          join users on users.email = menu.email
-where users.email = ' vuthanhnam@gmail.com ' and activity_button.created_at between '2021-08-17' and '2021-08-22'
+where users.email = 'namvtph09571@fpt.edu.vn' and activity_button.created_at between '2021-09-03' and '2021-04-09'
 
 select distinct button.name_button, count(*) as countNumber
 from activity_button join button on button.id=activity_button.id_button
@@ -359,4 +359,21 @@ select activity_button.ip_address,user_address, count(*) from activity_button jo
            join menu on menu.id = button.id_menu join  users on users.email = menu.email and
            users.email =' vuthanhnam@gmail.com '  group by activity_button.ip_address,user_address
 
+		  
+insert into activity_button values(9,'2021-05-05','https://webhangtot.com/bang-ma-mau-cmyk-rgb-html-css',1,'192.15.22.111','HaNoi','english','VNPT')
+insert into activity_button values(9,'2021-03-05','https://webhangtot.com/bang-ma-mau-cmyk-rgb-html-css',1,'192.15.22.02','HOaBinh','english','FPT')
+insert into activity_button values(9,'2021-08-05','https://coreui.io/docs/icons/introduction/',1,'132.55.22.111','HaiPhong','english','Viettel')
 
+
+ select * from activity_button where activity_button.created_at  between '2021-08-01' AND '2021-09-05'
+select count(*) as TotalClickOnMenuEnable from activity_button join  button on button.id = activity_button.id_button 
+            join menu on menu.id = button.id_menu join  users on users.email = menu.email 
+            where users.email ='namvtph09571@fpt.edu.vn' and menu.id =9 and LEFT(CONVERT(VARCHAR, activity_button.created_at, 120), 10) LIKE '2021-09-04%'
+			
+			select * from menu where menu.id=9
+			select * from button where button.id_menu=9
+
+			select button.id, activity_button.id,activity_button.created_at, count(*) as countNumberClickMenu from activity_button join button on button.id = activity_button.id_button 
+            join menu on menu.id = button.id_menu join  users on users.email = menu.email and users.email = 'namvtph09571@fpt.edu.vn'
+      and activity_button.created_at between '2021-08-01' and '2022-09-05' and menu.id=9 group by button.id,activity_button.id,activity_button.created_at
+		--and (DATEDIFF(day, activity_button.created_at, '2021-09-05')>=0 and DATEDIFF(day,'2021-08-01', activity_button.created_at)>=0)

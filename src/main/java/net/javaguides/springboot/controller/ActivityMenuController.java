@@ -98,7 +98,22 @@ public class ActivityMenuController {
         }
 
     }
+    @GetMapping("/TotalClickOnMenuEnableWithId")
+    ResponseEntity<?> TotalClickOnMenuEnableWithId(
+            @RequestParam(name = "email", required = true) String email,
+            @RequestParam(name = "idMenu", required = true) String idMenu,
+            @RequestParam(name = "day", required = true) String day
+    ) {
+        try {
+                Integer dtoPage = activityMenuRepository.TotalClickOnMenuEnableWithId(email,Integer.parseInt(idMenu),day);
+            return new ResponseEntity<>(dtoPage, new HttpHeaders(), HttpStatus.OK);
 
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body("Page Empty" + e);
+        }
+
+    }
     @GetMapping("/statisticAllActionOnThisMenuByDay")
     ResponseEntity<?> statisticAllActionOnThisMenuByDay(
             @RequestParam(name = "email", required = true) String email,
@@ -280,7 +295,7 @@ public class ActivityMenuController {
             System.out.println(endd.toString());
             PageRequest pageRequest = PageRequest.of(Integer.parseInt(pageNo), Integer.parseInt(limit), Sort.by("id").descending());
             Page<Object[]> dtoPage = null;
-            if (search.length() > 0) {
+            if (search==null) {
                 dtoPage = activityMenuRepository.getStatisticInformationOfAction(email, startd, endd, pageRequest);
             } else {
                 dtoPage = activityMenuRepository.getStatisticInformationOfActionWithSearch(email, startd, endd, search, pageRequest);
@@ -330,6 +345,7 @@ public class ActivityMenuController {
     @GetMapping("/countTotalClickBuFromUrl")
     ResponseEntity<?> countTotalClickBuFromUrl(
             @RequestParam(name = "email") String email,
+            @RequestParam(name = "idMenu")String idMenu,
             @RequestParam(name = "start", required = false) String start,
             @RequestParam(name = "end", required = false) String end,
             @RequestParam(name = "pageNo", defaultValue = "0", required = false) String pageNo,
@@ -339,7 +355,7 @@ public class ActivityMenuController {
             PageRequest pageRequest = PageRequest.of(Integer.parseInt(pageNo), Integer.parseInt(limit));
             Page<Object[]> dtoPage = null;
             if (start.length() > 0 && end.length() > 0) {
-                dtoPage = activityMenuRepository.countTotalClickBuFromUrl(email, start, end, pageRequest);
+                dtoPage = activityMenuRepository.countTotalClickBuFromUrl(email,Integer.parseInt(idMenu), start, end, pageRequest);
             } else {
 
             }

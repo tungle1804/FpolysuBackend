@@ -21,6 +21,10 @@ public class ModalController {
         return modalRepository.getModalByIdButton(id);
     }
 
+    @GetMapping("/getModal")
+    public List<Modal> getModal(){
+        return modalRepository.findAll();
+    }
     @PostMapping("/createModal")
     public Modal createModal(@RequestBody Modal modal) {
 

@@ -110,7 +110,7 @@ public class MenuController {
         int countBasic = menuRepository.getBasicPro(userRepository.findOneByEmail(email));
 //        int countHistory = menuRepository.getCountHistory(userRepository.findOneByEmail(email));
         System.out.println("AAAAAAAA      " + countBasic);
-        if (countBasic > 10) {
+        if (countBasic > 5) {
             return "Lỗi, tài khoản của bạn chưa nâng cấp";
         }
         return "OK";

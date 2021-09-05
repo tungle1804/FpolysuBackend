@@ -71,12 +71,12 @@ public interface ActivityMenuRepository extends JpaRepository<ActivityMenu, Inte
 //            "join users on users.email = menu.email \n" +
 //            "where users.email =:email and button.id_menu in (select distinct activity_menu.id_menu from activity_menu)\n" +
 //            "group by button.type_button",nativeQuery = true)
-    @Query(value = "select  b.TypeButton, count(ab) as countNumberActionButtonByType \n" +
+    @Query(value = "select  b.typeButton, count(ab) as countNumberActionButtonByType \n" +
             "from ActivityButton ab join Button b on b.id = ab.buttonId\n" +
             "join Menu m on m.id = b.menu.id \n" +
             "join User u on u.email = m.users.email \n" +
             "where u.email =:email and b.menu.id in (select am.menuId from ActivityMenu am)\n" +
-            "group by b.TypeButton order by countNumberActionButtonByType")
+            "group by b.typeButton order by countNumberActionButtonByType")
     Page<Object[]> getTotalNumberClickOnButtonByType(@Param("email") String email, Pageable pageable);
 
     //////////////////////////////////////////////////////////////////

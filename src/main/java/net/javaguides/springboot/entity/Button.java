@@ -16,7 +16,7 @@ public class Button {
 
 
     @Column(name = "type_button")
-    private String TypeButton;
+    private String typeButton;
 
     @Column(name = "name_button")
     private String name_button;
@@ -61,12 +61,13 @@ public class Button {
 		this.id = id;
 	}
 
+
 	public String getTypeButton() {
-		return TypeButton;
+		return typeButton;
 	}
 
 	public void setTypeButton(String typeButton) {
-		TypeButton = typeButton;
+		this.typeButton = typeButton;
 	}
 
 	public String getName_button() {

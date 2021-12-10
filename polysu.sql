@@ -244,7 +244,7 @@ VALUES (8,1, N'Địa chỉ', 'Hà Đông')
 -- insert servicefee
 select * from servicefee
 insert into servicefee(name_service, price)
-values ('1 tháng', 59000)
+values ('1 tháng', 2.99)
 insert into servicefee(name_service, price)
 values ('3 tháng', 130000)
 insert into servicefee(name_service, price)
@@ -274,7 +274,7 @@ insert into activity_menu(id_menu,created_at) values(3,N'8-29-2021')
 
 
 -- activity-button
-insert into activity_button(id_button,created_at,from_url,equipment,ip_address,user_address,languages,supplier) values(1,'8-4-2021','',1,'202.74.58.0/23',N'IPv4',N'English','ABBank')
+insert into activity_button(id_button,created_at,from_url,equipment,ip_address,user_address,languages,supplier) values(1,'8-4-2021','',1,'202.74.58.0/23',N'IPv4','',N'English','ABBank')
 insert into activity_button(id_button,created_at,from_url,equipment,ip_address,user_address,languages,supplier) values(1,'9-4-2021','',1,'202.59.252.0/23',N'IPv4',N'English','ACBS')
 insert into activity_button(id_button,created_at,from_url,equipment,ip_address,user_address,languages,supplier) values(2,'8-14-2021','',1,'103.9.80.0/22',N'IPv4',N'English','ACB')
 insert into activity_button(id_button,created_at,from_url,equipment,ip_address,user_address,languages,supplier) values(3,'8-24-2021','',1,'112.3.119.116',N'IPv4',N'Tiếng việt','ABBank')
